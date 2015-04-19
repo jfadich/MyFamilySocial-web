@@ -20,6 +20,7 @@ angular.module('inspinia', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize', '
             controller: "ForumCtrl",
             data: { pageTitle: 'Test' }
         });
+
     $urlRouterProvider.otherwise('main');
   })
 ;

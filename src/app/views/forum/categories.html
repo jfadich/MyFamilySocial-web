@@ -1,6 +1,6 @@
 <div class="row wrapper border-bottom white-bg page-heading">
     <div class="col-lg-10">
-        <h2>{{ headerTitle }}</h2>
+        <h2>Forum</h2>
         <ol class="breadcrumb">
             <li>
                 <a href="index.html">Home</a>
@@ -16,41 +16,68 @@
 </div>
 <div class="wrapper wrapper-content">
     <div class="row">
+        <div class="col-lg-12">
+            <div class="wrapper wrapper-content">
 
-        <div class="col-lg-4 animated fadeInUp" ng-repeat="thread in threads">
-            <div class="ibox">
-                <div class="ibox-content">
-                    <a ui-sref="thread" class="btn-link">
-                        <h2>
-                           {{ thread.title }}
-                        </h2>
-                    </a>
-                    <div class="small m-b-xs">
-                        <strong>{{ thread.owner.data.first_name }} {{ thread.owner.data.last_name }}</strong> <span class="text-muted"><i class="fa fa-clock-o"></i> {{thread.modified | date:'short'}}</span>
+                <div class="ibox-content m-b-sm border-bottom">
+                    <div class="p-xs">
+                        <div class="pull-left m-r-md">
+                            <i class="fa fa-users text-navy mid-icon"></i>
+                        </div>
+                        <h2>Welcome to Family Discussions</h2>
+                        <span>Feel free to choose topic you're interested in.</span>
                     </div>
-                    <p>
-                        English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web
-                    </p>
-                    <div class="row">
+                </div>
 
-                        <div class="col-md-6">
-                            <div class="small text-left">
-                                <h5>Stats:</h5>
-                                <div> <i class="fa fa-comments-o"> </i>  {{ thread.reply_count }} comments </div>
+                <div class="ibox-content forum-container">
+
+                    <div class="forum-title">
+                        <div class="pull-right forum-desc">
+                            <samll>Total posts: 320,800</samll>
+                        </div>
+                        <h3>General subjects</h3>
+                    </div>
+
+                    <div class="forum-item animated fadeInUp" ng-repeat="category in categories">
+                        <div class="row">
+                            <div class="col-md-9">
+                                <div class="forum-icon">
+                                    <i class="{{ category.icon }}"></i>
+                                </div>
+                                <a ui-sref="miscellaneous.forum_post_view" class="forum-item-title">{{ category.name }}</a>
+                                <div class="forum-sub-title">{{ category.description }}</div>
+                            </div>
+                            <div class="col-md-1 forum-info">
+                                        <span class="views-number">
+                                            1216
+                                        </span>
+                                <div>
+                                    <small>Views</small>
+                                </div>
+                            </div>
+                            <div class="col-md-1 forum-info">
+                                        <span class="views-number">
+                                            368
+                                        </span>
+                                <div>
+                                    <small>Topics</small>
+                                </div>
+                            </div>
+                            <div class="col-md-1 forum-info">
+                                        <span class="views-number">
+                                            140
+                                        </span>
+                                <div>
+                                    <small>Posts</small>
+                                </div>
                             </div>
                         </div>
-
-                        <div class="col-md-6 text-right" ng-if="thread.tags.data.length > 0">
-                            <h5>Tags:</h5>
-                            <span ng-repeat="tag in thread.tags.data"> <button class="btn btn-white btn-xs">{{ tag.name }}</button> </span>
-                        </div>
                     </div>
+
+
                 </div>
             </div>
         </div>
-
-
-
-
     </div>
 </div>
+
