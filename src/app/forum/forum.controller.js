@@ -6,8 +6,8 @@ angular.module('inspinia')
         this.userName = 'John Fadich';
         this.helloText = 'Welcome to the Forum';
         this.descriptionText = 'It is an application skeleton for a typical AngularJS web app. You can use it to quickly bootstrap your angular webapp projects.';
-
-        $http.get('http://myfamily.dev/forum?with=owner').
+$scope.headerTitle = 'Forum';
+        $http.get('http://myfamily.dev/forum?with=owner,tags').
             success(function(threads) {
                 $scope.threads = threads.data;console.log(threads);
             }).
