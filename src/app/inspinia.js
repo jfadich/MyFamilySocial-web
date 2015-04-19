@@ -29,7 +29,7 @@ $(document).ready(function () {
         if(!$("body").hasClass('body-small')) {
             fix_height();
         }
-    })
+    });
 
     setTimeout(function(){
         fix_height();

@@ -11,15 +11,20 @@ angular.module('inspinia', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize', '
         })
         .state('index.main', {
             url: "/main",
-            templateUrl: "app/main/main.html",
-            data: { pageTitle: 'Example view' }
+            templateUrl: "app/views/main.html",
+            data: { pageTitle: 'Main' }
         })
         .state('index.minor', {
             url: "/minor",
-            templateUrl: "app/minor/minor.html",
-            data: { pageTitle: 'Example view' }
+            templateUrl: "app/views/minor.html",
+            data: { pageTitle: 'Test' }
         })
-
+        .state('index.forum', {
+            url: "/discussions",
+            templateUrl: "app/views/forum/categories.html",
+            controller: "ForumCtrl",
+            data: { pageTitle: 'Test' }
+        })
     $urlRouterProvider.otherwise('/index/main');
   })
 ;
