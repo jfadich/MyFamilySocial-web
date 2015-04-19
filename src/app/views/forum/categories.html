@@ -1,0 +1,56 @@
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-lg-10">
+        <h2>Forum</h2>
+        <ol class="breadcrumb">
+            <li>
+                <a href="index.html">Home</a>
+            </li>
+            <li>
+                <a>Miscellaneous</a>
+            </li>
+            <li class="active">
+                <strong>Forum view</strong>
+            </li>
+        </ol>
+    </div>
+</div>
+<div class="wrapper wrapper-content">
+    <div class="row">
+
+        <div class="col-lg-4 animated fadeInRight" ng-repeat="thread in threads">
+            <div class="ibox">
+                <div class="ibox-content">
+                    <a ui-sref="app.article" class="btn-link">
+                        <h2>
+                           {{ thread.title }}
+                        </h2>
+                    </a>
+                    <div class="small m-b-xs">
+                        <strong>{{ thread.owner.data.first_name }} {{ thread.owner.data.last_name }}</strong> <span class="text-muted"><i class="fa fa-clock-o"></i> {{thread.modified | date:'short'}}</span>
+                    </div>
+                    <p>
+                        English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web
+                    </p>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h5>Tags:</h5>
+                            <button class="btn btn-primary btn-xs" type="button">Model</button>
+                            <button class="btn btn-white btn-xs" type="button">Publishing</button>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="small text-right">
+                                <h5>Stats:</h5>
+                                <div> <i class="fa fa-comments-o"> </i> 56 comments </div>
+                                <i class="fa fa-eye"> </i> 144 views
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+    </div>
+</div>
