@@ -1,23 +1,22 @@
 'use strict';
 
 angular.module('inspinia')
-  .controller('ForumCtrl', function ($scope, $http) {
+  .controller('ForumCtrl', function ($scope, ForumService) {
 
         $scope.threads = [];
+        $scope.categories = [];
+
         $scope.headerTitle = 'Forum';
-        $http.get('http://myfamily.dev/forum?with=owner,tags').
+
+        ForumService.getThreads().
             success(function(threads) {
-                $scope.threads = threads.data;console.log(threads);
-            }).
-            error(function(data){
-                console.log(data);
+                $scope.threads = threads.data;
             });
 
-        $http.get('http://myfamily.dev/forum/categories').
-            success(function(threads) {
-                $scope.categories = threads.data;console.log(threads);
-            }).
-            error(function(data){
-                console.log(data);
+        ForumService.getCategories().
+            success(function(categories) {
+                $scope.categories = categories.data;
             });
+
+        console.log(self);
     });
