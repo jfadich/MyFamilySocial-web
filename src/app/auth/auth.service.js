@@ -1,35 +1,4 @@
-;
-(function () {
-    function authInterceptor(API, auth) {
-        return {
-
-            request: function (config) {
-                var token = auth.getToken();
-                if (config.url.indexOf(API) === 0 && token) {
-                    // automatically attach Authorization header
-                    config.headers.Authorization = 'Bearer ' + token;
-                }
-
-                return config;
-            },
-
-            response: function (res) {
-
-                // If a token was sent back, save it
-                if (res.config.url.indexOf(API) === 0 && res.data.token) {
-                    auth.saveToken(res.data.token);
-                }
-
-                // If a token is invalid, attempt to refresh it
-                if (res.status === 401 && res.data.error && res.data.error === "invalid_token") {
-
-                    // TODO auto refresh
-                }
-
-                return res;
-            },
-        }
-    }
+;(function () {
 
     function authService($window) {
         var self = this;
@@ -53,6 +22,9 @@
         };
 
         self.parseJwt = function (token) {
+            if(token === undefined)
+                return false;
+
             var base64Url = token.split('.')[1];
             var base64 = base64Url.replace('-', '+').replace('_', '/');
             return JSON.parse($window.atob(base64));
@@ -63,11 +35,63 @@
         }
     }
 
+    function AuthIntercepter(API, auth, $injector, $q, $location) {
+        return {
+
+            request: function (config) {
+                if(config.url.indexOf(API) !== 0) {
+                    return config; // make sure this is an API request
+                }
+
+                var token = auth.getToken();
+
+                if (token) {
+                    config.headers.Authorization = 'Bearer ' + token; // automatically attach Authorization header
+                }
+                else {
+                    $location.path('/login');
+                }
+
+                if(auth.parseJwt(token).exp < (new Date().getTime() / 1000) && config.url !==  API + '/auth/refresh')
+                {
+                    var deferred = $q.defer();
+                    var http = $injector.get('$http');
+
+                    http.post(API + '/auth/refresh').then(
+                        function(response){
+                            http(response.config).then(
+                                function(response){
+                                    deferred.resolve(response);
+                                },function (response) {
+                                    deferred.reject();
+                                })
+                        },
+                        function(response){
+                            deferred.reject();
+                            $location.path('/login');
+                        })
+                }
+
+                return config;
+            },
+
+            response: function (res) {
+
+                // If a token was sent back, save it
+                if (res.config.url.indexOf(API) === 0 && res.data.token) {
+                    auth.saveToken(res.data.token);
+                }
+
+                return res;
+            }
+        }
+    }
+
     angular.module('inspinia')
-        .factory('authInterceptor', authInterceptor)
         .service('auth', authService)
         .constant('API', 'http://myfamily.dev')
         .config(function ($httpProvider) {
-            $httpProvider.interceptors.push('authInterceptor');
+            $httpProvider.interceptors.push(['API', 'auth', '$injector', '$q', '$location',AuthIntercepter ]);
         });
+
 })();

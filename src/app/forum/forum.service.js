@@ -1,7 +1,6 @@
+;(function () {
 
-angular.module('inspinia')
-
-    .service('ForumService', function($http, API){
+    function ForumService($http, API){
 
         this.getThreads = function()
         {
@@ -19,4 +18,10 @@ angular.module('inspinia')
                 });
         }
 
-    });
+    }
+
+    angular.module('inspinia')
+        .service('ForumService', ForumService);
+
+
+})();

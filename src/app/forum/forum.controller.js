@@ -1,8 +1,6 @@
-'use strict';
+;(function () {
 
-angular.module('inspinia')
-  .controller('ForumCtrl', function ($scope, ForumService) {
-
+    function ForumController($scope, ForumService) {
         $scope.threads = [];
         $scope.categories = [];
 
@@ -17,6 +15,11 @@ angular.module('inspinia')
             success(function(categories) {
                 $scope.categories = categories.data;
             });
+    }
 
-        console.log(self);
-    });
+    angular.module('inspinia')
+        .controller('ForumCtrl', ForumController);
+
+})();
+
+

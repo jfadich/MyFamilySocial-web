@@ -11,7 +11,7 @@
         };
 
         self.refresh = function() {
-            $http.post(API + '/auth/refresh', {})
+            return $http.post(API + '/auth/refresh', {})
         };
 
     }

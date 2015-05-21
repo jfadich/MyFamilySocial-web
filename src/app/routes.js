@@ -1,4 +1,5 @@
 ;(function(){
+
     function routes($stateProvider, $urlRouterProvider) {
         $stateProvider
 
@@ -17,6 +18,12 @@
                 templateUrl: "app/views/forum/categories.html",
                 controller: "ForumCtrl",
                 data: { pageTitle: 'Test' }
+            })
+            .state('login', {
+                url: "/login",
+                templateUrl: "app/views/auth/login.html",
+                controller: "LoginCtrl",
+                data: { pageTitle: 'Login' }
             });
 
         $urlRouterProvider.otherwise('main');
