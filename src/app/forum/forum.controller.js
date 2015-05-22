@@ -1,21 +1,20 @@
 ;(function () {
 
-    function ForumController($scope, ForumService, $location) {
+    function ForumController($scope, ForumService) {
         $scope.threads = [];
         $scope.categories = [];
 
         $scope.headerTitle = 'Forum';
         $scope.breadcrumbs = [{title: 'Forum', link: '#/discussions'}];
 
-        ForumService.getThreads().
-            success(function(threads) {
-                $scope.threads = threads.data;
-            });
+        ForumService.getThreads().then(function(threads){
+            $scope.threads = threads;
+        });
 
-        ForumService.getCategories().
-            success(function(categories) {
-                $scope.categories = categories.data;
-            });
+        ForumService.getCategories().then(function(categories){
+            $scope.categories = categories;
+        });
+
     }
 
     angular.module('inspinia')

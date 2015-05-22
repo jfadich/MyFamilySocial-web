@@ -3,21 +3,33 @@
     function routes($stateProvider, $urlRouterProvider) {
         $stateProvider
 
-            .state('master', {
+            .state('family', {
                 abstract: true,
                 url: "",
                 templateUrl: "components/common/content.html",
             })
-            .state('master.main', {
+            .state('family.main', {
                 url: "/main",
                 templateUrl: "app/views/main.html",
                 data: { pageTitle: 'Main' }
             })
-            .state('master.forum', {
+            .state('family.forum', {
                 url: "/discussions",
                 templateUrl: "app/views/forum/categories.html",
                 controller: "ForumCtrl",
-                data: { pageTitle: 'Forum' }
+                data: { pageTitle: 'Forum' },
+                resolve: {
+                    ForumService: "ForumService"
+                }
+            })
+            .state('family.forum.category', {
+                url: "/cat",
+                templateUrl: "app/views/forum/listThreads.html",
+                controller: "ForumCtrl",
+                data: { pageTitle: 'category' },
+                resolve: {
+                    ForumService: "ForumService"
+                }
             })
             .state('login', {
                 url: "/login",

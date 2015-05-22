@@ -5,16 +5,20 @@
         this.getThreads = function()
         {
             return $http.get(API + '/forum?with=owner,tags').
-                error(function(data){
-                    console.log(data);
+                then(function(response){
+                    return response.data.data;
+                },function(response){
+                    console.log(response.data);
                 });
         };
 
         this.getCategories = function()
         {
             return $http.get(API + '/forum/categories').
-                error(function(data){
-                    console.log(data);
+                then(function(response){
+                    return response.data.data;
+                }, function(response){
+                    console.log(response.data);
                 });
         }
 
