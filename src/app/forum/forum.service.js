@@ -8,7 +8,7 @@
                 then(function(response){
                     return response.data.data;
                 },function(response){
-                    console.log(response.data);
+                    console.log(response);
                 });
         };
 
@@ -18,7 +18,7 @@
                 then(function(response){
                     return response.data.data;
                 }, function(response){
-                    console.log(response.data);
+                    console.log(response);
                 });
         }
 

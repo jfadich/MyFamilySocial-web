@@ -8,7 +8,8 @@
         'ngSanitize',
         'ngResource',
         'ui.router',
-        'ui.bootstrap'
+        'ui.bootstrap',
+        'cgNotify'
     ])
 })();
 

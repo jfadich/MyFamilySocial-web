@@ -1,6 +1,6 @@
 ;(function () {
 
-    function authService($window, $q) {
+    function authService($window) {
         var self = this;
 
         self.saveToken = function (token) {
@@ -14,17 +14,17 @@
         self.isAuthenticated = function () {
             var token = self.getToken();
             if (token === null)
-                return $q.reject('You must be authenticated');
+                return false;
 
             var params = self.parseJwt(token);
 
             if (params === null)
-                return $q.reject('Invalid token');
+                return false;
 
             if(Math.round(new Date().getTime() / 1000) <= params.exp)
                 return true;
 
-            return $q.reject('You must be authenticated');
+            return false;
         };
 
         self.parseJwt = function (token) {
@@ -54,21 +54,20 @@
         }
     }
 
-    function AuthIntercepter(API, auth, $injector, $q, $location) {
+    function AuthIntercepter(API, auth, $injector, $q) {
         return {
 
             request: function (config) {
-                if(config.url.indexOf(API) !== 0 || config.url.indexOf(API + '/auth/login') !== 0) {
+                if(config.url.indexOf(API) !== 0 || config.url.indexOf(API + '/auth/login') === 0) {
                     return config; // make sure this is an API request
                 }
+                var $state =  $injector.get('$state');
 
                 var token = auth.getToken();
-                if(token === null)
-                    return $location.path('/login');
-
                 var params = auth.parseJwt(token);
-                if(token === null)
-                    return $location.path('/login');
+
+                if(params === null)
+                    return $state.go('login');
 
                 var expired = params.exp < (new Date().getTime() / 1000);
 
@@ -85,7 +84,7 @@
                         function(response){
                             token = response.data.token;
                             if(token === null)
-                                return $location.path('/login');
+                                return $state.go('login');
 
                             auth.saveToken(token);console.log('new token:' + token);
 
@@ -98,7 +97,7 @@
                         },
                         function(response){
                             deferred.reject();
-                            $location.path('/login');
+                            $state.go('login');
                         })
                 }
             },
@@ -106,7 +105,7 @@
             response: function (res) {
 
                 if(res.status == 401)
-                    $location.path('login');
+                    $state.go('login');
 
                 // If a token was sent back, save it
                 if (res.config.url.indexOf(API) === 0 && res.data.token) {
