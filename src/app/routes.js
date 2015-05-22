@@ -17,7 +17,7 @@
                 url: "/discussions",
                 templateUrl: "app/views/forum/categories.html",
                 controller: "ForumCtrl",
-                data: { pageTitle: 'Test' }
+                data: { pageTitle: 'Forum' }
             })
             .state('login', {
                 url: "/login",

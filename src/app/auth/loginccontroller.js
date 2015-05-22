@@ -2,13 +2,17 @@
 
     function LoginController($scope, user, $location) {
         $scope.user = {};
+        $scope.errors = [];
+
 
         $scope.submit = function()
         {
             user.login($scope.user.email, $scope.user.password).then(function(response){
                 $location.path('/main');
             }, function(response){
-                alert('nope');
+                if(response.status === 401)
+                    $scope.errors = [{message: 'Invalid credentials'}];
+                console.log(response);
             });
         }
 
