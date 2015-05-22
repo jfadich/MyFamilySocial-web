@@ -7,11 +7,15 @@
                 abstract: true,
                 url: "",
                 templateUrl: "components/common/content.html",
+                'auth' : function(auth){
+                    return auth.isAuthenticated();
+                }
             })
             .state('family.main', {
                 url: "/main",
                 templateUrl: "app/views/main.html",
-                data: { pageTitle: 'Main' }
+                data: { pageTitle: 'Main' },
+
             })
             .state('family.forum', {
                 url: "/discussions",

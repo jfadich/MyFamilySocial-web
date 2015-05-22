@@ -1,6 +1,6 @@
 ;(function () {
 
-    function authService($window) {
+    function authService($window, $q) {
         var self = this;
 
         self.saveToken = function (token) {
@@ -11,19 +11,25 @@
             return $window.localStorage['token'];
         };
 
-        self.isAuthed = function () {
+        self.isAuthenticated = function () {
             var token = self.getToken();
-            if (token) {
-                var params = self.parseJwt(token);
-                return Math.round(new Date().getTime() / 1000) <= params.exp;
-            } else {
-                return false;
-            }
+            if (token === null)
+                return $q.reject('You must be authenticated');
+
+            var params = self.parseJwt(token);
+
+            if (params === null)
+                return $q.reject('Invalid token');
+
+            if(Math.round(new Date().getTime() / 1000) <= params.exp)
+                return true;
+
+            return $q.reject('You must be authenticated');
         };
 
         self.parseJwt = function (token) {
             if(token === undefined)
-                return false;
+                return null;
 
             var base64Url = token.split('.')[1];
             var base64 = base64Url.replace('-', '+').replace('_', '/');
@@ -32,6 +38,19 @@
 
         self.logout = function () {
             $window.localStorage.removeItem('token');
+        };
+
+        self.validateToken = function() {
+            var token = self.getToken();
+            if (token === null)
+                return null;
+
+            var params = self.parseJwt(token);
+
+            if (params === null)
+                return null;
+
+            return params;
         }
     }
 
@@ -39,27 +58,38 @@
         return {
 
             request: function (config) {
-                if(config.url.indexOf(API) !== 0) {
+                if(config.url.indexOf(API) !== 0 || config.url.indexOf(API + '/auth/login') !== 0) {
                     return config; // make sure this is an API request
                 }
 
                 var token = auth.getToken();
+                if(token === null)
+                    return $location.path('/login');
 
-                if (token) {
+                var params = auth.parseJwt(token);
+                if(token === null)
+                    return $location.path('/login');
+
+                var expired = params.exp < (new Date().getTime() / 1000);
+
+                if (!expired || config.url == API + '/auth/refresh') {
                     config.headers.Authorization = 'Bearer ' + token; // automatically attach Authorization header
+                    return config;
                 }
-                else {
-                    $location.path('/login');
-                }
-
-                if(auth.parseJwt(token).exp < (new Date().getTime() / 1000) && config.url !==  API + '/auth/refresh')
+                else
                 {
                     var deferred = $q.defer();
                     var http = $injector.get('$http');
 
                     http.post(API + '/auth/refresh').then(
                         function(response){
-                            http(response.config).then(
+                            token = response.data.token;
+                            if(token === null)
+                                return $location.path('/login');
+
+                            auth.saveToken(token);console.log('new token:' + token);
+
+                            http(config.config).then(
                                 function(response){
                                     deferred.resolve(response);
                                 },function (response) {
@@ -71,11 +101,12 @@
                             $location.path('/login');
                         })
                 }
-
-                return config;
             },
 
             response: function (res) {
+
+                if(res.status == 401)
+                    $location.path('login');
 
                 // If a token was sent back, save it
                 if (res.config.url.indexOf(API) === 0 && res.data.token) {
