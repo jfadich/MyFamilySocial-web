@@ -33,7 +33,7 @@
                     </a>
 
                     <div class="media-body ">
-                        <small class="pull-right">2h ago</small>
+                        <small class="pull-right" am-time-ago="reply.created * 1000"></small>
                         <strong>{{ reply.owner.data.first_name }} {{ reply.owner.data.last_name }}</strong><br>
                         <small class="text-muted">{{ reply.created * 1000 | date : short }}</small>
                         <p>

@@ -5,10 +5,11 @@
         <div class="col-lg-4" ng-repeat="user in users" ng-class="{ clearfix: $index % 3 === 0}">
             <div class="contact-box">
                 <a>
-                    <div class="col-sm-4">
+                    <div class="col-sm-4" style="max-width: 110px;">
                         <div class="text-center">
                             <img alt="image" class="img-circle m-t-xs img-responsive" ng-src="{{ user.image }}" ng-if="user.image !== undefined">
-                            <img alt="image" class="img-circle m-t-xs img-responsive" src="assets/images/common/thumb-default-profile.jpg" ng-if="user.image === undefined">
+                            <img alt="image" class="img-circle m-t-xs img-responsive" src="assets/images/common/thumb-default-profile.jpg" ng-if="user.image === undefined"><br>
+                            {{ user.birthday }}
                         </div>
                     </div>
                     <div class="col-sm-8">
