@@ -4,6 +4,10 @@
             <li class="nav-header">
 
                 <div class="dropdown profile-element" dropdown>
+                    <span>
+                        <img alt="image" class="img-circle" src="assets/images/common/small-default-profile.jpg" ng-if="main.user.image === null || main.user.image === undefined" class="m-r-sm">
+                        <img alt="image" class="img-circle" ng-src="{{main.user.image}}" ng-if="main.user.image !== null && main.user.image !== undefined" class="m-r-sm">
+                    </span>
                     <a class="dropdown-toggle" dropdown-toggle href>
                             <span class="clear">
                                 <span class="block m-t-xs">
@@ -25,8 +29,8 @@
             <li ui-sref-active="active">
                 <a ui-sref="family.main"><i class="fa fa-laptop"></i> <span class="nav-label">Main page</span> </a>
             </li>
-            <li ui-sref-active="active">
-                <a ui-sref="family.forum"><i class="fa fa-comments"></i> <span class="nav-label">Discussions</span></a>
+            <li ng-class="{ active: $state.includes('family.forum') }">
+                <a ui-sref="family.forum.index"><i class="fa fa-comments"></i> <span class="nav-label">Discussions</span></a>
             </li>
         </ul>
 

@@ -1,20 +1,24 @@
 <div ng-include="'/components/common/heading.html'"></div>
 <div class="wrapper wrapper-content">
-    <div class="ibox">
+    <div class="ibox animated fadeInUp" ng-show="thread">
         <div class="ibox-content">
 
-            <div class="m-b-md">
-                <a href="" class="pull-left">
-                    <img alt="image" src="assets/images/common/small-default-profile.jpg" ng-if="thread.owner.data.image === null" class="m-r-sm">
-                    <img alt="image" ng-src="{{ thread.owner.data.image }}" ng-if="thread.owner.data.image !== null" class="m-r-sm">
-                </a>
-                <a href="" class="btn btn-white btn-xs pull-right">Edit project</a>
-                <h2>{{ thread.title }}</h2>
-                <small class="text-muted">Posted in {{ thread.category.data.name }} by {{ thread.owner.data.first_name }} {{ thread.created * 1000 | date : short }}</small>
-            </div>
             <div>
-                <p>{{ thread.body }}</p>
+                <a href="" class="pull-left">
+                    <img alt="image" src="assets/images/common/small-default-profile.jpg" ng-if="thread.owner.data.image === null" class="m-r-sm ng-cloak">
+                    <img alt="image" ng-src="{{ thread.owner.data.image }}" ng-if="thread.owner.data.image !== null" class="m-r-sm ng-cloak">
+                </a>
+
+                <div class="media-body ">
+                    <a href="" class="btn btn-white btn-xs pull-right"><i class="glyphicon glyphicon-pencil"></i> &nbsp;Edit thread</a>
+                    <strong>{{ thread.owner.data.first_name }} {{ thread.owner.data.last_name }}</strong><br>
+                    <small class="text-muted">{{ thread.created * 1000 | date : short }}</small>
+                    <p>
+                        {{ thread.body }}
+                    </p>
+                </div>
             </div>
+
 
         </div>
     </div>
@@ -22,7 +26,7 @@
     <div class="ibox">
         <div class="ibox-content">
             <div class="feed-activity-list">
-                <div class="feed-element" ng-repeat="reply in thread.replies.data">
+                <div class="feed-element animated fadeInUp" ng-repeat="reply in thread.replies.data">
                     <a href="" class="pull-left">
                         <img alt="image" src="assets/images/common/small-default-profile.jpg" ng-if="reply.owner.data.image === null">
                         <img alt="image" ng-src="{{ reply.owner.data.image }}" ng-if="reply.owner.data.image !== null">

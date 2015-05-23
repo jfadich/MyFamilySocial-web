@@ -17,20 +17,25 @@
                 }
             })
             .state('family.forum', {
-                url: "/discussions",
+                url: '/discussions',
+                abstract: true,
+                template: '<ui-view/>'
+            } )
+            .state('family.forum.index', {
+                url: "/categories",
                 templateUrl: "app/views/forum/categories.html",
                 controller: "CategoriesCtrl",
                 data: { pageTitle: 'Forum',
                         requireAuth: true
                 },
             })
-            .state('family.category', {
-                url: "/discussions/:category_slug",
+            .state('family.forum.category', {
+                url: "/:category_slug",
                 templateUrl: "app/views/forum/listThreads.html",
                 controller: "ForumCtrl",
                 data: { pageTitle: 'category' },
             })
-            .state('family.thread', {
+            .state('family.forum.thread', {
                 url: "/topics/:thread_slug",
                 templateUrl: "app/views/forum/showThread.html",
                 controller: "ThreadCtrl",
@@ -46,7 +51,7 @@
                 url: "/logout",
                 controller: "LoginCtrl"
             });
-
+        $urlRouterProvider.when('/discussions', '/discussions/categories');
         $urlRouterProvider.otherwise('main');
     }
     angular.module('inspinia')
