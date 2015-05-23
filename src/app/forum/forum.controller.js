@@ -4,8 +4,8 @@
         $scope.category = null;
         $scope.threads = [];
 
-        ForumService.with('threads').getCategory($state.params.category_slug).then(function(category){
-            $scope.category = category;
+        ForumService.with('threads.owner,threads.tags').getCategory($state.params.category_slug).then(function(category){
+            $scope.category = category;console.log(category);
             $scope.threads = category.threads.data;
             $scope.headerTitle = $scope.category.name;
             $scope.breadcrumbs = [{title: 'Forum', link: '#/discussions'},

@@ -2,32 +2,27 @@
 <div class="wrapper wrapper-content">
     <div class="row">
 
-        <div class="col-lg-4 animated fadeInUp" ng-repeat="thread in threads">
+        <div class="col-lg-12 animated fadeInUp" ng-repeat="thread in threads">
             <div class="ibox">
                 <div class="ibox-content">
-                    <a ui-sref="family.forum.thread({thread_slug: thread.slug})" class="btn-link">
-                        <h2>
-                            {{ thread.title }}
-                        </h2>
+                    <a href="" class="pull-left">
+                        <img alt="image" src="assets/images/common/small-default-profile.jpg" ng-if="thread.owner.data.image === null" class="m-r-sm ng-cloak">
+                        <img alt="image" ng-src="{{ thread.owner.data.image }}" ng-if="thread.owner.data.image !== null" class="m-r-sm ng-cloak">
                     </a>
-                    <div class="small m-b-xs">
-                        <strong>{{ thread.owner.data.first_name }} {{ thread.owner.data.last_name }}</strong> <span class="text-muted"><i class="fa fa-clock-o"></i> {{thread.modified | date:'short'}}</span>
-                    </div>
-                    <p>
-                        English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web
-                    </p>
-                    <div class="row">
+                    <div class="media-body ">
+                        <a ui-sref="family.forum.thread({thread_slug: thread.slug})" class="btn-link">
+                            <h2>
+                                {{ thread.title }}
+                            </h2>
+                        </a>
+                        <div class="m-b-xs">
+                            <strong>{{ thread.owner.data.first_name }} {{ thread.owner.data.last_name }}</strong> |
+                            <i class="fa fa-clock-o"></i> <span am-time-ago="thread.modified" am-preprocess="unix"></span> |
+                            <i class="fa fa-comments-o"></i>  {{ thread.reply_count }} comments
 
-                        <div class="col-md-6">
-                            <div class="small text-left">
-                                <h5>Stats:</h5>
-                                <div> <i class="fa fa-comments-o"> </i>  {{ thread.reply_count }} comments </div>
-                            </div>
-                        </div>
-
-                        <div class="col-md-6 text-right" ng-if="thread.tags.data.length > 0">
-                            <h5>Tags:</h5>
-                            <span ng-repeat="tag in thread.tags.data"> <button class="btn btn-white btn-xs">{{ tag.name }}</button> </span>
+                            <span class="col-md-6 text-right pull-right" ng-if="thread.tags.data.length > 0">
+                                <span ng-repeat="tag in thread.tags.data"> <button class="btn btn-white btn-xs">{{ tag.name }}</button> </span>
+                            </span>
                         </div>
                     </div>
                 </div>
