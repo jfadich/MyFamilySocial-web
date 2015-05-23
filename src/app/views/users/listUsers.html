@@ -1,0 +1,33 @@
+<div ng-include="'/components/common/heading.html'"></div>
+<div class="wrapper wrapper-content animated fadeInUp">
+    <div class="row">
+
+        <div class="col-lg-4" ng-repeat="user in users" ng-class="{ clearfix: $index % 3 === 0}">
+            <div class="contact-box">
+                <a>
+                    <div class="col-sm-4">
+                        <div class="text-center">
+                            <img alt="image" class="img-circle m-t-xs img-responsive" ng-src="{{ user.image }}" ng-if="user.image !== undefined">
+                            <img alt="image" class="img-circle m-t-xs img-responsive" src="assets/images/common/thumb-default-profile.jpg" ng-if="user.image === undefined">
+                        </div>
+                    </div>
+                    <div class="col-sm-8">
+                        <h3><strong>{{ user.first_name }} {{ user.last_name }}</strong></h3>
+
+                        <p>
+                        <address style="height: 100px;">
+                             <strong ng-if="user.email">{{ user.email }}</strong><br>
+                            <i class="fa fa-map-marker"></i> &nbsp;{{ user.address.street_address }}<br>
+                            {{ user.address.city }}, {{ user.address.state }} {{ user.address.zip-code }}<br>
+                            <span ng-if="user.phone_one"><abbr title="Phone">P:</abbr> {{ user.phone_one }}</span><br>
+                            <span ng-if="user.phone_two"><abbr title="Phone">P:</abbr> {{ user.phone_two }}</span>
+                        </address>
+                        </p>
+                    </div>
+                    <div class="clearfix"></div>
+                </a>
+            </div>
+        </div>
+
+    </div>
+</div>

@@ -17,14 +17,23 @@
         };
 
         self.getCurrent = function() {
-            return self.userPromise('~').
-                then(function(response){
-                    return response.data.data;
-                });
+            return self.userPromise('~');
+        };
+
+        self.getUsers = function() {
+            return self.userPromise();
         };
 
         self.userPromise = function(user) {
-            return $http.get(API + '/users/' + user);
+            if(user === undefined)
+                user = '';
+
+            return $http.get(API + '/users/' + user).
+                then(function(response){
+                    return response.data.data;
+                }, function(response){
+                    console.log(response);
+                });
         }
 
     }

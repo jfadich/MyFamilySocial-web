@@ -41,6 +41,19 @@
                 controller: "ThreadCtrl",
                 data: { pageTitle: 'category' },
             })
+            .state('family.members', {
+                url: '/members',
+                abstract: true,
+                template: '<ui-view/>'
+            } )
+            .state('family.members.index', {
+                url: "/index",
+                templateUrl: "app/views/users/listUsers.html",
+                controller: "UsersCtrl",
+                data: { pageTitle: 'Members',
+                    requireAuth: true
+                },
+            })
             .state('login', {
                 url: "/login",
                 templateUrl: "app/views/auth/login.html",
@@ -52,6 +65,7 @@
                 controller: "LoginCtrl"
             });
         $urlRouterProvider.when('/discussions', '/discussions/categories');
+        $urlRouterProvider.when('/members', '/members/index');
         $urlRouterProvider.otherwise('main');
     }
     angular.module('inspinia')
