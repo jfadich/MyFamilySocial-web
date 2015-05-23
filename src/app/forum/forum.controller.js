@@ -4,7 +4,7 @@
         $scope.category = null;
         $scope.threads = [];
 
-        ForumService.getCategory($state.params.category_slug).then(function(category){
+        ForumService.with('threads').getCategory($state.params.category_slug).then(function(category){
             $scope.category = category;
             $scope.threads = category.threads.data;
             $scope.headerTitle = $scope.category.name;

@@ -66,12 +66,13 @@
                 var token = auth.getToken();
                 var params = auth.parseJwt(token);
 
-                if(params === null)
+                if(params === null){alert('bad params');
                     return $state.go('login');
+                }
 
                 var expired = params.exp < (new Date().getTime() / 1000);
 
-                if (!expired || config.url == API + '/auth/refresh') {
+                if (!expired || config.url === API + '/auth/refresh') {
                     config.headers.Authorization = 'Bearer ' + token; // automatically attach Authorization header
                     return config;
                 }
@@ -83,8 +84,10 @@
                     http.post(API + '/auth/refresh').then(
                         function(response){
                             token = response.data.token;
-                            if(token === null)
+                            if(token === null){
+                                alert('no token received');
                                 return $state.go('login');
+                            }
 
                             auth.saveToken(token);console.log('new token:' + token);
 
@@ -97,6 +100,7 @@
                         },
                         function(response){
                             deferred.reject();
+                            alert('bad request to auth/refresh');
                             $state.go('login');
                         })
                 }
@@ -104,8 +108,10 @@
 
             response: function (res) {
 
-                if(res.status == 401)
+                if(res.status == 401){
+                    alert('401 response');
                     $state.go('login');
+                }
 
                 // If a token was sent back, save it
                 if (res.config.url.indexOf(API) === 0 && res.data.token) {
@@ -121,7 +127,7 @@
         .service('auth', authService)
         .constant('API', 'http://myfamily.dev')
         .config(function ($httpProvider) {
-            $httpProvider.interceptors.push(['API', 'auth', '$injector', '$q', '$location',AuthInterceptor ]);
+            $httpProvider.interceptors.push(['API', 'auth', '$injector', '$q',AuthInterceptor ]);
         });
 
 })();

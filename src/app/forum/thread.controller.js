@@ -6,7 +6,7 @@
         $scope.headerTitle = 'Forum';
         $scope.breadcrumbs = [{title: 'Forum', link: '#/discussions'}];
 
-        ForumService.getThread($state.params.thread_slug).then(function(thread){
+        ForumService.with('replies,replies.owner,category,owner').getThread($state.params.thread_slug).then(function(thread){
             $scope.thread = thread;
             $scope.headerTitle = $scope.thread.title;
             $scope.breadcrumbs = [{title: 'Forum', link: '#/discussions'},

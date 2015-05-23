@@ -1,46 +1,58 @@
 ;(function () {
 
     function ForumService($http, API){
+        var self = this;
+        self.includes = '';
 
-        this.getThreads = function()
+        self.getThreads = function()
         {
-            return $http.get(API + '/forum?with=owner,tags').
-                then(function(response){
-                    return response.data.data;
-                },function(response){
-                    console.log(response);
-                });
+            return self.forumPromise();
         };
 
-        this.getThread = function(slug)
+        self.getThread = function(slug)
         {
-            return $http.get(API + '/forum/topic/' + slug + '?with=replies,replies.owner,category,owner').
+            return self.forumPromise('topic/' + slug);
+        };
+
+        self.getCategories = function()
+        {
+            return self.forumPromise('categories');
+        };
+
+        self.getCategory = function(slug)
+        {
+            return self.forumPromise('categories/' + slug);
+        };
+
+        self.forumPromise = function(endpoint) {
+            if(endpoint === undefined)
+                endpoint = '';
+
+            return $http.get(self.url(endpoint)).
                 then(function(response){
+                    self.includes = '';
                     return response.data.data;
                 }, function(response){
                     console.log(response);
                 });
         };
 
-        this.getCategories = function()
-        {
-            return $http.get(API + '/forum/categories').
-                then(function(response){
-                    return response.data.data;
-                }, function(response){
-                    console.log(response);
-                });
+        self.with = function(includes) {
+            self.includes = includes;
+
+            return self;
         };
 
-        this.getCategory = function(slug)
-        {
-            return $http.get(API + '/forum/categories/' + slug + '?with=threads').
-                then(function(response){
-                    return response.data.data;
-                }, function(response){
-                    console.log(response);
-                });
-        }
+        self.url = function(endpoint) {
+            var path = API + '/forum/' + endpoint;
+
+            if(self.includes != '') {
+                path = path + '?with=' + self.includes;
+            }
+
+            return path;
+        };
+
     }
 
     angular.module('inspinia')
