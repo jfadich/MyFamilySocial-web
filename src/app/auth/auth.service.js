@@ -54,7 +54,7 @@
         }
     }
 
-    function AuthIntercepter(API, auth, $injector, $q) {
+    function AuthInterceptor(API, auth, $injector, $q) {
         return {
 
             request: function (config) {
@@ -79,7 +79,7 @@
                 {
                     var deferred = $q.defer();
                     var http = $injector.get('$http');
-
+                    console.log('attempted refresh');
                     http.post(API + '/auth/refresh').then(
                         function(response){
                             token = response.data.token;
@@ -121,7 +121,7 @@
         .service('auth', authService)
         .constant('API', 'http://myfamily.dev')
         .config(function ($httpProvider) {
-            $httpProvider.interceptors.push(['API', 'auth', '$injector', '$q', '$location',AuthIntercepter ]);
+            $httpProvider.interceptors.push(['API', 'auth', '$injector', '$q', '$location',AuthInterceptor ]);
         });
 
 })();

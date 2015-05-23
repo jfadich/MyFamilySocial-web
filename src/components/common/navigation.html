@@ -7,17 +7,17 @@
                     <a class="dropdown-toggle" dropdown-toggle href>
                             <span class="clear">
                                 <span class="block m-t-xs">
-                                    <strong class="font-bold">{{user.first_name}} {{user.last_name}}<b class="caret"></b></strong>
+                                    <strong class="font-bold">{{main.user.first_name}} {{main.user.last_name}}<b class="caret"></b></strong>
                              </span>
-                                <span class="text-muted text-xs block">{{ user.email }}</span>
+                                <span class="text-muted text-xs block">{{ main.user.email }}</span>
                             </span>
                     </a>
                     <ul class="dropdown-menu animated fadeInDown m-t-xs">
-                        <li><a href="">Logout</a></li>
+                        <li><a ui-sref="logout">Logout</a></li>
                     </ul>
                 </div>
                 <div class="logo-element">
-                    {{ user.first_name[0] }}{{ user.last_name[0] }}+
+                    {{ main.user.first_name[0] }}{{ main.user.last_name[0] }}+
                 </div>
 
             </li>

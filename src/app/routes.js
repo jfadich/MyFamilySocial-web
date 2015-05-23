@@ -19,13 +19,13 @@
             .state('family.forum', {
                 url: "/discussions",
                 templateUrl: "app/views/forum/categories.html",
-                controller: "ForumCtrl",
+                controller: "CategoriesCtrl",
                 data: { pageTitle: 'Forum',
                         requireAuth: true
                 },
             })
-            .state('family.forum.category', {
-                url: "/cat",
+            .state('family.category', {
+                url: "/discussions/:category_slug",
                 templateUrl: "app/views/forum/listThreads.html",
                 controller: "ForumCtrl",
                 data: { pageTitle: 'category' },
@@ -35,6 +35,10 @@
                 templateUrl: "app/views/auth/login.html",
                 controller: "LoginCtrl",
                 data: { pageTitle: 'Login' }
+            })
+            .state('logout', {
+                url: "/logout",
+                controller: "LoginCtrl"
             });
 
         $urlRouterProvider.otherwise('main');

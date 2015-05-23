@@ -20,8 +20,17 @@
                 }, function(response){
                     console.log(response);
                 });
-        }
+        };
 
+        this.getCategory = function(slug)
+        {
+            return $http.get(API + '/forum/categories/' + slug + '?with=threads').
+                then(function(response){
+                    return response.data.data;
+                }, function(response){
+                    console.log(response);
+                });
+        }
     }
 
     angular.module('inspinia')
