@@ -30,6 +30,12 @@
                 controller: "ForumCtrl",
                 data: { pageTitle: 'category' },
             })
+            .state('family.thread', {
+                url: "/topics/:thread_slug",
+                templateUrl: "app/views/forum/showThread.html",
+                controller: "ThreadCtrl",
+                data: { pageTitle: 'category' },
+            })
             .state('login', {
                 url: "/login",
                 templateUrl: "app/views/auth/login.html",

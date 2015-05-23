@@ -12,6 +12,16 @@
                 });
         };
 
+        this.getThread = function(slug)
+        {
+            return $http.get(API + '/forum/topic/' + slug + '?with=replies,replies.owner,category,owner').
+                then(function(response){
+                    return response.data.data;
+                }, function(response){
+                    console.log(response);
+                });
+        };
+
         this.getCategories = function()
         {
             return $http.get(API + '/forum/categories').
