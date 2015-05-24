@@ -11,7 +11,11 @@
                 </a>
 
                 <div class="media-body ">
-                    <a href="" class="btn btn-white btn-xs pull-right"><i class="glyphicon glyphicon-pencil"></i> &nbsp;Edit thread</a>
+                    <span class=" pull-right">
+                        <button class="btn btn-white btn-xs" ng-if="thread.permissions.edit"> <i class="fa fa-pencil"></i> </button>
+                        <button class="btn btn-white btn-xs" ng-if="thread.permissions.delete"> <i class="glyphicon glyphicon-remove"></i> </button>
+                    </span>
+
                     <strong>{{ thread.owner.data.first_name }} {{ thread.owner.data.last_name }}</strong><br>
                     <small class="text-muted">{{ thread.created * 1000 | date : short }}</small>
                     <p>
@@ -41,7 +45,7 @@
 
     <div class="ibox">
         <div class="ibox-content">
-            <form class="ng-pristine ng-valid">
+            <form class="ng-pristine ng-valid" ng-if="thread.permissions.reply">
                 <div class="form-group">
                     <textarea type="text" placeholder="Add reply" name="comment" ng-model="comment" class="form-control">
                     </textarea>
@@ -51,7 +55,6 @@
                             Add Reply
                         </button>
                     </div>
-
                 <br>
             </form>
             <div class="feed-activity-list">
@@ -61,8 +64,12 @@
                         <img alt="image" ng-src="{{ reply.owner.data.image.small }}" ng-if="reply.owner.data.image.small !== undefined">
                     </a>
 
-                    <div class="media-body ">
-                        <small class="pull-right" am-time-ago="reply.created * 1000"></small>
+                    <div class="media-body text-muted">
+                        <span class=" pull-right">
+                            <button class="btn btn-white btn-xs" ng-if="reply.permissions.edit"> <i class="fa fa-pencil"></i> </button>
+                            <button class="btn btn-white btn-xs" ng-if="reply.permissions.delete"> <i class="glyphicon glyphicon-remove"></i> </button>
+                        </span>
+
                         <strong>{{ reply.owner.data.first_name }} {{ reply.owner.data.last_name }}</strong><br>
                         <small class="text-muted">{{ reply.created * 1000 | date : short }}</small>
                         <p>

@@ -9,7 +9,7 @@ angular.module('inspinia')
         });
 
         self.getUser = function() {
-            user.getCurrent().then(function(user){
+            user.with('role').getCurrent().then(function(user){
                 self.user = user;
             });
         };
