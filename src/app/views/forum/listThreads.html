@@ -6,8 +6,8 @@
                 <div class="feed-element animated fadeInUp" ng-repeat="thread in threads.data">
 
                     <a href="" class="pull-left">
-                        <img alt="image" src="assets/images/common/small-default-profile.jpg" ng-if="thread.owner.data.image === null" class="m-r-sm ng-cloak">
-                        <img alt="image" ng-src="{{ thread.owner.data.image }}" ng-if="thread.owner.data.image !== null" class="m-r-sm ng-cloak">
+                        <img alt="image" src="assets/images/common/small-default-profile.jpg" ng-if="thread.owner.data.image.small === undefined" class="m-r-sm ng-cloak">
+                        <img alt="image" ng-src="{{ thread.owner.data.image.small }}" ng-if="thread.owner.data.image.small !== undefined" class="m-r-sm ng-cloak">
                     </a>
                     <div class="media-body ">
                         <a ui-sref="family.forum.thread({thread_slug: thread.slug})" class="btn-link">
@@ -32,7 +32,7 @@
                             class="btn btn-block btn-outline btn-default"
                             ng-click="more()"
                             ng-if="threads.data.length < threads.meta.pagination.total">
-                        More topics
+                        <i class="fa fa-arrow-down"></i> More topics
                     </button>
                 </p>
             </div>

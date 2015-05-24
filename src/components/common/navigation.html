@@ -5,8 +5,8 @@
 
                 <div class="dropdown profile-element" dropdown>
                     <span>
-                        <img alt="image" class="img-circle" src="assets/images/common/small-default-profile.jpg" ng-if="main.user.image === null || main.user.image === undefined" class="m-r-sm">
-                        <img alt="image" class="img-circle" ng-src="{{main.user.image}}" ng-if="main.user.image !== null && main.user.image !== undefined" class="m-r-sm">
+                        <img alt="image" class="img-circle" src="assets/images/common/small-default-profile.jpg" ng-if="main.user.image.small === undefined" class="m-r-sm">
+                        <img alt="image" class="img-circle" ng-src="{{main.user.image.small}}" ng-if="main.user.image.small !== undefined" class="m-r-sm">
                     </span>
                     <a class="dropdown-toggle" dropdown-toggle href>
                             <span class="clear">

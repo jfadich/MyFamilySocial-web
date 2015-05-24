@@ -21,6 +21,10 @@
             return self.userPromise('~');
         };
 
+        self.getUser = function(user) {
+            return self.userPromise(user);
+        };
+
         self.getUsers = function() {
             return self.userPromise();
         };

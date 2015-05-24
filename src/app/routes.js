@@ -54,6 +54,14 @@
                     requireAuth: true
                 },
             })
+            .state('family.members.profile', {
+                url: "/:user",
+                templateUrl: "app/views/users/showProfile.html",
+                controller: "ProfileCtrl",
+                data: { pageTitle: 'Members',
+                    requireAuth: true
+                },
+            })
             .state('login', {
                 url: "/login",
                 templateUrl: "app/views/auth/login.html",
