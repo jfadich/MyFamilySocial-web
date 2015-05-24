@@ -5,8 +5,10 @@
 
                 <div class="dropdown profile-element" dropdown>
                     <span>
-                        <img alt="image" class="img-circle" src="assets/images/common/small-default-profile.jpg" ng-if="main.user.image.small === undefined" class="m-r-sm">
-                        <img alt="image" class="img-circle" ng-src="{{main.user.image.small}}" ng-if="main.user.image.small !== undefined" class="m-r-sm">
+                        <a ui-sref="family.members.profile({user: '~'})">
+                            <img alt="image" class="img-circle" src="assets/images/common/small-default-profile.jpg" ng-if="main.user.image.small === undefined" class="m-r-sm">
+                            <img alt="image" class="img-circle" ng-src="{{main.user.image.small}}" ng-if="main.user.image.small !== undefined" class="m-r-sm">
+                        </a>
                     </span>
                     <a class="dropdown-toggle" dropdown-toggle href>
                             <span class="clear">

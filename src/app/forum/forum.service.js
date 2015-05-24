@@ -25,6 +25,10 @@
             return self.getPromise('categories/' + slug);
         };
 
+        self.addReply = function(thread, comment) {
+            return self.postPromise('topic/' + thread, { comment: comment});
+        };
+
         self.getPromise = function(endpoint) {
             if(endpoint === undefined)
                 endpoint = '';
@@ -42,12 +46,7 @@
             if(endpoint === undefined)
                 endpoint = '';
 
-            return $http.post(self.url(endpoint), data).
-                then(function(response){
-                    return response.data;
-                }, function(response){
-                    console.log(response);
-                });
+            return $http.post(API + '/forum/' + endpoint, data)
         };
 
         self.with = function(includes) {
