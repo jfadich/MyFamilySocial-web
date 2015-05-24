@@ -1,10 +1,10 @@
 <div ng-include="'/components/common/heading.html'"></div>
 <div class="wrapper wrapper-content">
     <div class="row">
+        <div class="ibox">
+            <div class="ibox-content feed-activity-list">
+                <div class="feed-element animated fadeInUp" ng-repeat="thread in threads.data">
 
-        <div class="col-lg-12 animated fadeInUp" ng-repeat="thread in threads">
-            <div class="ibox">
-                <div class="ibox-content">
                     <a href="" class="pull-left">
                         <img alt="image" src="assets/images/common/small-default-profile.jpg" ng-if="thread.owner.data.image === null" class="m-r-sm ng-cloak">
                         <img alt="image" ng-src="{{ thread.owner.data.image }}" ng-if="thread.owner.data.image !== null" class="m-r-sm ng-cloak">
@@ -26,10 +26,18 @@
                         </div>
                     </div>
                 </div>
+                <br>
+                <p>
+                    <button type="button"
+                            class="btn btn-block btn-outline btn-default"
+                            ng-click="more()"
+                            ng-if="threads.data.length < threads.meta.pagination.total">
+                        More topics
+                    </button>
+                </p>
             </div>
+
         </div>
-
-
 
 
     </div>

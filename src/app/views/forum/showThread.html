@@ -41,8 +41,16 @@
                         </p>
                     </div>
                 </div>
-
             </div>
+            <br>
+            <p>
+                <button type="button"
+                        class="btn btn-block btn-outline btn-default"
+                        ng-click="more()"
+                        ng-if="thread.replies.data.length < thread.replies.meta.pagination.total">
+                    More replies
+                </button>
+            </p>
         </div>
     </div>
 </div>

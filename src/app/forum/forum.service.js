@@ -3,35 +3,48 @@
     function ForumService($http, API){
         var self = this;
         self.includes = '';
+        self.pagination;
 
         self.getThreads = function()
         {
-            return self.forumPromise();
+            return self.getPromise();
         };
 
         self.getThread = function(slug)
         {
-            return self.forumPromise('topic/' + slug);
+            return self.getPromise('topic/' + slug);
         };
 
         self.getCategories = function()
         {
-            return self.forumPromise('categories');
+            return self.getPromise('categories');
         };
 
         self.getCategory = function(slug)
         {
-            return self.forumPromise('categories/' + slug);
+            return self.getPromise('categories/' + slug);
         };
 
-        self.forumPromise = function(endpoint) {
+        self.getPromise = function(endpoint) {
             if(endpoint === undefined)
                 endpoint = '';
 
             return $http.get(self.url(endpoint)).
                 then(function(response){
-                    self.includes = '';
-                    return response.data.data;
+                    self.pagination = get_recursive(response.data, 'pagination');
+                    return response.data;
+                }, function(response){
+                    console.log(response);
+                });
+        };
+
+        self.postPromise = function(endpoint, data) {
+            if(endpoint === undefined)
+                endpoint = '';
+
+            return $http.post(self.url(endpoint), data).
+                then(function(response){
+                    return response.data;
                 }, function(response){
                     console.log(response);
                 });
@@ -43,11 +56,24 @@
             return self;
         };
 
+        self.next = function() {
+            if(self.pagination === null || self.pagination.links.next === undefined)
+                return null;
+
+            return self.getPromise(self.pagination.links.next);
+        };
+
         self.url = function(endpoint) {
-            var path = API + '/forum/' + endpoint;
+            var path;
+
+            if(endpoint.indexOf(API) === 0)
+                path = endpoint;
+            else
+                path = API + '/forum/' + endpoint;
 
             if(self.includes != '') {
-                path = path + '?with=' + self.includes;
+                path += path.indexOf('?') !== -1 ? '&' : '?';
+                path += 'with=' + self.includes;
             }
 
             return path;

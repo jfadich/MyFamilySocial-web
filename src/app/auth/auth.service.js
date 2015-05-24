@@ -66,9 +66,9 @@
                 var token = auth.getToken();
                 var params = auth.parseJwt(token);
 
-                if(params === null){alert('bad params');
+                if(params === null)
                     return $state.go('login');
-                }
+
 
                 var expired = params.exp < (new Date().getTime() / 1000);
 
@@ -80,12 +80,11 @@
                 {
                     var deferred = $q.defer();
                     var http = $injector.get('$http');
-                    console.log('attempted refresh');
+
                     http.post(API + '/auth/refresh').then(
                         function(response){
                             token = response.data.token;
                             if(token === null){
-                                alert('no token received');
                                 return $state.go('login');
                             }
 
@@ -100,7 +99,6 @@
                         },
                         function(response){
                             deferred.reject();
-                            alert('bad request to auth/refresh');
                             $state.go('login');
                         })
                 }
@@ -108,10 +106,8 @@
 
             response: function (res) {
 
-                if(res.status == 401){
-                    alert('401 response');
+                if(res.status == 401)
                     $state.go('login');
-                }
 
                 // If a token was sent back, save it
                 if (res.config.url.indexOf(API) === 0 && res.data.token) {
