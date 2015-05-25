@@ -1,6 +1,6 @@
 ;(function () {
 
-    function ThreadController($scope, ForumService, $state, notify) {
+    function ThreadController($scope, ForumService, $state, toastr) {
         $scope.thread = null;
         $scope.comment = null;
 
@@ -23,10 +23,7 @@
                 $scope.sort();
                 $scope.thread.replies.data.push(response.data.data);
                 $scope.comment = '';
-                notify({
-                    message: 'Reply added Successfully',
-                    classes: 'alert-success'
-                });
+                toastr.success('Reply added Successfully', 'Success');
             }, function(response){
                 var message;
 
@@ -41,10 +38,7 @@
                     default: message = 'An error occurred';
                         break;
                 }
-                notify({
-                    message: message,
-                    classes: 'alert-danger'
-                });
+                toastr.error(message, 'Error');
             })
         };
 

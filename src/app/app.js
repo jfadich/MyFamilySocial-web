@@ -9,8 +9,8 @@
         'ngResource',
         'ui.router',
         'ui.bootstrap',
-        'cgNotify',
-        'angularMoment'
+        'angularMoment',
+        'toastr'
     ])
 })();
 

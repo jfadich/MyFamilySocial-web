@@ -70,7 +70,8 @@
             })
             .state('logout', {
                 url: "/logout",
-                controller: "LoginCtrl"
+                controller: "LoginCtrl",
+                data: {}
             });
         $urlRouterProvider.when('/discussions', '/discussions/categories');
         $urlRouterProvider.when('/members', '/members/index');
@@ -78,6 +79,14 @@
     }
     angular.module('inspinia')
         .config(routes)
+        .config(function(toastrConfig) {
+            angular.extend(toastrConfig, {
+
+                progressBar: true,
+                closeButton: true,
+                tapToDismiss: true
+            });
+        })
         .run(function($rootScope, $state, auth) {
             $rootScope.$state = $state;
             $rootScope.$on('$stateChangeStart',

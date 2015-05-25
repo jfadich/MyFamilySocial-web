@@ -1,12 +1,8 @@
 ;(function () {
 
 angular.module('inspinia')
-  .controller('MainCtrl', function ($scope, user, auth, notify) {
+  .controller('MainCtrl', function ($scope, user, auth) {
         var self = this;
-        notify.config({
-            templateUrl: 'components/common/notify.html',
-            position: 'right'
-        });
 
         self.getUser = function() {
             user.with('role').getCurrent().then(function(user){

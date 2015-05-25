@@ -1,16 +1,16 @@
 ;(function () {
 
-    function LoginController($scope, user, $location, auth,$state, notify) {
+    function LoginController($scope, user, $state, auth,$state, toastr) {
         $scope.credentials = {};
         $scope.errors = [];
 
         $scope.submit = function()
         {
             user.login($scope.credentials.email, $scope.credentials.password).then(function(response){
-                $location.path('/main');
+                $state.go('family.main');
             }, function(response){
                 if(response.status === 401){
-                    $scope.errors = [{message: 'Invalid credentials'}];
+                    toastr.error('Invalid credentials');
                 }
                 console.log(response);
             });
@@ -18,12 +18,8 @@
 
         if($state.current.url == '/logout') {
             auth.logout();
-            notify({
-                message: 'You are now logged out',
-                position: 'center',
-                classes: 'alert-success'
-            });
-            $location.path('/login');
+            toastr.success('You are now logged out');
+            $state.go('login');
         }
     }
 
