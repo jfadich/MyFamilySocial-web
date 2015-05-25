@@ -1,129 +1,75 @@
 ;(function () {
 
-    function authService($window) {
+    function authService($http, API_URL, $rootScope, token) {
         var self = this;
 
-        self.saveToken = function (token) {
-            $window.localStorage['token'] = token;
+        self.login = function (email, password) {
+            return $http.post(API_URL + '/auth/login', {
+                email: email,
+                password: password
+            }).then(function (response) {
+                $rootScope.$broadcast('USER_LOGGED_IN', response.data);
+            })
         };
 
-        self.getToken = function () {
-            return $window.localStorage['token'];
+        self.logout = function() {
+            token.destroy();
+            $rootScope.$broadcast('USER_LOGGED_OUT');
         };
 
-        self.isAuthenticated = function () {
-            var token = self.getToken();
-            if (token === null)
-                return false;
-
-            var params = self.parseJwt(token);
-
-            if (params === null)
-                return false;
-
-            if(Math.round(new Date().getTime() / 1000) <= params.exp)
-                return true;
-
-            return false;
+        self.refresh = function () {
+            return $http.post(API_URL + '/auth/refresh', {})
         };
 
-        self.parseJwt = function (token) {
-            if(token === undefined)
-                return null;
-
-            var base64Url = token.split('.')[1];
-            var base64 = base64Url.replace('-', '+').replace('_', '/');
-            return JSON.parse($window.atob(base64));
+        self.isAuthenticated = function() {
+            return !token.expired();
         };
 
-        self.logout = function () {
-            $window.localStorage.removeItem('token');
+        self.canRefresh = function() {
+            return token.live();
         };
 
-        self.validateToken = function() {
-            var token = self.getToken();
-            if (token === null)
-                return null;
+        self.getCurrent = function () {
+            return $http.get(API_URL + '/users/~?with=role').
+                then(function (response) {
+                    return response.data.data;
+                }, function (response) {
+                    return console.log(response);
+                });
+        };
 
-            var params = self.parseJwt(token);
-
-            if (params === null)
-                return null;
-
-            return params;
-        }
     }
 
-    function AuthInterceptor(API, auth, $injector, $q) {
+    function tokenInterceptor(API_URL, token) {
         return {
 
-            request: function (config) {
-                if(config.url.indexOf(API) !== 0 || config.url.indexOf(API + '/auth/login') === 0) {
-                    return config; // make sure this is an API request
+            request: function (request) {
+                if(request.url.indexOf(API_URL) !== 0 || request.url.indexOf(API_URL + '/auth/login') === 0) {
+                    return request; // make sure this is an API request
                 }
-                var $state =  $injector.get('$state');
 
-                var token = auth.getToken();
-                var params = auth.parseJwt(token);
+                if (token.live())
+                    request.headers.Authorization = 'Bearer ' + token.get(); // automatically attach Authorization header
 
-                if(params === null)
-                    return $state.go('login');
-
-
-                var expired = params.exp < (new Date().getTime() / 1000);
-
-                if (!expired || config.url === API + '/auth/refresh') {
-                    config.headers.Authorization = 'Bearer ' + token; // automatically attach Authorization header
-                    return config;
-                }
-                else
-                {
-                    var deferred = $q.defer();
-                    var http = $injector.get('$http');
-
-                    http.post(API + '/auth/refresh').then(
-                        function(response){
-                            token = response.data.token;
-                            if(token === null){
-                                return $state.go('login');
-                            }
-
-                            auth.saveToken(token);console.log('new token:' + token);
-
-                            http(config.config).then(
-                                function(response){
-                                    deferred.resolve(response);
-                                },function (response) {
-                                    deferred.reject();
-                                })
-                        },
-                        function(response){
-                            deferred.reject();
-                            $state.go('login');
-                        })
-                }
+                return request;
             },
 
-            response: function (res) {
-
-                if(res.status == 401)
-                    $state.go('login');
-
+            response: function (response) {
                 // If a token was sent back, save it
-                if (res.config.url.indexOf(API) === 0 && res.data.token) {
-                    auth.saveToken(res.data.token);
+                if (response.config.url.indexOf(API_URL) === 0 && response.data.token) {
+                    token.save(response.data.token);
                 }
 
-                return res;
+                return response;
             }
         }
     }
-
     angular.module('inspinia')
         .service('auth', authService)
-        .constant('API', 'http://myfamily.dev')
+        .constant('API_URL', 'http://myfamily.dev')
         .config(function ($httpProvider) {
-            $httpProvider.interceptors.push(['API', 'auth', '$injector', '$q',AuthInterceptor ]);
+            $httpProvider.interceptors.push(tokenInterceptor);
         });
+
 
 })();

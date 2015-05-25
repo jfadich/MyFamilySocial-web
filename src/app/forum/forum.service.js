@@ -1,6 +1,6 @@
 ;(function () {
 
-    function ForumService($http, API){
+    function ForumService(api, API_URL){
         var self = this;
         self.includes = '';
         self.pagination;
@@ -41,7 +41,7 @@
             if(endpoint === undefined)
                 endpoint = '';
 
-            return $http.get(self.url(endpoint)).
+            return api.get(self.url(endpoint)).
                 then(function(response){
                     self.pagination = get_recursive(response.data, 'pagination');
                     return response.data;
@@ -54,7 +54,7 @@
             if(endpoint === undefined)
                 endpoint = '';
 
-            return $http.post(API + '/forum/' + endpoint, data)
+            return api.post('/forum/' + endpoint, data)
         };
 
         self.with = function(includes) {
@@ -73,10 +73,10 @@
         self.url = function(endpoint) {
             var path;
 
-            if(endpoint.indexOf(API) === 0)
+            if(endpoint.indexOf(API_URL) === 0)
                 path = endpoint;
             else
-                path = API + '/forum/' + endpoint;
+                path = '/forum/' + endpoint;
 
             if(self.includes != '') {
                 path += path.indexOf('?') !== -1 ? '&' : '?';

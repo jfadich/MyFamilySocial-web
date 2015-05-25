@@ -103,7 +103,7 @@
                 tapToDismiss: true
             });
         })
-        .run(function($rootScope, $state, auth, user, toastr) {
+        .run(function($rootScope, $state, auth, toastr) {
             $rootScope.$state = $state;
             $rootScope.$on('$stateChangeStart',
                 function(event, toState, toParams, fromState, fromParams){
@@ -111,9 +111,16 @@
                     {
                         if(!auth.isAuthenticated()){
                             event.preventDefault();
-                            user.refresh().error(function(response){
-                                toastr.error('You must be logged in to do that');
+
+                            if(!auth.canRefresh())
                                 return $state.go('login');
+
+                            auth.refresh().then(
+                                function(response){alert('refreshed');
+                                    return $state.go(toState.name,toState.toParams);
+                                }, function(response) {
+                                    toastr.error('You must be logged in to do that');
+                                    return $state.go('login');
                             });
                         }
                     }

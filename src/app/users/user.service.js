@@ -1,11 +1,11 @@
 ;(function(){
 
-    function userService($http, API, $rootScope) {
+    function userService($http, API_URL, $rootScope) {
         var self = this;
         self.includes = '';
 
         self.login = function(email, password) {
-            return $http.post(API + '/auth/login', {
+            return $http.post(API_URL + '/auth/login', {
                 email: email,
                 password: password
             }).then(function(response){
@@ -14,7 +14,7 @@
         };
 
         self.refresh = function() {
-            return $http.post(API + '/auth/refresh', {})
+            return $http.post(API_URL + '/auth/refresh', {})
         };
 
         self.getCurrent = function() {
@@ -36,7 +36,7 @@
         };
 
         self.url = function(endpoint) {
-            var path = API + '/users/' + endpoint;
+            var path = API_URL + '/users/' + endpoint;
 
             if(self.includes != '') {
                 path = path + '?with=' + self.includes;
@@ -63,6 +63,6 @@
     }
 
     angular.module('inspinia')
-        .service('user', ['$http','API', '$rootScope', userService]);
+        .service('user', ['$http','API_URL', '$rootScope', userService]);
 
 })();
