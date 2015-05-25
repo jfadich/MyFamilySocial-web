@@ -103,28 +103,8 @@
                 tapToDismiss: true
             });
         })
-        .run(function($rootScope, $state, auth, toastr) {
+        .run(function($rootScope, $state) {
             $rootScope.$state = $state;
-            $rootScope.$on('$stateChangeStart',
-                function(event, toState, toParams, fromState, fromParams){
-                    if(toState.data.requireAuth === true)
-                    {
-                        if(!auth.isAuthenticated()){
-                            event.preventDefault();
-
-                            if(!auth.canRefresh())
-                                return $state.go('login');
-
-                            auth.refresh().then(
-                                function(response){alert('refreshed');
-                                    return $state.go(toState.name,toState.toParams);
-                                }, function(response) {
-                                    toastr.error('You must be logged in to do that');
-                                    return $state.go('login');
-                            });
-                        }
-                    }
-                })
         });
 
 })();

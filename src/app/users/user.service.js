@@ -1,68 +1,56 @@
 ;(function(){
 
-    function userService($http, API_URL, $rootScope) {
+    function userService( api ) {
         var self = this;
-        self.includes = '';
 
-        self.login = function(email, password) {
-            return $http.post(API_URL + '/auth/login', {
-                email: email,
-                password: password
-            }).then(function(response){
-                $rootScope.$broadcast('USER_LOGGED_IN', response.data);
-            })
+        self.getUser = function(user, includes) {
+            return self.getPromise(user, includes);
         };
 
-        self.refresh = function() {
-            return $http.post(API_URL + '/auth/refresh', {})
+        self.getUsers = function(includes) {
+            return self.getPromise('',includes);
         };
 
-        self.getCurrent = function() {
-            return self.userPromise('~');
-        };
-
-        self.getUser = function(user) {
-            return self.userPromise(user);
-        };
-
-        self.getUsers = function() {
-            return self.userPromise();
-        };
-
-        self.with = function(includes) {
-            self.includes = includes;
-
-            return self;
-        };
-
-        self.url = function(endpoint) {
-            var path = API_URL + '/users/' + endpoint;
-
-            if(self.includes != '') {
-                path = path + '?with=' + self.includes;
-            }
-
-            return path;
-        };
-
-        self.userPromise = function(user) {
-            if(user === undefined)
-                user = '';
-
-            return $http.get(self.url(user)).
+        self.getPromise = function(endpoint, includes) {
+            return api.get(self.url(endpoint, includes)).
                 then(function(response){
-                    return response.data.data;
+                    self.pagination = get_recursive(response.data, 'pagination');
+                    return response.data;
                 }, function(response){
-                    if(response.status === 401){
-                        toastr.error('Invalid credentials');
-                    }
-                    return console.log(response);
+                    console.log(response);
                 });
+        };
+
+        self.postPromise = function(endpoint, data) {
+            if(endpoint === undefined)
+                endpoint = '';
+
+            return api.post(self.url(endpoint), data)
+        };
+
+        self.next = function() {
+            if(self.pagination === null || self.pagination.links.next === undefined)
+                return null;
+
+            return self.getPromise(self.pagination.links.next);
+        };
+
+        self.url = function(endpoint, includes) {
+            if(endpoint === undefined)
+                endpoint = '/users/';
+
+            if(includes === undefined)
+                includes = '';
+
+            if((endpoint.indexOf("http") !== 0))
+                endpoint = '/users/' + endpoint;
+
+            return api.url(endpoint, includes);
         }
 
     }
 
     angular.module('inspinia')
-        .service('user', ['$http','API_URL', '$rootScope', userService]);
+        .service('user', ['api', '$rootScope', userService]);
 
 })();

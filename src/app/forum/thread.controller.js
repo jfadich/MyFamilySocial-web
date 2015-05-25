@@ -7,7 +7,7 @@
         $scope.headerTitle = 'Forum';
         $scope.breadcrumbs = [{title: 'Forum', link: '#/discussions'}];
 
-        ForumService.with('replies.owner,category,owner,tags').getThread($state.params.thread_slug).then(function(thread){
+        ForumService.getThread($state.params.thread_slug, 'replies.owner,category,owner,tags').then(function(thread){
             $scope.thread = thread.data;
             $scope.sort();
             $scope.headerTitle = $scope.thread.title;
@@ -19,7 +19,7 @@
 
         $scope.addReply = function(comment) {
             ForumService.addReply($scope.thread.slug, comment).then(function(response){
-                console.log(response);console.log($scope.thread.replies);
+                console.log(response);
                 $scope.sort();
                 $scope.thread.replies.data.push(response.data.data);
                 $scope.comment = '';
@@ -45,7 +45,7 @@
         $scope.more = function() {
             var more = ForumService.next();
             if(more !== null){
-                more.then(function(thread){
+                more.then(function(thread){console.log(thread);
                     if(thread.data.replies.data !== null)
                         $scope.thread.replies.data = $scope.thread.replies.data.concat(thread.data.replies.data);
                     $scope.sort();
@@ -54,15 +54,13 @@
         };
 
         $scope.sort = function() {
-            function compare(a,b) {
+            $scope.thread.replies.data.sort(function(a,b) {
                 if (a.created < b.created)
                     return -1;
                 if (a.created > b.created)
                     return 1;
                 return 0;
-            }
-
-            $scope.thread.replies.data.sort(compare);
+            });
         }
 
     }

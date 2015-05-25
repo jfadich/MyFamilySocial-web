@@ -1,6 +1,6 @@
 ;(function () {
 
-    function authService($http, API_URL, $rootScope, token) {
+    function authService($http, API_URL, $rootScope, token, toastr, $state) {
         var self = this;
 
         self.login = function (email, password) {
@@ -29,14 +29,26 @@
             return token.live();
         };
 
-        self.getCurrent = function () {
-            return $http.get(API_URL + '/users/~?with=role').
-                then(function (response) {
-                    return response.data.data;
-                }, function (response) {
-                    return console.log(response);
-                });
-        };
+        $rootScope.$on('$stateChangeStart',
+            function(event, toState, toParams, fromState, fromParams){
+                if(toState.data.requireAuth === true)
+                {
+                    if(!self.isAuthenticated()){
+                        event.preventDefault();
+
+                        if(!self.canRefresh())
+                            return $state.go('login');
+
+                        self.refresh().then(
+                            function(response){alert('refreshed');
+                                return $state.go(toState.name,toState.toParams);
+                            }, function(response) {
+                                toastr.error('Your session has expired');
+                                return $state.go('login');
+                            });
+                    }
+                }
+            });
 
     }
 

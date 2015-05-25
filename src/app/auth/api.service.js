@@ -1,65 +1,64 @@
-;(function () {
+;
+(function () {
 
     function apiService($http, API_URL, auth, $state, toastr, token) {
         var self = this;
 
         self.get = function (endpoint) {
-            if (!token.live())
-                return $state.go('login');
-
-            if(endpoint.indexOf(API_URL) === 0)
-                var url = endpoint;
-            else
-                var url = API_URL + endpoint;
-
-            if(token.expired())
-                return self.refreshToken(url, 'get');
-
-            return $http.get(url).then(function (response) {
-                    return response; // everything's good, pass it on to service
-                }, function(response) {
-                    if (response.data.error.error_code == 102) {
-                        return self.refreshToken(url, 'get');
-                    }
-                    return response;
-                });
+            return self.request(endpoint, 'get');
         };
 
         self.post = function (endpoint, data) {
-            if (token.claims() == null)
+            return self.request(endpoint,'post', data);
+        };
+
+        self.request = function (url, method, data) {
+            var promise;
+
+            if (!token.live())
                 return $state.go('login');
 
-            return $http.post(API_URL + endpoint, data).error(function (response) {
-                if (response.data.error_code == 102) {alert('api');
-                    auth.refresh().then(function(response){
-                        alert('Your session has refreshed!');
-                        return $http.post(API_URL + endpoint, data);
-                    }, function(response){
-                        toastr.info('Your session has expired');
-                        $state.go('login');
-                    });
+            if (token.expired())
+                return self.refreshToken(url, method, data);
+
+            if (method === 'get')
+                promise = $http.get(url);
+            else if (method === 'post')
+                promise = $http.post(url, data);
+
+            return promise.then(function (response) {
+                return response; // everything's good, pass it on to service
+            }, function (response) {console.log(response);
+                if (response.data.error.error_code == 102) {
+                    return self.refreshToken(url, method, data);
                 }
                 return response;
             });
         };
 
-        self.validateToken = function() {
-
-        };
-
-        self.refreshToken = function(url, method, data)
-        {
-            return auth.refresh().then(function(response) {
+        self.refreshToken = function (url, method, data) {
+            return auth.refresh().then(function (response) {
                 alert('Your session has refreshed!');
-                if(method === 'get')
-                    return $http.get(url);
-                if(method === 'post')
-                    return $http.post(url, data);
-            }, function(response){
+                return self.request(url, method, data);
+            }, function (response) {
                 toastr.info('Your session has expired');
                 return $state.go('login');
             });
         };
+
+        self.url = function (endpoint, includes) {
+            if (endpoint.indexOf(API_URL) === 0)
+                var url = endpoint;
+            else
+                var url = API_URL + endpoint;
+
+            if(includes !== undefined) {
+                url += url.indexOf('?') !== -1 ? '&' : '?';
+                url += 'with=' + includes;
+            }
+
+            return url;
+        }
 
     }
 

@@ -1,28 +1,27 @@
 ;(function () {
 
-    function ForumService(api, API_URL){
+    function ForumService(api){
         var self = this;
-        self.includes = '';
         self.pagination;
 
-        self.getThreads = function()
+        self.getThreads = function(includes)
         {
-            return self.getPromise();
+            return self.getPromise('', includes);
         };
 
-        self.getThread = function(slug)
+        self.getThread = function(slug, includes)
         {
-            return self.getPromise('topic/' + slug);
+            return self.getPromise('topic/' + slug, includes);
         };
 
-        self.getCategories = function()
+        self.getCategories = function(includes)
         {
-            return self.getPromise('categories');
+            return self.getPromise('categories', includes);
         };
 
-        self.getCategory = function(slug)
+        self.getCategory = function(slug, includes)
         {
-            return self.getPromise('categories/' + slug);
+            return self.getPromise('categories/' + slug, includes);
         };
 
         self.addReply = function(thread, comment) {
@@ -37,11 +36,8 @@
             });
         };
 
-        self.getPromise = function(endpoint) {
-            if(endpoint === undefined)
-                endpoint = '';
-
-            return api.get(self.url(endpoint)).
+        self.getPromise = function(endpoint, includes) {
+            return api.get(self.url(endpoint, includes)).
                 then(function(response){
                     self.pagination = get_recursive(response.data, 'pagination');
                     return response.data;
@@ -54,13 +50,7 @@
             if(endpoint === undefined)
                 endpoint = '';
 
-            return api.post('/forum/' + endpoint, data)
-        };
-
-        self.with = function(includes) {
-            self.includes = includes;
-
-            return self;
+            return api.post(self.url(endpoint), data)
         };
 
         self.next = function() {
@@ -70,22 +60,15 @@
             return self.getPromise(self.pagination.links.next);
         };
 
-        self.url = function(endpoint) {
-            var path;
+        self.url = function(endpoint, includes) {
+            if (endpoint === undefined)
+                endpoint = '/forum/';
 
-            if(endpoint.indexOf(API_URL) === 0)
-                path = endpoint;
-            else
-                path = '/forum/' + endpoint;
+            if((endpoint.indexOf("http") !== 0))
+                endpoint = '/forum/' + endpoint;
 
-            if(self.includes != '') {
-                path += path.indexOf('?') !== -1 ? '&' : '?';
-                path += 'with=' + self.includes;
-            }
-
-            return path;
-        };
-
+            return api.url(endpoint, includes);
+        }
     }
 
     angular.module('inspinia')

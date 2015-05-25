@@ -1,6 +1,6 @@
 ;(function () {
 
-    function LoginController($scope, user, $state, auth, toastr) {
+    function LoginController($scope, $state, auth, toastr) {
         $scope.credentials = {};
         $scope.errors = [];
 
@@ -16,7 +16,7 @@
 
         $scope.submit = function()
         {
-            user.login($scope.credentials.email, $scope.credentials.password).then(function(response){
+            auth.login($scope.credentials.email, $scope.credentials.password).then(function(response){
                 $state.go('family.main');
             }, function(response){
                 console.log(response);

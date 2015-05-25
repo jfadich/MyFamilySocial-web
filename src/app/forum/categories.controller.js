@@ -5,7 +5,7 @@
 
             $scope.headerTitle = 'Forum';
             $scope.breadcrumbs = [{title: 'Forum', link: '#/discussions'}];
-            ForumService.with('threads').getCategories().then(function(categories){
+            ForumService.getCategories().then(function(categories){
                 $scope.categories = categories;
             });
 

@@ -6,7 +6,7 @@
         $scope.headerTitle = 'Family Members';
         $scope.breadcrumbs = [{title: 'Family Members', link: '#/members'}];
         user.getUsers().then(function(users){
-            $scope.users = users;
+            $scope.users = users.data;
         });
 
     }

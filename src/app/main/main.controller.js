@@ -4,8 +4,8 @@ angular.module('inspinia')
   .controller('MainCtrl', function ($scope, user, auth) {
         var self = this;
         self.getUser = function() {
-            user.with('role').getCurrent().then(function(user){
-                self.user = user;
+            user.getUser('~', 'role').then(function(user){
+                self.user = user.data;
             });
         };
 
