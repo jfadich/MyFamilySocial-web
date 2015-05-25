@@ -53,7 +53,10 @@
                 then(function(response){
                     return response.data.data;
                 }, function(response){
-                    console.log(response);
+                    if(response.status === 401){
+                        toastr.error('Invalid credentials');
+                    }
+                    return console.log(response);
                 });
         }
 

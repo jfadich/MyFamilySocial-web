@@ -1,26 +1,28 @@
 ;(function () {
 
-    function LoginController($scope, user, $state, auth,$state, toastr) {
+    function LoginController($scope, user, $state, auth, toastr) {
         $scope.credentials = {};
         $scope.errors = [];
+
+        if($state.current.url == '/logout') {
+            auth.logout();
+            toastr.success('You are now logged out');
+            return $state.go('login');
+        }
+        else if(auth.isAuthenticated())
+        {
+            return $state.go('family.main');
+        }
 
         $scope.submit = function()
         {
             user.login($scope.credentials.email, $scope.credentials.password).then(function(response){
                 $state.go('family.main');
             }, function(response){
-                if(response.status === 401){
-                    toastr.error('Invalid credentials');
-                }
                 console.log(response);
             });
         };
 
-        if($state.current.url == '/logout') {
-            auth.logout();
-            toastr.success('You are now logged out');
-            $state.go('login');
-        }
     }
 
     angular.module('inspinia')

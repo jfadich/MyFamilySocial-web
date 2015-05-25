@@ -10,7 +10,8 @@
         'ui.router',
         'ui.bootstrap',
         'angularMoment',
-        'toastr'
+        'toastr',
+        'summernote',
     ])
 })();
 

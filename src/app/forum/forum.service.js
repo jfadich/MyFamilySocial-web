@@ -29,6 +29,14 @@
             return self.postPromise('topic/' + thread, { comment: comment});
         };
 
+        self.addThread = function(thread) {
+            return self.postPromise('topic/', {
+                title: thread.title,
+                body: thread.body,
+                category: thread.category
+            });
+        };
+
         self.getPromise = function(endpoint) {
             if(endpoint === undefined)
                 endpoint = '';
