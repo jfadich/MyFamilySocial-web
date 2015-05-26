@@ -33,12 +33,19 @@
                 promise = $http.delete(url);
 
             return promise.catch(function (response) {
-                if (response.data.error.error_code == 102)
+                    if (response.data.error.error_code == 102)
                     return self.refreshToken(url, method, data);
-                console.log(response);
-                if(response.data.error.error_code == 104){
+
+                if(response.data.error.error_code == 104)
                     toastr.error('You\'re not authorized to do that');
-                    return $q.reject(response);
+
+                if(response.data.error.error_code === 201) {
+                    var errors = response.data.error.message;
+
+                    for(var attributes in errors) {console.log(attributes);
+                        for(var message in errors[attributes])
+                            toastr.error(errors[attributes][message]);
+                    }
                 }
 
                 return $q.reject(response);

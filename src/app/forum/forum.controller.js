@@ -35,16 +35,16 @@
             { title: 'Create Topic', link: '#/discussions/new'}];
 
         $scope.addThread = function(thread) {
-            if(thread === null || !thread.title || !thread.category || ! thread.body ){
-                toastr.error('Please fill in all fields');
-                return;
-            }
+            $scope.$broadcast('show-errors-check-validity');
 
-            ForumService.addThread(thread).then(function(response){
-                var thread = response.data.data;console.log(thread);
-                toastr.success("'"+thread.title+"' created successfully!");
-                return $state.go("family.forum.thread",{thread_slug: thread.slug});
-            });
+            if ($scope.threadForm.$valid) {
+                ForumService.addThread(thread).then(function (response) {
+                    var thread = response.data.data;
+                    console.log(thread);
+                    toastr.success("'" + thread.title + "' created successfully!");
+                    return $state.go("family.forum.thread", {thread_slug: thread.slug});
+                });
+            }
         };
 
         ForumService.getCategories().then(function(category){
