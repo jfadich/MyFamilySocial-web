@@ -12,6 +12,20 @@
             })
         };
 
+        self.register = function (first_name, last_name, email, password, password_confirm) {
+            return $http.post(API_URL + '/auth/register', {
+                first_name: first_name,
+                last_name: last_name,
+                email: email,
+                password: password,
+                password_confirmation: password_confirm
+            }).then(function (response) {
+                $rootScope.$broadcast('USER_REGISTERED', response.data);
+                $rootScope.$broadcast('USER_LOGGED_IN', response.data);
+                return response;
+            })
+        };
+
         self.logout = function() {
             token.destroy();
             $rootScope.$broadcast('USER_LOGGED_OUT');

@@ -75,7 +75,13 @@
                     requireAuth: true
                 },
             })
+            .state('auth', {
+                url: '/auth',
+                abstract: true,
+                templateUrl: 'app/views/auth/auth.html'
+            } )
             .state('login', {
+                parent: 'auth',
                 url: "/login",
                 templateUrl: "app/views/auth/login.html",
                 controller: "LoginCtrl",
@@ -83,7 +89,17 @@
                         requireAuth: false
                 }
             })
+            .state('register', {
+                parent: 'auth',
+                url: "/register",
+                templateUrl: "app/views/auth/register.html",
+                controller: "LoginCtrl",
+                data: { pageTitle: 'Register',
+                    requireAuth: false
+                }
+            })
             .state('logout', {
+                parent: 'auth',
                 url: "/logout",
                 controller: "LoginCtrl",
                 data: { requireAuth: false
@@ -99,7 +115,6 @@
             angular.extend(toastrConfig, {
 
                 progressBar: true,
-                closeButton: true,
                 tapToDismiss: true
             });
         })

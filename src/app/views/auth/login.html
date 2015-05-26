@@ -1,28 +1,28 @@
-<div class="middle-box text-center loginscreen  animated fadeInDown">
-    <div>
-        <div>
-
-            <h1 class="logo-name">F+</h1>
-
-        </div>
-        <h3>Welcome to MyFamily.social</h3>
-        <div id="#login-errors">
-            <div class="alert alert-danger animated FadeInUp" ng-repeat="error in errors">
-                {{ error.message }}
+        <p>Login to access your account.</p>
+        <form name="login" class="m-t" role="form" novalidate ng-submit="login_submit()" >
+            <div class="form-group" show-errors="{ showSuccess: true }">
+                <input
+                    ng-model="credentials.email"
+                    placeholder="Email"
+                    type="email"
+                    name="email"
+                    class="form-control"
+                    required
+                >
             </div>
-        </div>
-        <form class="m-t" role="form" action="#">
-            <div class="form-group">
-                <input class="form-control" placeholder="Username" ng-model="credentials.email" required="">
+            <div class="form-group" show-errors="{ showSuccess: true }">
+                <input
+                    ng-model="credentials.password"
+                    placeholder="Password"
+                    name="password"
+                    type="password"
+                    class="form-control"
+                    min="6"
+                    required
+                >
             </div>
-            <div class="form-group">
-                <input type="password" class="form-control" placeholder="Password" ng-model="credentials.password" required="">
-            </div>
-            <button type="submit" class="btn btn-primary block full-width m-b" ng-click="submit()">Login</button>
+            <button type="submit" class="btn btn-primary block full-width m-b" ng-disabled="login.$invalid">Login</button>
 
+            <a class="btn btn-sm btn-white btn-block" ui-sref="register">Create an account</a><br>
             <a href="#"><small>Forgot password?</small></a>
-            <p class="text-muted text-center"><small>Do not have an account?</small></p>
-            <a class="btn btn-sm btn-white btn-block" href="register.html">Create an account</a>
         </form>
-    </div>
-</div>

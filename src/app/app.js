@@ -11,7 +11,7 @@
         'ui.bootstrap',
         'angularMoment',
         'toastr',
-        'summernote',
+        'ui.bootstrap.showErrors',
     ])
 })();
 

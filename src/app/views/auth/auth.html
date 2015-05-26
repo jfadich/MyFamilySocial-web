@@ -1,0 +1,11 @@
+<div class="middle-box text-center loginscreen  animated fadeInDown">
+    <div class="ibox-content">
+        <h3>Welcome to MyFamily.social</h3>
+        <div id="#login-errors">
+            <div class="alert alert-danger animated FadeInUp" ng-repeat="error in errors">
+                {{ error.message }}
+            </div>
+        </div>
+        <ui-view/>
+    </div>
+</div>
