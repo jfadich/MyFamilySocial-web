@@ -1,7 +1,7 @@
 ;
 (function () {
 
-    function apiService($http, API_URL, auth, $state, toastr, token) {
+    function apiService($http, API_URL, auth, $state, toastr, token, $q) {
         var self = this;
 
         self.get = function (endpoint) {
@@ -10,6 +10,10 @@
 
         self.post = function (endpoint, data) {
             return self.request(endpoint,'post', data);
+        };
+
+        self.delete = function (endpoint) {
+            return self.request(endpoint,'delete');
         };
 
         self.request = function (url, method, data) {
@@ -25,14 +29,19 @@
                 promise = $http.get(url);
             else if (method === 'post')
                 promise = $http.post(url, data);
+            else if (method === 'delete')
+                promise = $http.delete(url);
 
-            return promise.then(function (response) {
-                return response; // everything's good, pass it on to service
-            }, function (response) {console.log(response);
-                if (response.data.error.error_code == 102) {
+            return promise.catch(function (response) {
+                if (response.data.error.error_code == 102)
                     return self.refreshToken(url, method, data);
+                console.log(response);
+                if(response.data.error.error_code == 104){
+                    toastr.error('You\'re not authorized to do that');
+                    return $q.reject(response);
                 }
-                return response;
+
+                return $q.reject(response);
             });
         };
 

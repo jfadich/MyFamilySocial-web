@@ -58,7 +58,7 @@
                 <br>
             </form>
             <div class="feed-activity-list">
-                <div class="feed-element animated fadeInUp" ng-repeat="reply in thread.replies.data">
+                <div class="feed-element animated fadeInUp" ng-repeat="reply in thread.replies.data"  ng-class="{'flipOutX': reply.deleted}">
                     <a  ui-sref="family.members.profile({user: reply.owner.data.id})" class="pull-left">
                         <img alt="image" src="assets/images/common/small-default-profile.jpg" ng-if="reply.owner.data.image.small === undefined">
                         <img alt="image" ng-src="{{ reply.owner.data.image.small }}" ng-if="reply.owner.data.image.small !== undefined">
@@ -67,7 +67,7 @@
                     <div class="media-body text-muted">
                         <span class=" pull-right">
                             <button class="btn btn-white btn-xs" ng-if="reply.permissions.edit"> <i class="fa fa-pencil"></i> </button>
-                            <button class="btn btn-white btn-xs" ng-if="reply.permissions.delete"> <i class="glyphicon glyphicon-remove"></i> </button>
+                            <button class="btn btn-white btn-xs" ng-if="reply.permissions.delete" ng-click="deleteReply(reply)"> <i class="glyphicon glyphicon-remove"></i> </button>
                         </span>
 
                         <strong>{{ reply.owner.data.first_name }} {{ reply.owner.data.last_name }}</strong><br>

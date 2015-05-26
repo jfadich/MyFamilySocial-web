@@ -9,7 +9,6 @@
 
         ForumService.getThread($state.params.thread_slug, 'replies.owner,category,owner,tags').then(function(thread){
             $scope.thread = thread.data;
-            $scope.sort();
             $scope.headerTitle = $scope.thread.title;
             $scope.breadcrumbs = [{title: 'Forum', link: '#/discussions'},
                 { title: $scope.thread.title, link: ''}];
@@ -40,6 +39,21 @@
                 }
                 toastr.error(message, 'Error');
             })
+        };
+
+        $scope.deleteReply = function(reply) {
+            if(!confirm('Are you sure you want to delete this reply?'))
+                return;
+            reply.deleted = true;
+            ForumService.deleteReply(reply.id).then(function(response){
+                var index = $scope.thread.replies.data.indexOf(reply);
+                $scope.thread.replies.data.splice(index, 1);
+                toastr.success('Reply delete successfully');
+                return response;
+
+            }, function(response){
+                reply.deleted = false;
+            });
         };
 
         $scope.more = function() {
