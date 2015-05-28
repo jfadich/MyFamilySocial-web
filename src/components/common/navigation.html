@@ -34,7 +34,7 @@
             <li ng-class="{ active: $state.includes('family.forum') }">
                 <a ui-sref="family.forum.index"><i class="fa fa-comments"></i> <span class="nav-label">Discussions</span></a>
                 <ul class="nav nav-second-level" ng-class="{in: $state.includes('family.forum')}">
-                    <li ui-sref-active="active"><a ui-sref="family.forum.index">Categories</a></li>
+                    <li ui-sref-active="active"><a ui-sref="family.forum.index"><i class="glyphicon glyphicon-th-list icon-resize-small"></i> Categories</a></li>
                     <li ui-sref-active="active" ng-if="main.user.role.data.permissions.forum_createThread"><a ui-sref="family.forum.createThread"><i class="fa fa-plus icon-resize-small"></i> Create Topic</a></li>
                 </ul>
             </li>

@@ -17,28 +17,13 @@
         });
 
         $scope.addReply = function(comment) {
-            ForumService.addReply($scope.thread.slug, comment).then(function(response){
+            ForumService.addReply($scope.thread.slug, comment.body).then(function(response){
+                comment.body = '';
                 console.log(response);
                 $scope.sort();
                 $scope.thread.replies.data.push(response.data.data);
-                $scope.comment = '';
-                toastr.success('Reply added Successfully', 'Success');
-            }, function(response){
-                var message;
-
-                switch(response.status)
-                {
-                    case 403:
-                    case 401:
-                        message = 'You aren\'t authorized to do that';
-                        break;
-                    case 422: message = 'A comment is required';
-                        break;
-                    default: message = 'An error occurred';
-                        break;
-                }
-                toastr.error(message, 'Error');
-            })
+                toastr.success('Reply added Successfully');
+            });
         };
 
         $scope.deleteReply = function(reply) {
