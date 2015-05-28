@@ -66,36 +66,8 @@
 
     }
 
-    function tokenInterceptor(API_URL, token) {
-        return {
-
-            request: function (request) {
-                if(request.url.indexOf(API_URL) !== 0 || request.url.indexOf(API_URL + '/auth/login') === 0) {
-                    return request; // make sure this is an API request
-                }
-
-                if (token.live())
-                    request.headers.Authorization = 'Bearer ' + token.get(); // automatically attach Authorization header
-
-                return request;
-            },
-
-            response: function (response) {
-                // If a token was sent back, save it
-                if (response.config.url.indexOf(API_URL) === 0 && response.data.token) {
-                    token.save(response.data.token);
-                }
-
-                return response;
-            }
-        }
-    }
     angular.module('inspinia')
         .service('auth', authService)
         .constant('API_URL', 'http://myfamily.dev')
-        .config(function ($httpProvider) {
-            $httpProvider.interceptors.push(tokenInterceptor);
-        });
-
 
 })();
