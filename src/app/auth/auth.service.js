@@ -32,7 +32,7 @@
         };
 
         self.refresh = function () {
-            return $http.post(API_URL + '/auth/refresh', {})
+            return $http.post(API_URL + '/auth/refresh', {});
         };
 
         self.isAuthenticated = function() {
@@ -55,9 +55,9 @@
 
                         self.refresh().then(
                             function(response){alert('refreshed');
-                                return $state.go(toState.name,toState.toParams);
+                                return $state.go(toState.name,toParams);
                             }, function(response) {
-                                toastr.error('Your session has expired');
+                                toastr.info('Your session has expired');
                                 return $state.go('login');
                             });
                     }

@@ -3,6 +3,7 @@
     function ThreadController($scope, ForumService, $state, toastr) {
         $scope.thread = null;
         $scope.comment = null;
+        $scope.editing = 0;
 
         $scope.headerTitle = 'Forum';
         $scope.breadcrumbs = [{title: 'Forum', link: '#/discussions'}];
@@ -24,6 +25,18 @@
                 $scope.thread.replies.data.push(response.data.data);
                 toastr.success('Reply added Successfully', { iconClass: 'toast-comment'});
             });
+        };
+
+        $scope.editReply = function(reply) {
+            $scope.editing = reply.id;
+        };
+
+        $scope.stopEdit = function() {
+            $scope.editing = 0;
+        };
+
+        $scope.saveReply = function(reply) {
+            alert(reply.body);
         };
 
         $scope.deleteReply = function(reply) {

@@ -7,50 +7,57 @@
                 abstract: true,
                 url: "",
                 templateUrl: "components/common/content.html",
-
+                data: {
+                    requireAuth: true
+                }
             })
             .state('family.main', {
                 url: "/main",
                 templateUrl: "app/views/main.html",
-                data: { pageTitle: 'Main',
-                        requireAuth: true
+                data: {
+                    pageTitle: 'Main'
                 }
             })
             .state('family.forum', {
                 url: '/discussions',
                 abstract: true,
-                template: '<ui-view/>'
+                template: '<ui-view/>',
+                resolve: {
+                    categories: function(ForumService) {
+                        return ForumService.getCategories();
+                    }
+                }
             } )
             .state('family.forum.index', {
                 url: "/categories",
                 templateUrl: "app/views/forum/categories.html",
                 controller: "CategoriesCtrl",
-                data: { pageTitle: 'Forum',
-                        requireAuth: true
-                },
+                data: {
+                    pageTitle: 'Discussion Categories'
+                }
             })
             .state('family.forum.createThread', {
                 url: "/new",
                 templateUrl: "app/views/forum/threadForm.html",
                 controller: "ThreadFormCtrl",
-                data: { pageTitle: 'Create Topic',
-                    requireAuth: true
+                data: {
+                    pageTitle: 'Create Topic'
                 }
             })
             .state('family.forum.category', {
                 url: "/:category_slug",
                 templateUrl: "app/views/forum/listThreads.html",
                 controller: "ForumCtrl",
-                data: { pageTitle: 'Forum Category',
-                    requireAuth: true
+                data: {
+                    pageTitle: 'Forum Category'
                 }
             })
             .state('family.forum.thread', {
                 url: "/topics/:thread_slug",
                 templateUrl: "app/views/forum/showThread.html",
                 controller: "ThreadCtrl",
-                data: { pageTitle: 'Forum Thread',
-                    requireAuth: true
+                data: {
+                    pageTitle: 'Forum Thread'
                 }
             })
 
@@ -63,30 +70,33 @@
                 url: "/index",
                 templateUrl: "app/views/users/listUsers.html",
                 controller: "UsersCtrl",
-                data: { pageTitle: 'Members',
-                    requireAuth: true
-                },
+                data: {
+                    pageTitle: 'Members'
+                }
             })
             .state('family.members.profile', {
                 url: "/:user",
                 templateUrl: "app/views/users/showProfile.html",
                 controller: "ProfileCtrl",
-                data: { pageTitle: 'Members',
-                    requireAuth: true
-                },
+                data: {
+                    pageTitle: 'Members'
+                }
             })
             .state('auth', {
                 url: '/auth',
                 abstract: true,
-                templateUrl: 'app/views/auth/auth.html'
+                templateUrl: 'app/views/auth/auth.html',
+                data: {
+                    requireAuth: false
+                }
             } )
             .state('login', {
                 parent: 'auth',
                 url: "/login",
                 templateUrl: "app/views/auth/login.html",
                 controller: "LoginCtrl",
-                data: { pageTitle: 'Login',
-                        requireAuth: false
+                data: {
+                    pageTitle: 'Login'
                 }
             })
             .state('register', {
@@ -94,16 +104,14 @@
                 url: "/register",
                 templateUrl: "app/views/auth/register.html",
                 controller: "LoginCtrl",
-                data: { pageTitle: 'Register',
-                    requireAuth: false
+                data: {
+                    pageTitle: 'Register'
                 }
             })
             .state('logout', {
                 parent: 'auth',
                 url: "/logout",
-                controller: "LoginCtrl",
-                data: { requireAuth: false
-                }
+                controller: "LoginCtrl"
             });
         $urlRouterProvider.when('/discussions', '/discussions/categories');
         $urlRouterProvider.when('/members', '/members/index');

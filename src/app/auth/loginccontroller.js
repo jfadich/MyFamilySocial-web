@@ -21,7 +21,7 @@
 
             if ($scope.login.$valid) {
                 auth.login($scope.credentials.email, $scope.credentials.password).then(function(response){
-                    $state.go('family.main');console.log('boo')
+                    $state.go('family.main');
                 }, function(response){
                     toastr.error('Invalid credentials');
                     console.log(response);
