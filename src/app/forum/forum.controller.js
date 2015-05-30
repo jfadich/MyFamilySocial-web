@@ -27,9 +27,9 @@
 
     }
 
-    function ThreadFormController($scope, ForumService, toastr, $state) {
+    function ThreadFormController($scope, ForumService, toastr, $state, categories) {
         $scope.thread = null;
-        $scope.categories = [];
+        $scope.categories = categories.data;
         $scope.headerTitle = 'Add new Post';
         $scope.breadcrumbs = [{title: 'Forum', link: '#/discussions'},
             { title: 'Create Topic', link: '#/discussions/new'}];
@@ -41,17 +41,11 @@
                 ForumService.addThread(thread).then(function (response) {
                     var thread = response.data.data;
                     console.log(thread);
-                    toastr.success("'" + thread.title + "' created successfully!");
+                    toastr.success("'" + thread.title + "' created successfully!", { iconClass: 'toast-comment'});
                     return $state.go("family.forum.thread", {thread_slug: thread.slug});
                 });
             }
         };
-
-        ForumService.getCategories().then(function(category){
-            $scope.categories = category.data;
-        }, function(response){
-            console.log(response);
-        });
     }
 
     angular.module('inspinia')

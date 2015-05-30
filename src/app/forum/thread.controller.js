@@ -22,7 +22,7 @@
                 console.log(response);
                 $scope.sort();
                 $scope.thread.replies.data.push(response.data.data);
-                toastr.success('Reply added Successfully');
+                toastr.success('Reply added Successfully', { iconClass: 'toast-comment'});
             });
         };
 

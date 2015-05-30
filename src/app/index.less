@@ -1,2 +1,17 @@
+@import '../../bower_components/font-awesome/less/font-awesome.less'; // Import here to make font-awesome unicode variables available
 @import '/less/style.less';
 @nav-profil-pattern: url("../assets/images/patterns/header-profile.png") no-repeat;
+
+
+// Custom Icons for the toastr
+#toast-container > .toast-warning:before {
+  content: @fa-var-shield;
+}
+#toast-container > .toast-info:before {
+  content: @fa-var-info;
+}
+.toast-comment:extend(.toast-success)  {
+  &:before{
+    content: @fa-var-comment;
+  }
+}
