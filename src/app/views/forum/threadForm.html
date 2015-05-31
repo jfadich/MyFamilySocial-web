@@ -26,9 +26,30 @@
                             <textarea ng-model="thread.body" name="body" class="form-control" rows="8" required></textarea>
                         </div>
                     </div>
+                    <div class="form-group" mass-autocomplete>
+                        <label class="col-sm-2 control-label">Tags <small>(comma separated)</small></label>
+                        <div class="col-sm-4">
+                            <input type="text" class="form-control" name="tags_search" ng-model="dirty.value" mass-autocomplete-item="tag_autocomplete">
+                        </div>
+                        <span class="col-md-6 text-left pull-right" ng-if="thread.tags.data.length > 0">
+                            <span ng-repeat="tag in thread.tags.data" >
+                                <button class="btn btn-white btn-sm" ng-click="removeTag(tag)"><i class="fa fa-close"></i> &nbsp;{{ tag.name }}</button>
+                            </span>
+                        </span>
+                    </div>
+                    <div class="ac-container col-sm-4 col-sm-offset-2" ng-show="tag_autocomplete && dirty.value.length" style="position: absolute">
+                        <ul class="ac-menu">
+                            <li ng-repeat="result in results"
+                                ng-if="$index > 0"
+                                class="ac-menu-item"
+                                ng-class="$index == selected_index ? 'ac-state-focus' : ''">
+                                <a href ng-click="apply_selection($index, $event)" ng-bind-html=result.label> </a>
+                            </li>
+                        </ul>
+                    </div>
                 </form>
 
-            </div>
+        </div>
             <div class="mail-body text-right">
                 <button ng-click="addThread(thread)" class="btn btn-sm btn-primary" data-toggle="tooltip" data-placement="top" title=" Add Topic"><i class="fa fa-plus"></i> Add Topic</button>
                 <a ng-click="deleteTopic()" ui-sref="inbox" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="top" title="Discard email" ng-if="thread.id"><i class="fa fa-times"></i> Discard</a>
@@ -37,5 +58,5 @@
 
         </div>
     </div>
-
 </div>
+

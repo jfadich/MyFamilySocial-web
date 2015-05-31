@@ -12,7 +12,7 @@
         'angularMoment',
         'toastr',
         'ui.bootstrap.showErrors',
+        'ngSanitize',
+        'MassAutoComplete'
     ])
 })();
-
-// Other libraries are loaded dynamically using the library ocLazyLoad

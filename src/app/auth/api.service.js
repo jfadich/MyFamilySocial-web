@@ -12,6 +12,10 @@
             return self.request(endpoint,'post', data);
         };
 
+        self.patch = function (endpoint, data) {
+            return self.request(endpoint,'patch', data);
+        };
+
         self.delete = function (endpoint) {
             return self.request(endpoint,'delete');
         };
@@ -29,10 +33,16 @@
                 promise = $http.get(url);
             else if (method === 'post')
                 promise = $http.post(url, data);
+            else if (method === 'patch')
+                promise = $http.patch(url, data);
             else if (method === 'delete')
                 promise = $http.delete(url);
 
-            return promise.catch(function (response) {
+            return promise.catch(function (response) {console.log(response);
+                if(response.data === null || response.data.error === undefined) {
+                    console.log(response);
+                    return $q.reject(response);
+                }
                 if (response.data.error.error_code == 102)
                     return self.refreshToken(url, method, data);
 

@@ -32,6 +32,12 @@
             return api.delete(api.url('/comments/') + reply);
         };
 
+        self.updateReply = function(reply) {
+            return api.patch(api.url('/comments/') + reply.id, {
+                body: reply.body
+            });
+        };
+
         self.addThread = function(thread) {
             return self.postPromise('topic/', {
                 title: thread.title,
@@ -54,7 +60,14 @@
             if(endpoint === undefined)
                 endpoint = '';
 
-            return api.post(self.url(endpoint), data)
+            return api.post(self.url(endpoint), data);
+        };
+
+        self.patchPromise = function(endpoint, data) {
+            if(endpoint === undefined)
+                endpoint = '';
+
+            return api.patch(self.url(endpoint), data);
         };
 
         self.next = function() {

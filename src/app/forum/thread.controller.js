@@ -10,6 +10,7 @@
 
         ForumService.getThread($state.params.thread_slug, 'replies.owner,category,owner,tags').then(function(thread){
             $scope.thread = thread.data;
+            $scope.thread.tags = $scope.thread.tags.join(',');
             $scope.headerTitle = $scope.thread.title;
             $scope.breadcrumbs = [{title: 'Forum', link: '#/discussions'},
                 { title: $scope.thread.title, link: ''}];
@@ -20,7 +21,6 @@
         $scope.addReply = function(comment) {
             ForumService.addReply($scope.thread.slug, comment.body).then(function(response){
                 comment.body = '';
-                console.log(response);
                 $scope.sort();
                 $scope.thread.replies.data.push(response.data.data);
                 toastr.success('Reply added Successfully', { iconClass: 'toast-comment'});
@@ -36,7 +36,10 @@
         };
 
         $scope.saveReply = function(reply) {
-            alert(reply.body);
+            ForumService.updateReply(reply).then(function(response) {
+                $scope.editing = 0;
+                toastr.success('Reply updated Successfully', { iconClass: 'toast-comment'});
+            });
         };
 
         $scope.deleteReply = function(reply) {
@@ -64,7 +67,7 @@
                 });
             }
         };
-
+        console.log('here');
         $scope.sort = function() {
             $scope.thread.replies.data.sort(function(a,b) {
                 if (a.created < b.created)
@@ -74,7 +77,6 @@
                 return 0;
             });
         }
-
     }
 
     angular.module('inspinia')
