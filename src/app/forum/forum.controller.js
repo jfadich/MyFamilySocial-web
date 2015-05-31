@@ -27,8 +27,7 @@
 
     function ThreadFormController($scope, ForumService, toastr, $state, categories, TagService) {
         $scope.thread = {};
-        $scope.thread.tags = {};
-        $scope.thread.tags.data = [];
+        $scope.thread.tag_array = [];
         $scope.categories = categories.data;
         $scope.headerTitle = 'Add new Post';
         $scope.breadcrumbs = [{title: 'Forum', link: '#/discussions'},
@@ -46,7 +45,7 @@
                     for(var i = 0; i < terms.length - 1; i++)
                     {
                         if(terms[i] !== '')
-                            $scope.thread.tags.data.push({name: terms[i]});
+                            $scope.thread.tag_array.push({name: terms[i]});
 
                         $scope.dirty.value = term;
                     }
@@ -63,13 +62,13 @@
                 });
             },
             on_select: function(selected) {
-                $scope.thread.tags.data.push({name: selected.value});
+                $scope.thread.tag_array.push({name: selected.value});
                 $scope.dirty = {};
             }
         };
 
         $scope.removeTag = function(tag) {
-            var index = $scope.thread.tags.data.indexOf(tag);
+            var index = $scope.thread.tag_array.indexOf(tag);
             $scope.thread.tags.data.splice(index, 1);
         };
 
@@ -77,8 +76,8 @@
             $scope.$broadcast('show-errors-check-validity');
 
             if ($scope.threadForm.$valid) {
-                if(thread.tags.data && thread.tags.data.length > 0) {
-                    thread.tags = thread.tags.data.map(function(tag){
+                if(thread.tag_array && thread.tag_array.length > 0) {
+                    thread.tags = thread.tag_array.map(function(tag){
                         return tag.name;
                     }).join(",");
                 }

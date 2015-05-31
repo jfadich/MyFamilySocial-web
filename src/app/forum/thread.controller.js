@@ -1,9 +1,11 @@
 ;(function () {
 
-    function ThreadController($scope, ForumService, $state, toastr) {
+    function ThreadController($scope, ForumService, $state, toastr, TagService, categories) {
+        $scope.categories = $scope.categories = categories.data;
         $scope.thread = null;
         $scope.comment = null;
         $scope.editing = 0;
+        $scope.dirty = {};
 
         $scope.headerTitle = 'Forum';
         $scope.breadcrumbs = [{title: 'Forum', link: '#/discussions'}];
@@ -29,6 +31,48 @@
         $scope.editReply = function(reply) {
             reply.edited = reply.body;
             $scope.editing = reply.id;
+        };
+
+        $scope.stopEdit = function() {
+            $scope.editing = 0;
+        };
+
+        $scope.editThread = function(thread) {console.log(thread);
+            thread.tag_array = thread.tags.data;
+            thread.edited = thread.body;
+            $scope.editing_thread = true;
+        };
+        $scope.tag_autocomplete = {
+            suggest: function(search) {
+                $scope.results = [];
+                var ix = search.lastIndexOf(','),
+                    term = search.substring(ix + 1),
+                    terms = search.split(',');
+                if(terms.length > 0)
+                {
+                    for(var i = 0; i < terms.length - 1; i++)
+                    {
+                        if(terms[i] !== '')
+                            $scope.thread.tag_array.push({name: terms[i]});
+
+                        $scope.dirty.value = term;
+                    }
+                }
+                if(term == '')
+                    return;
+                return TagService.search(term).then(function(response){
+                    var tags = response.data.data;
+
+                    tags.forEach(function(tag){
+                        $scope.results.push({value: tag.name, label: tag.name});
+                    });
+                    return $scope.results;
+                });
+            },
+            on_select: function(selected) {
+                $scope.thread.tag_array.push({name: selected.value});
+                $scope.dirty = {};
+            }
         };
 
         $scope.stopEdit = function() {

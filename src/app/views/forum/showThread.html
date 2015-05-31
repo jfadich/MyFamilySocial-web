@@ -2,7 +2,7 @@
 <div class="wrapper wrapper-content">
     <div class="ibox animated fadeInUp" ng-show="thread">
 
-        <div class="ibox-content">
+        <div class="ibox-content" ng-if="!editing_thread">
 
             <div>
                 <a href="" class="pull-left">
@@ -12,7 +12,7 @@
 
                 <div class="media-body ">
                     <span class=" pull-right">
-                        <button class="btn btn-white btn-xs" ng-if="thread.permissions.edit"> <i class="fa fa-pencil"></i> </button>
+                        <button class="btn btn-white btn-xs" ng-if="thread.permissions.edit" ng-click="editThread(thread)"> <i class="fa fa-pencil"></i> </button>
                         <button class="btn btn-white btn-xs" ng-if="thread.permissions.delete"> <i class="glyphicon glyphicon-remove"></i> </button>
                     </span>
 
@@ -38,6 +38,56 @@
                         &nbsp;<span am-time-ago="thread.created" am-preprocess="unix"></span>
                     </span>
                 </h4>
+            </div>
+        </div>
+
+        <div class="ibox-content" ng-if="editing_thread">
+            <form class="form-horizontal" name="threadForm" novalidate>
+                <div class="form-group" show-errors="{ showSuccess: true}">
+                    <label class="col-sm-2 control-label">Thread Title:</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" name="title" ng-model="thread.title" required>
+                    </div>
+                </div>
+                <div class="form-group" show-errors="{ showSuccess: true}">
+                    <label class="col-sm-2 control-label">Category:</label>
+                    <div class="col-sm-10">
+                        <select class="form-control m-b" ng-model="thread.category.data.id" name="category" required>
+                            <option ng-repeat="category in categories" ng-model="category" value="{{ category.id }}">{{ category.name }}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group" show-errors="{ showSuccess: true}">
+                    <div class="col-sm-12">
+                        <textarea ng-model="thread.body" name="body" class="form-control" rows="8" required></textarea>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Tags <small>(comma separated)</small></label>
+                    <div class="col-sm-3">
+                        <input type="text" class="form-control" ng-model="dirty.value" mass-autocomplete-item="tag_autocomplete">
+                    </div>
+                        <span class="col-md-7 text-left pull-right" ng-if="thread.tag_array.length > 0">
+                            <span ng-repeat="tag in thread.tag_array">
+                                <a class="btn btn-white btn-sm" ng-click="removeTag(tag)"><i class="fa fa-close"></i> &nbsp;{{ tag.name }}</a>
+                            </span>
+                        </span>
+                </div>
+
+            </form>
+
+            <div class="media-body">
+                <div class="form-group col-sm-6">
+                    <button class="btn btn-primary btn-outline form-control" ng-disabled="editThreadReply.$invalid" ng-click="saveReply(reply)">
+                        Save Reply
+                    </button>
+                </div>
+                <div class="form-group col-sm-6">
+                    <button class="btn btn-warning btn-outline form-control" ng-click="stopEdit()">
+                        Cancel
+                    </button>
+                </div>
+                <br>
             </div>
 
         </div>
@@ -78,7 +128,7 @@
                         </p>
                     </div>
 
-                    <form class="ng-pristine ng-valid media-body" ng-if="editing == reply.id" name="editThreadReply" novalidate="">
+                    <form class="media-body" ng-if="editing == reply.id" name="editThreadReply" novalidate="">
                         <div class="form-group">
                     <textarea type="text" name="reply" ng-model="reply.edited" class="form-control" rows="4" required="">
                     </textarea>

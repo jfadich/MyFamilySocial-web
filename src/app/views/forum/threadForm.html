@@ -31,8 +31,8 @@
                         <div class="col-sm-3">
                             <input type="text" class="form-control" ng-model="dirty.value" mass-autocomplete-item="tag_autocomplete">
                         </div>
-                        <span class="col-md-7 text-left pull-right" ng-if="thread.tags.data.length > 0">
-                            <span ng-repeat="tag in thread.tags.data" >
+                        <span class="col-md-7 text-left pull-right" ng-if="thread.tag_array.length > 0">
+                            <span ng-repeat="tag in thread.tag_array">
                                 <a class="btn btn-white btn-sm" ng-click="removeTag(tag)"><i class="fa fa-close"></i> &nbsp;{{ tag.name }}</a>
                             </span>
                         </span>
@@ -42,7 +42,6 @@
         </div>
             <div class="mail-body text-right">
                 <button ng-click="addThread(thread)" class="btn btn-sm btn-primary" data-toggle="tooltip" data-placement="top" title=" Add Topic"><i class="fa fa-plus"></i> Add Topic</button>
-                <a ng-click="deleteTopic()" ui-sref="inbox" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="top" title="Discard email" ng-if="thread.id"><i class="fa fa-times"></i> Discard</a>
             </div>
             <div class="clearfix"></div>
 
