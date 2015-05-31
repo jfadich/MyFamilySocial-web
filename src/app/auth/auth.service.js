@@ -23,12 +23,15 @@
                 $rootScope.$broadcast('USER_REGISTERED', response.data);
                 $rootScope.$broadcast('USER_LOGGED_IN', response.data);
                 return response;
-            })
+            });
         };
 
         self.logout = function() {
             token.destroy();
-            $rootScope.$broadcast('USER_LOGGED_OUT');
+            $rootScope.$broadcast('USER_LOGGED_OUT').then(function (response) {
+                $rootScope.$broadcast('USER_REFRESH', response.data);
+                return response;
+            });
         };
 
         self.refresh = function () {

@@ -42,6 +42,7 @@
             return self.postPromise('topic/', {
                 title: thread.title,
                 body: thread.body,
+                tags: thread.tags,
                 category: thread.category
             });
         };

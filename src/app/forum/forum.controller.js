@@ -14,7 +14,6 @@
             console.log(response);
         });
 
-
         $scope.more = function() {
             var more = ForumService.next();
             if(more !== null){
@@ -24,7 +23,6 @@
                 });
             }
         }
-
     }
 
     function ThreadFormController($scope, ForumService, toastr, $state, categories, TagService) {
@@ -60,12 +58,13 @@
 
                     tags.forEach(function(tag){
                         $scope.results.push({value: tag.name, label: tag.name});
-                    })
-
+                    });
+                    return $scope.results;
                 });
             },
-            on_select: function(selection) {
-                console.log(selection);
+            on_select: function(selected) {
+                $scope.thread.tags.data.push({name: selected.value});
+                $scope.dirty = {};
             }
         };
 
@@ -78,6 +77,12 @@
             $scope.$broadcast('show-errors-check-validity');
 
             if ($scope.threadForm.$valid) {
+                if(thread.tags.data && thread.tags.data.length > 0) {
+                    thread.tags = thread.tags.data.map(function(tag){
+                        return tag.name;
+                    }).join(",");
+                }
+                console.log(thread);
                 ForumService.addThread(thread).then(function (response) {
                     var thread = response.data.data;
                     toastr.success("'" + thread.title + "' created successfully!", { iconClass: 'toast-comment'});
