@@ -47,15 +47,10 @@
                 {
                     for(var i = 0; i < terms.length - 1; i++)
                     {
-                        //if(i === terms.length -1 && term != '')
-
-
-console.log(terms[i]);
                         if(terms[i] !== '')
                             $scope.thread.tags.data.push({name: terms[i]});
+
                         $scope.dirty.value = term;
-
-
                     }
                 }
                 if(term == '')

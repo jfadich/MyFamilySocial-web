@@ -10,7 +10,6 @@
 
         ForumService.getThread($state.params.thread_slug, 'replies.owner,category,owner,tags').then(function(thread){
             $scope.thread = thread.data;
-            $scope.thread.tags = $scope.thread.tags.join(',');
             $scope.headerTitle = $scope.thread.title;
             $scope.breadcrumbs = [{title: 'Forum', link: '#/discussions'},
                 { title: $scope.thread.title, link: ''}];
@@ -28,6 +27,7 @@
         };
 
         $scope.editReply = function(reply) {
+            reply.edited = reply.body;
             $scope.editing = reply.id;
         };
 
@@ -36,6 +36,8 @@
         };
 
         $scope.saveReply = function(reply) {
+            reply.body = reply.edited;
+            reply.edited = undefined;
             ForumService.updateReply(reply).then(function(response) {
                 $scope.editing = 0;
                 toastr.success('Reply updated Successfully', { iconClass: 'toast-comment'});
@@ -67,7 +69,7 @@
                 });
             }
         };
-        console.log('here');
+
         $scope.sort = function() {
             $scope.thread.replies.data.sort(function(a,b) {
                 if (a.created < b.created)

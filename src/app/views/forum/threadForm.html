@@ -28,16 +28,16 @@
                     </div>
                     <div class="form-group" mass-autocomplete>
                         <label class="col-sm-2 control-label">Tags <small>(comma separated)</small></label>
-                        <div class="col-sm-4">
+                        <div class="col-sm-3">
                             <input type="text" class="form-control" name="tags_search" ng-model="dirty.value" mass-autocomplete-item="tag_autocomplete">
                         </div>
-                        <span class="col-md-6 text-left pull-right" ng-if="thread.tags.data.length > 0">
+                        <span class="col-md-7 text-left pull-right" ng-if="thread.tags.data.length > 0">
                             <span ng-repeat="tag in thread.tags.data" >
                                 <button class="btn btn-white btn-sm" ng-click="removeTag(tag)"><i class="fa fa-close"></i> &nbsp;{{ tag.name }}</button>
                             </span>
                         </span>
                     </div>
-                    <div class="ac-container col-sm-4 col-sm-offset-2" ng-show="tag_autocomplete && dirty.value.length" style="position: absolute">
+                    <div class="ac-container col-sm-2 col-sm-offset-2" ng-show="tag_autocomplete && dirty.value.length" style="position: absolute">
                         <ul class="ac-menu">
                             <li ng-repeat="result in results"
                                 ng-if="$index > 0"
