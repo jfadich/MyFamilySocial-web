@@ -59,56 +59,9 @@
                     </div>
                 <br>
             </form>
-            <div class="feed-activity-list">
-                <div class="feed-element animated fadeInUp" ng-repeat="reply in thread.replies.data"  ng-class="{'flipOutX': reply.deleted}">
 
-                    <a  ui-sref="family.members.profile({user: reply.owner.data.id})" class="pull-left">
-                        <img alt="image" src="assets/images/common/small-default-profile.jpg" ng-if="reply.owner.data.image.small === undefined">
-                        <img alt="image" ng-src="{{ reply.owner.data.image.small }}" ng-if="reply.owner.data.image.small !== undefined">
-                    </a>
+            <div ng-include="'/app/views/forum/_commentsFeed.html'"></div>
 
-                    <div class="media-body text-muted" ng-if="editing != reply.id">
-                        <span class=" pull-right">
-                            <button class="btn btn-white btn-xs" ng-if="reply.permissions.edit" ng-click="editReply(reply)"> <i class="fa fa-pencil"></i> </button>
-                            <button class="btn btn-white btn-xs" ng-if="reply.permissions.delete" ng-click="deleteReply(reply)"> <i class="glyphicon glyphicon-remove"></i> </button>
-                        </span>
-
-                        <strong>{{ reply.owner.data.first_name }} {{ reply.owner.data.last_name }}</strong><br>
-                        <small class="text-muted">{{ reply.created * 1000 | date : short }}  <span ng-if="reply.created !== reply.updated">[Edited]</span></small>
-                        <p>
-                            {{ reply.body }}
-                        </p>
-                    </div>
-
-                    <form class="media-body" ng-if="editing == reply.id" name="editThreadReply" novalidate="">
-                        <div class="form-group">
-                    <textarea type="text" name="reply" ng-model="reply.edited" class="form-control" rows="4" required="">
-                    </textarea>
-                        </div>
-                        <div class="form-group col-sm-6">
-                            <button class="btn btn-primary btn-outline form-control" ng-disabled="editThreadReply.$invalid" ng-click="saveReply(reply)">
-                                Save Reply
-                            </button>
-                        </div>
-                        <div class="form-group col-sm-6">
-                            <button class="btn btn-warning btn-outline form-control" ng-click="stopEdit()">
-                                Cancel
-                            </button>
-                        </div>
-                        <br>
-                    </form>
-
-                </div>
-            </div>
-            <br>
-            <p>
-                <button type="button"
-                        class="btn btn-block btn-outline btn-primary"
-                        ng-click="more()"
-                        ng-if="thread.replies.data.length < thread.replies.meta.pagination.total">
-                    <i class="fa fa-arrow-down"></i> More replies
-                </button>
-            </p>
         </div>
     </div>
 </div>

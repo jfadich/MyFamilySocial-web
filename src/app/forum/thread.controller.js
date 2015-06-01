@@ -3,7 +3,7 @@
     function ThreadController($scope, ForumService, $state, toastr, TagService, categories) {
         $scope.categories = categories.data;
         $scope.thread = null;
-        $scope.comment = null;
+        $scope.comment = [];
         $scope.editing = 0;
         $scope.dirty = {};
 
@@ -12,6 +12,7 @@
 
         ForumService.getThread($state.params.thread_slug, 'replies.owner,category,owner,tags').then(function(thread){
             $scope.thread = thread.data;
+            $scope.comments = thread.data.replies.data;
             $scope.headerTitle = $scope.thread.title;
             $scope.breadcrumbs = [{title: 'Forum', link: '#/discussions'},
                 { title: $scope.thread.category.data.name, link: ''}];
@@ -28,15 +29,6 @@
             });
         };
 
-        $scope.editReply = function(reply) {
-            reply.edited = reply.body;
-            $scope.editing = reply.id;
-        };
-
-        $scope.stopEdit = function() {
-            $scope.editing = 0;
-        };
-
         $scope.editThread = function(thread) {console.log(thread);
             thread.tag_array = thread.tags.data;
             $scope.editing_thread = true;
@@ -44,45 +36,6 @@
 
         $scope.stopThreadEdit = function() {
             $scope.editing_thread = false;
-        };
-
-        $scope.stopEdit = function() {
-            $scope.editing = 0;
-        };
-
-        $scope.saveReply = function(reply) {
-            reply.body = reply.edited;
-            reply.edited = undefined;
-            ForumService.updateReply(reply).then(function(response) {
-                $scope.editing = 0;
-                toastr.success('Reply updated Successfully', { iconClass: 'toast-comment'});
-            });
-        };
-
-        $scope.deleteReply = function(reply) {
-            if(!confirm('Are you sure you want to delete this reply?'))
-                return;
-            reply.deleted = true;
-            ForumService.deleteReply(reply.id).then(function(response){
-                var index = $scope.thread.replies.data.indexOf(reply);
-                $scope.thread.replies.data.splice(index, 1);
-                toastr.success('Reply delete successfully');
-                return response;
-
-            }, function(response){
-                reply.deleted = false;
-            });
-        };
-
-        $scope.more = function() {
-            var more = ForumService.next();
-            if(more !== null){
-                more.then(function(thread){console.log(thread);
-                    if(thread.data.replies.data !== null)
-                        $scope.thread.replies.data = $scope.thread.replies.data.concat(thread.data.replies.data);
-                    $scope.sort();
-                });
-            }
         };
 
         $scope.sort = function() {

@@ -28,14 +28,14 @@
 
         self.logout = function() {
             token.destroy();
-            $rootScope.$broadcast('USER_LOGGED_OUT').then(function (response) {
-                $rootScope.$broadcast('USER_REFRESH', response.data);
-                return response;
-            });
+            $rootScope.$broadcast('USER_LOGGED_OUT');
         };
 
         self.refresh = function () {
-            return $http.post(API_URL + '/auth/refresh', {});
+            return $http.post(API_URL + '/auth/refresh', {}).then(function (response) {
+                $rootScope.$broadcast('USER_REFRESH', response.data);
+                return response;
+            });
         };
 
         self.isAuthenticated = function() {

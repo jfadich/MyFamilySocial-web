@@ -17,7 +17,7 @@
                         </a>
                         <div class="m-b-xs">
                             <strong>{{ thread.owner.data.first_name }} {{ thread.owner.data.last_name }}</strong> |
-                            <i class="fa fa-clock-o"></i> <span am-time-ago="thread.modified" am-preprocess="unix"></span> |
+                            <i class="fa fa-clock-o"></i> <span am-time-ago="thread.freshness" am-preprocess="unix"></span> |
                             <i class="fa fa-comments-o"></i>  {{ thread.reply_count }} comments
 
                             <span class="col-md-6 text-right pull-right" ng-if="thread.tags.data.length > 0">

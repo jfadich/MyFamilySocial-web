@@ -37,9 +37,16 @@
             if ($scope.register.$valid) {
                 auth.register($scope.newUser.first_name, $scope.newUser.last_name, $scope.newUser.email, $scope.newUser.password, $scope.newUser.password_confirm).then(function(response){console.log(response);
                     $state.go('family.main');
-                }, function(response){console.log($scope.newUser.first_name, $scope.newUser.last_name, $scope.newUser.email, $scope.newUser.password, $scope.newUser.password_confirm);
-                    toastr.error('Invalid input');
-                    console.log(response);
+                }, function(response){
+                    if(response.data.error.error_code === 201) {
+                        var errors = response.data.error.message;
+
+                        for(var attributes in errors) {
+                            for(var message in errors[attributes])
+                                toastr.error(errors[attributes][message]);
+                        }
+                    }
+                    return response;
                 });
             }
         }
