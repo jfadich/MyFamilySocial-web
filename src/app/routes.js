@@ -39,7 +39,7 @@
             .state('family.forum.createThread', {
                 url: "/new",
                 templateUrl: "app/views/forum/threadForm.html",
-                controller: "ThreadFormCtrl",
+                controller: "AddThreadCtrl",
                 data: {
                     pageTitle: 'Create Topic'
                 }

@@ -6,46 +6,12 @@
 
             <div class="mail-body">
 
-                <form class="form-horizontal" name="threadForm" method="get" novalidate>
-                    <div class="form-group" show-errors="{ showSuccess: true}">
-                        <label class="col-sm-2 control-label">Thread Title:</label>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" name="title" ng-model="thread.title" required>
-                        </div>
-                    </div>
-                    <div class="form-group" show-errors="{ showSuccess: true}">
-                        <label class="col-sm-2 control-label">Category:</label>
-                        <div class="col-sm-10">
-                            <select class="form-control m-b" ng-model="thread.category" name="category" required>
-                                <option ng-repeat="category in categories" ng-model="category" value="{{ category.id }}">{{ category.name }}</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-group" show-errors="{ showSuccess: true}">
-                        <div class="col-sm-12">
-                            <textarea ng-model="thread.body" name="body" class="form-control" rows="8" required></textarea>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label">Tags <small>(comma separated)</small></label>
-                        <div class="col-sm-3">
-                            <input type="text" class="form-control" ng-model="dirty.value" mass-autocomplete-item="tag_autocomplete">
-                        </div>
-                        <span class="col-md-7 text-left pull-right" ng-if="thread.tag_array.length > 0">
-                            <span ng-repeat="tag in thread.tag_array">
-                                <a class="btn btn-white btn-sm" ng-click="removeTag(tag)"><i class="fa fa-close"></i> &nbsp;{{ tag.name }}</a>
-                            </span>
-                        </span>
-                    </div>
-                </form>
+                <div ng-include="'/app/views/forum/_threadForm.html'"></div>
 
-        </div>
-            <div class="mail-body text-right">
-                <button ng-click="addThread(thread)" class="btn btn-sm btn-primary" data-toggle="tooltip" data-placement="top" title=" Add Topic"><i class="fa fa-plus"></i> Add Topic</button>
             </div>
-            <div class="clearfix"></div>
-
         </div>
-    </div>
-</div>
 
+
+    </div>
+
+</div>

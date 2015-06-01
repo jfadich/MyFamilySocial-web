@@ -43,7 +43,16 @@
                 title: thread.title,
                 body: thread.body,
                 tags: thread.tags,
-                category: thread.category
+                category: thread.category.data.id
+            });
+        };
+
+        self.updateThread = function(thread) {
+            return self.patchPromise('topic/' + thread.slug, {
+                title: thread.title,
+                body: thread.body,
+                tags: thread.tags,
+                category: thread.category.data.id
             });
         };
 
