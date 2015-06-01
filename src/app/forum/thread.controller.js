@@ -7,15 +7,16 @@
         $scope.editing = 0;
         $scope.dirty = {};
 
-        $scope.headerTitle = 'Forum';
+       // $scope.headerTitle = 'Forum';
         $scope.breadcrumbs = [{title: 'Forum', link: '#/discussions'}];
 
         ForumService.getThread($state.params.thread_slug, 'replies.owner,category,owner,tags').then(function(thread){
             $scope.thread = thread.data;
             $scope.comments = thread.data.replies.data;
-            $scope.headerTitle = $scope.thread.title;
+          //  $scope.headerTitle = $scope.thread.title;
             $scope.breadcrumbs = [{title: 'Forum', link: '#/discussions'},
-                { title: $scope.thread.category.data.name, link: ''}];
+                { title: $scope.thread.category.data.name, link: ''},
+                { title: $scope.thread.title, link: ''}];
         }, function(response){
             console.log(response);
         });

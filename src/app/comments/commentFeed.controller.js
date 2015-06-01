@@ -17,6 +17,7 @@
         };
 
         $scope.deleteReply = function(reply) {
+            $scope.editing = 0;
             if(!confirm('Are you sure you want to delete this reply?')) return;
 
             reply.deleted = true;

@@ -5,39 +5,40 @@
         <div class="ibox-content" ng-if="!editing_thread">
 
             <div>
-                <a href="" class="pull-left">
-                    <img alt="image" src="assets/images/common/small-default-profile.jpg" ng-if="thread.owner.data.image.small === undefined" class="m-r-sm ng-cloak">
-                    <img alt="image" ng-src="{{ thread.owner.data.image.small }}" ng-if="thread.owner.data.image.small !== undefined" class="m-r-sm ng-cloak">
-                </a>
+
 
                 <div class="media-body ">
                     <span class=" pull-right">
                         <button class="btn btn-white btn-xs" ng-if="thread.permissions.edit" ng-click="editThread(thread)"> <i class="fa fa-pencil"></i> </button>
                         <button class="btn btn-white btn-xs" ng-if="thread.permissions.delete"> <i class="glyphicon glyphicon-remove"></i> </button>
                     </span>
+<h2>{{thread.title}}</h2>
 
-                    <strong>{{ thread.owner.data.first_name }} {{ thread.owner.data.last_name }}</strong><br>
-                    <small class="text-muted">{{ thread.created * 1000 | date : short }}</small>
+                <div class="ibox-content">
                     <p>
                         {{ thread.body }}
-                    </p>
+                    </p></div>
                 </div>
             </div>
             <div class="forum-post-info">
-                <h4>
-                    <span class="text-navy">
+                <a href="" class="pull-left">
+                    <img alt="image" src="assets/images/common/small-default-profile.jpg" ng-if="thread.owner.data.image.small === undefined" class="m-r-sm ng-cloak">
+                    <img alt="image" ng-src="{{ thread.owner.data.image.small }}" ng-if="thread.owner.data.image.small !== undefined" class="m-r-sm ng-cloak">
+                </a>
+                <div>
+                    Posted by <strong>{{ thread.owner.data.first_name }} {{ thread.owner.data.last_name }}</strong> in
+                    <span>
                         <i class="{{ thread.category.data.icon }}"></i> <a ui-sref="family.forum.category({category_slug: thread.category.data.slug})">{{ thread.category.data.name }}</a>
                     </span>
-                    <span class="col-md-6 text-right pull-right" ng-if="thread.tags.data.length > 0">
+                    on <small class="text-muted"><i class="fa fa-clock-o"></i> {{ thread.created * 1000 | date : short }}</small>
+                </div>
+                    <div style="padding-top: 5px;" ng-if="thread.tags.data.length > 0">
                         <span ng-repeat="tag in thread.tags.data">
                             <button class="btn btn-white btn-xs">{{ tag.name }}</button>
                         </span>
-                    </span>
-                    <span class="small">
-                        &nbsp;<i class="fa fa-clock-o"></i>
-                        &nbsp;<span am-time-ago="thread.created" am-preprocess="unix"></span>
-                    </span>
-                </h4>
+                    </div>
+                <div class="clearfix"></div>
+
             </div>
         </div>
 
