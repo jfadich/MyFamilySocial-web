@@ -82,6 +82,19 @@
                     pageTitle: 'Members'
                 }
             })
+            .state('family.photos', {
+                url: '/photos',
+                abstract: true,
+                template: '<ui-view/>'
+            } )
+            .state('family.photos.albums', {
+                url: "",
+                templateUrl: "app/views/photos/albums.html",
+                controller: "AlbumCtrl",
+                data: {
+                    pageTitle: 'Photos'
+                }
+            })
             .state('auth', {
                 url: '/auth',
                 abstract: true,

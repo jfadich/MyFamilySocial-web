@@ -8,12 +8,13 @@
         };
 
         $scope.saveReply = function(reply) {
+            $scope.editing = 0;
             reply.body = reply.edited;
-            reply.edited = undefined;
             ForumService.updateReply(reply).then(function(response) {
-                $scope.editing = 0;
                 toastr.success('Reply updated Successfully', { iconClass: 'toast-comment'});
+                reply.edited = undefined;
             });
+
         };
 
         $scope.deleteReply = function(reply) {
@@ -34,16 +35,6 @@
 
         $scope.stopEdit = function() {
             $scope.editing = 0;
-        };
-
-        $scope.more = function() {
-            var more = ForumService.next();console.log($scope.thread.replies.meta.pagination);
-            if(more !== null){
-                more.then(function(thread){console.log(thread);
-                    if(thread.data.replies.data !== null)
-                        $scope.comments = $scope.comments.concat(thread.data.replies.data);
-                });
-            }
         };
     }
 

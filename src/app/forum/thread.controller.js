@@ -23,10 +23,9 @@
 
         $scope.addReply = function(comment) {
             ForumService.addReply($scope.thread.slug, comment.body).then(function(response){
-                comment.body = '';
-                $scope.sort();
-                $scope.thread.replies.data.push(response.data.data);
+                $scope.comments.push(response.data.data);
                 toastr.success('Reply added Successfully', { iconClass: 'toast-comment'});
+                comment.body = '';
             });
         };
 
@@ -37,6 +36,19 @@
 
         $scope.stopThreadEdit = function() {
             $scope.editing_thread = false;
+        };
+
+
+        $scope.more = function() {
+            var more = ForumService.next();console.log($scope.thread.replies.meta.pagination);
+            if(more !== null){
+                more.then(function(thread){console.log(thread);
+                    if(thread.data.replies.data !== null)
+                        $scope.comments = $scope.comments.concat(thread.data.replies.data);
+
+                    $scope.sort(); // Make sure any new replies are in the correct place relative to the new items
+                });
+            }
         };
 
         $scope.sort = function() {
