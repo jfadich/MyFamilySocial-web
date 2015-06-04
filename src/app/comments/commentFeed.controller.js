@@ -9,7 +9,7 @@
 
         $scope.saveReply = function(reply) {
             $scope.editing = 0;
-            reply.body = reply.edited;
+            reply.body = reply.edited;console.log(reply);
             ForumService.updateReply(reply).then(function(response) {
                 toastr.success('Reply updated Successfully', { iconClass: 'toast-comment'});
                 reply.edited = undefined;

@@ -1,18 +1,17 @@
 <div ng-include="'/components/common/heading.html'"></div>
 <div class="wrapper wrapper-content">
-    <div class="ibox animated fadeInUp" ng-show="thread">
+    <div class="ibox" ng-show="thread">
 
         <div class="ibox-content" ng-if="!editing_thread">
 
             <div>
 
 
-                <div class="media-body ">
+                <div class="media-body animated fadeInUp ">
                     <span class=" pull-right">
                         <button class="btn btn-white btn-xs" ng-if="thread.permissions.edit" ng-click="editThread(thread)"> <i class="fa fa-pencil"></i> </button>
-                        <button class="btn btn-white btn-xs" ng-if="thread.permissions.delete"> <i class="glyphicon glyphicon-remove"></i> </button>
                     </span>
-<h2>{{thread.title}}</h2>
+                    <h2>{{thread.title}}</h2>
 
                 <div class="ibox-content">
                     <p>
@@ -20,7 +19,7 @@
                     </p></div>
                 </div>
             </div>
-            <div class="forum-post-info">
+            <div class="forum-post-info  animated fadeInUp">
                 <a href="" class="pull-left">
                     <img alt="image" src="assets/images/common/small-default-profile.jpg" ng-if="thread.owner.data.image.small === undefined" class="m-r-sm ng-cloak">
                     <img alt="image" ng-src="{{ thread.owner.data.image.small }}" ng-if="thread.owner.data.image.small !== undefined" class="m-r-sm ng-cloak">

@@ -6,7 +6,7 @@
                 <a ng-href="#/"target="_self">Home</a>
             </li>
             <li ng-repeat="crumb in breadcrumbs">
-                <a ng-href="{{ crumb.link }}" ng-hide="$last" target="_self">{{ crumb.title }}</a>
+                <a ui-sref="{{ crumb.link }}" ng-hide="$last" target="_self">{{ crumb.title }}</a>
                 <strong ng-show="$last">{{ crumb.title }}</strong>
             </li>
         </ol>

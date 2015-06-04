@@ -14,8 +14,8 @@
             $scope.thread = thread.data;
             $scope.comments = thread.data.replies.data;
           //  $scope.headerTitle = $scope.thread.title;
-            $scope.breadcrumbs = [{title: 'Forum', link: '#/discussions'},
-                { title: $scope.thread.category.data.name, link: ''},
+            $scope.breadcrumbs = [{title: 'Forum', link: 'family.forum.index'},
+                { title: $scope.thread.category.data.name, link: 'family.forum.category({category_slug: thread.category.data.slug})'},
                 { title: $scope.thread.title, link: ''}];
         }, function(response){
             console.log(response);

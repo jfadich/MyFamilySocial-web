@@ -2,29 +2,67 @@
 <div class="wrapper wrapper-content">
     <div class="row">
         <div class="ibox">
+            <div class="ibox-content m-b-sm border-bottom">
+                <div class="p-xs col-sm-10 animated fadeInUp">
+                    <div class="pull-left m-r-md">
+                        <i class="{{ category.icon }} mid-icon"></i>
+                    </div>
+                    <h2>{{ category.name }}</h2>
+                    <span>{{ category.description }}</span>
+
+                </div>
+                <div class="pull-right col-sm-2">
+                    <div class="space-25"></div>
+                    <a class="btn btn-primary btn-lg"
+                       ng-if="main.user.role.data.permissions.forum_createThread"
+                       ui-sref="family.forum.createThread">
+
+                        <i class="fa fa-plus"></i> Add Topic
+                    </a>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+
             <div class="ibox-content feed-activity-list">
+                <div class="row feed-element small font-bold text-center">
+                    <div class="col-md-7">Title</div>
+                    <div class="col-md-3 text-right">Tags</div>
+                    <div class="col-md-1">Replies</div>
+                    <div class="col-md-1">Freshness</div>
+                </div>
                 <div class="feed-element animated fadeInUp" ng-repeat="thread in threads.data">
 
-                    <a href="" class="pull-left">
-                        <img alt="image" src="assets/images/common/small-default-profile.jpg" ng-if="thread.owner.data.image.small === undefined" class="m-r-sm ng-cloak">
-                        <img alt="image" ng-src="{{ thread.owner.data.image.small }}" ng-if="thread.owner.data.image.small !== undefined" class="m-r-sm ng-cloak">
-                    </a>
-                    <div class="media-body ">
-                        <a ui-sref="family.forum.thread({thread_slug: thread.slug})" class="btn-link">
-                            <h2>
-                                {{ thread.title }}
-                            </h2>
-                        </a>
-                        <div class="m-b-xs">
-                            <strong>{{ thread.owner.data.first_name }} {{ thread.owner.data.last_name }}</strong> |
-                            <i class="fa fa-clock-o"></i> <span am-time-ago="thread.freshness" am-preprocess="unix"></span> |
-                            <i class="fa fa-comments-o"></i>  {{ thread.reply_count }} comments
+                        <div class="row">
+                            <div class="col-md-7">
 
-                            <span class="col-md-6 text-right pull-right" ng-if="thread.tags.data.length > 0">
-                                <span ng-repeat="tag in thread.tags.data"> <button class="btn btn-white btn-xs">{{ tag.name }}</button> </span>
-                            </span>
+                                <a href="" class="pull-left">
+                                    <img alt="image" src="assets/images/common/small-default-profile.jpg" ng-if="thread.owner.data.image.small === undefined" class="m-r-sm ng-cloak">
+                                    <img alt="image" ng-src="{{ thread.owner.data.image.small }}" ng-if="thread.owner.data.image.small !== undefined" class="m-r-sm ng-cloak">
+                                </a>
+                                <div class="media-body">
+                                <a ui-sref="family.forum.thread({thread_slug: thread.slug})" class="faq-question">{{ thread.title }}</a>
+                                <small>Added by <strong>{{ thread.owner.data.first_name }} {{ thread.owner.data.last_name }}</strong>
+                                    <i class="fa fa-clock-o"></i> <span am-time-ago="thread.created" am-preprocess="unix"></span>
+                                </small>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <span class="text-right pull-right" ng-if="thread.tags.data.length > 0">
+                                    <span ng-repeat="tag in thread.tags.data"> <button class="btn btn-white btn-xs">{{ tag.name }}</button> </span>
+                                </span>
+                            </div>
+                            <div class="col-md-1 text-center">
+
+                                42{{ thread.reply_count }}
+                            </div>
+                            <div class="col-md-1 text-center">
+
+                                <span am-time-ago="thread.freshness" am-preprocess="unix"></span>
+                            </div>
                         </div>
-                    </div>
+
+
+
                 </div>
                 <br>
                 <p>
