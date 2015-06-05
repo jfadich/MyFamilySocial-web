@@ -2,6 +2,7 @@
 
     function AlbumController($scope,PhotoService) {
         $scope.albums = [];
+        $scope.showEmpty = false;
         var perCard = 4;
 
         PhotoService.getAlbums().then(function(response){

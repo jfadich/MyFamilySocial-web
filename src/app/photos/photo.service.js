@@ -5,7 +5,7 @@
         self.pagination;
 
         self.getAlbums = function(includes) {
-            return api.get(api.url('/albums?with=photos'));
+            return api.get(api.url('/albums?with=photos:limit(4)'));
         }
     }
 
