@@ -13,6 +13,7 @@
         'toastr',
         'ui.bootstrap.showErrors',
         'ngSanitize',
-        'MassAutoComplete'
+        'MassAutoComplete',
+        'ncy-angular-breadcrumb'
     ])
 })();

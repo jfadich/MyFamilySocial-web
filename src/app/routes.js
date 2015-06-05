@@ -7,6 +7,9 @@
                 abstract: true,
                 url: "",
                 templateUrl: "components/common/content.html",
+                ncyBreadcrumb: {
+                    label: 'Home page'
+                },
                 data: {
                     requireAuth: true
                 }
@@ -22,6 +25,9 @@
                 url: '/discussions',
                 abstract: true,
                 template: '<ui-view/>',
+                ncyBreadcrumb: {
+                    label: 'Forum'
+                },
                 resolve: {
                     categories: function(ForumService) {
                         return ForumService.getCategories();
@@ -32,6 +38,9 @@
                 url: "/categories",
                 templateUrl: "app/views/forum/categories.html",
                 controller: "CategoriesCtrl",
+                ncyBreadcrumb: {
+                    label: 'Categories'
+                },
                 data: {
                     pageTitle: 'Discussion Categories'
                 }
@@ -40,6 +49,9 @@
                 url: "/new",
                 templateUrl: "app/views/forum/threadForm.html",
                 controller: "AddThreadCtrl",
+                ncyBreadcrumb: {
+                    label: 'Create New Topic'
+                },
                 data: {
                     pageTitle: 'Create Topic'
                 }
@@ -47,6 +59,9 @@
             .state('family.forum.category', {
                 url: "/:category_slug",
                 templateUrl: "app/views/forum/listThreads.html",
+                ncyBreadcrumb: {
+                    label: '{{category.name}}'
+                },
                 controller: "ForumCtrl",
                 data: {
                     pageTitle: 'Forum Category'
@@ -56,6 +71,9 @@
                 url: "/topics/:thread_slug",
                 templateUrl: "app/views/forum/showThread.html",
                 controller: "ThreadCtrl",
+                ncyBreadcrumb: {
+                    label: '{{ thread.category.data.name}} / {{thread.title}}'
+                },
                 data: {
                     pageTitle: 'Forum Thread'
                 }
@@ -78,6 +96,7 @@
                 url: "/:user",
                 templateUrl: "app/views/users/showProfile.html",
                 controller: "ProfileCtrl",
+
                 data: {
                     pageTitle: 'Members'
                 }
@@ -132,6 +151,11 @@
     }
     angular.module('inspinia')
         .config(routes)
+        .config(function($breadcrumbProvider) {
+            $breadcrumbProvider.setOptions({
+                includeAbstract: 'true'
+            });
+        })
         .config(function(toastrConfig) {
             angular.extend(toastrConfig, {
 

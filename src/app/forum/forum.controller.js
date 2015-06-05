@@ -7,9 +7,6 @@
         ForumService.getCategory($state.params.category_slug, 'threads.owner,threads.tags').then(function(category){
             $scope.category = category.data;
             $scope.threads = category.data.threads;
-            $scope.headerTitle = $scope.category.name;
-            $scope.breadcrumbs = [{title: 'Forum', link: '#/discussions'},
-                { title: $scope.category.name, link: '#/discussions/' + $scope.category.name }];
         }, function(response){
             console.log(response);
         });
