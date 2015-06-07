@@ -101,6 +101,7 @@
                     pageTitle: 'Members'
                 }
             })
+
             .state('family.photos', {
                 url: '/photos',
                 abstract: true,
@@ -110,6 +111,14 @@
                 url: "",
                 templateUrl: "app/views/photos/albums.html",
                 controller: "AlbumCtrl",
+                data: {
+                    pageTitle: 'Photos'
+                }
+            })
+            .state('family.photos.album', {
+                url: "/:album",
+                templateUrl: "app/views/photos/showAlbum.html",
+                controller: "PhotosCtrl",
                 data: {
                     pageTitle: 'Photos'
                 }

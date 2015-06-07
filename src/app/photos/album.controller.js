@@ -11,8 +11,34 @@
         })
     }
 
+    function PhotosController($scope,PhotoService,$state) {
+        $scope.albums = [];
+        $scope.showEmpty = false;
+        $scope.display = 'large';
+        var perCard = 4;
+
+        PhotoService.getAlbum($state.params.album).then(function(response){
+            $scope.album = response.data.data;
+            console.log($scope.album);
+        });
+
+        $scope.gallery = function(event) {console.log(event);
+            event = event || window.event;
+            var target = event.target || event.srcElement,
+                link = target.src ? target.parentNode : target,
+                options = {index: link, event: event},
+                links = event.currentTarget.getElementsByTagName('a');
+            blueimp.Gallery(links, options);
+        };
+
+        $scope.changeDisplay = function(newDisplay) {
+            $scope.display = newDisplay;
+        }
+    }
+
     angular.module('inspinia')
-        .controller('AlbumCtrl', AlbumController);
+        .controller('AlbumCtrl', AlbumController)
+        .controller('PhotosCtrl', PhotosController);
 
 })();
 
