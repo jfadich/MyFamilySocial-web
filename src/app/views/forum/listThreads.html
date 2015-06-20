@@ -33,10 +33,8 @@
                         <div class="row">
                             <div class="col-md-7">
 
-                                <a href="" class="pull-left">
-                                    <img alt="image" src="assets/images/common/small-default-profile.jpg" ng-if="thread.owner.data.image.small === undefined" class="m-r-sm ng-cloak">
-                                    <img alt="image" ng-src="{{ thread.owner.data.image.small }}" ng-if="thread.owner.data.image.small !== undefined" class="m-r-sm ng-cloak">
-                                </a>
+                                <profile-picture size="small" user="thread.owner.data" a-class="pull-left" img-class="m-r-sm"></profile-picture>
+
                                 <div class="media-body">
                                 <a ui-sref="family.forum.thread({thread_slug: thread.slug})" class="faq-question">{{ thread.title }}</a>
                                 <small>Added by <strong>{{ thread.owner.data.first_name }} {{ thread.owner.data.last_name }}</strong>

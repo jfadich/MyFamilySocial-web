@@ -1,10 +1,7 @@
 <div class="feed-activity-list" ng-controller="CommentFeedCtrl">
     <div class="feed-element animated fadeInUp" ng-repeat="reply in comments"  ng-class="{'flipOutX': reply.deleted}">
 
-        <a  ui-sref="family.members.profile({user: reply.owner.data.id})" class="pull-left">
-            <img alt="image" src="assets/images/common/small-default-profile.jpg" ng-if="reply.owner.data.image.small === undefined">
-            <img alt="image" ng-src="{{ reply.owner.data.image.small }}" ng-if="reply.owner.data.image.small !== undefined">
-        </a>
+        <profile-picture size="small" user="reply.owner.data" class="pull-left"></profile-picture>
 
         <div class="media-body text-muted" ng-if="editing != reply.id">
                     <span class=" pull-right">

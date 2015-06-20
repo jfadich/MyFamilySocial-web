@@ -2,7 +2,7 @@
 
     function ThreadController($scope, ForumService, $state, toastr, TagService, categories) {
         $scope.categories = categories.data;
-        $scope.thread = null;
+        $scope.thread = { owner:{data:{}}};
         $scope.comment = [];
         $scope.editing = 0;
         $scope.dirty = {};

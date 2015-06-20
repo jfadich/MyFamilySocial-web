@@ -22,12 +22,8 @@
             </div>
             <div class="clearfix"></div>
             <div class="forum-post-info  animated fadeInUp">
-                <a href="" class="pull-left">
-                    <img alt="image" src="assets/images/common/small-default-profile.jpg"
-                         ng-if="album.owner.data.image.small === undefined" class="m-r-sm ng-cloak">
-                    <img alt="image" ng-src="{{ album.owner.data.image.small }}"
-                         ng-if="album.owner.data.image.small !== undefined" class="m-r-sm ng-cloak">
-                </a>
+
+                <profile-picture size="small" user="album.owner.data" a-class="pull-left" img-class="m-r-sm"></profile-picture>
 
                 <div>
                     Created by <strong>{{ album.owner.data.first_name }} {{ album.owner.data.last_name }}</strong>

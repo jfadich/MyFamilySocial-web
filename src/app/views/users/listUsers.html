@@ -15,11 +15,7 @@
         <a ui-sref="family.members.profile({user:user.id})">
             <div class="col-sm-4" style="max-width: 110px;">
                 <div class="text-center">
-                    <img alt="image" class="img-circle m-t-xs img-responsive" ng-src="{{ user.image.thumb }}"
-                         ng-if="user.image.thumb !== undefined">
-                    <img alt="image" class="img-circle m-t-xs img-responsive"
-                         src="assets/images/common/thumb-default-profile.jpg"
-                         ng-if="user.image.thumb === undefined"><br>
+                    <profile-picture size="thumb" user="user" img-class="img-circle m-t-xs img-responsive" /><br>
                     {{ user.birthday * 1000 | amDateFormat: 'MMM Do YYYY' }}
                 </div>
             </div>

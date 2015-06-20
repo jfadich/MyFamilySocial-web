@@ -18,10 +18,9 @@
                 </div>
             </div>
             <div class="forum-post-info  animated fadeInUp">
-                <a href="" class="pull-left">
-                    <img alt="image" src="assets/images/common/small-default-profile.jpg" ng-if="thread.owner.data.image.small === undefined" class="m-r-sm ng-cloak">
-                    <img alt="image" ng-src="{{ thread.owner.data.image.small }}" ng-if="thread.owner.data.image.small !== undefined" class="m-r-sm ng-cloak">
-                </a>
+
+                <profile-picture size="small" user="thread.owner.data" a-class="pull-left" img-class="m-r-sm"></profile-picture>
+
                 <div>
                     Posted by <strong>{{ thread.owner.data.first_name }} {{ thread.owner.data.last_name }}</strong> in
                     <span>
