@@ -5,7 +5,7 @@
         $scope.showEmpty = false;
         var perCard = 4;
 
-        PhotoService.getAlbums().then(function(response){
+        PhotoService.getAlbums('photos:limit(4)').then(function(response){
             $scope.albums = response.data.data;
             console.log($scope.albums);
         })
@@ -17,7 +17,7 @@
         $scope.display = 'large';
         var perCard = 4;
 
-        PhotoService.getAlbum($state.params.album).then(function(response){
+        PhotoService.getAlbum($state.params.album, 'photos.owner,photos.tags,owner').then(function(response){
             $scope.album = response.data.data;
         });
 

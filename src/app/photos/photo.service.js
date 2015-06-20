@@ -5,11 +5,11 @@
         self.pagination;
 
         self.getAlbums = function(includes) {
-            return api.get(api.url('/albums?with=photos:limit(4)', includes));
+            return api.get(api.url('/albums', includes));
         };
 
-        self.getAlbum = function(album) {
-            return api.get(api.url('/albums/'+album+'?with=photos.owner,photos.tags,owner'));
+        self.getAlbum = function(album, includes) {
+            return api.get(api.url('/albums/'+album, includes));
         };
 
         self.getPhoto = function(photo, includes) {

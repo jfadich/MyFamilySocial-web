@@ -74,7 +74,8 @@ angular.module('inspinia')
 
         .directive("dropzone", function(api, token, toastr) {
             return function(scope, element, attrs) {
-                element.dropzone({
+
+                var dzOptions = {
                     url: api.url(attrs.dzUrl),
                     maxFilesize: 20,
                     paramName: "photo",
@@ -99,6 +100,12 @@ angular.module('inspinia')
                             $('.dropzone').removeClass('hide');
                         });
                     }
-                });
+                };
+
+                if(attrs.dzOptions !== undefined) {
+                    $.extend(dzOptions, JSON.parse(attrs.dzOptions));
+                }
+
+                element.dropzone(dzOptions);
             };
         });
