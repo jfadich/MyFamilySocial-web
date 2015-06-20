@@ -82,12 +82,18 @@
             .state('family.members', {
                 url: '/members',
                 abstract: true,
+                ncyBreadcrumb: {
+                    label: 'Family'
+                },
                 template: '<ui-view/>'
             } )
             .state('family.members.index', {
                 url: "/index",
                 templateUrl: "app/views/users/listUsers.html",
                 controller: "UsersCtrl",
+                ncyBreadcrumb: {
+                    label: 'Members'
+                },
                 data: {
                     pageTitle: 'Members'
                 }
@@ -96,7 +102,9 @@
                 url: "/:user",
                 templateUrl: "app/views/users/showProfile.html",
                 controller: "ProfileCtrl",
-
+                ncyBreadcrumb: {
+                    label: '{{ user.display_name }}'
+                },
                 data: {
                     pageTitle: 'Members'
                 }
@@ -105,12 +113,18 @@
             .state('family.photos', {
                 url: '/photos',
                 abstract: true,
+                ncyBreadcrumb: {
+                    label: 'Family Photos'
+                },
                 template: '<ui-view/>'
             } )
             .state('family.photos.albums', {
                 url: "",
                 templateUrl: "app/views/photos/albums.html",
                 controller: "AlbumCtrl",
+                ncyBreadcrumb: {
+                    label: 'Albums'
+                },
                 data: {
                     pageTitle: 'Photos'
                 }
@@ -119,6 +133,9 @@
                 url: "/albums/:album",
                 templateUrl: "app/views/photos/showAlbum.html",
                 controller: "PhotosCtrl",
+                ncyBreadcrumb: {
+                    label: '{{ album.name }}'
+                },
                 data: {
                     pageTitle: 'Photos'
                 }
@@ -127,6 +144,9 @@
                 url: "/:photo",
                 templateUrl: "app/views/photos/showPhoto.html",
                 controller: "PhotoCtrl",
+                ncyBreadcrumb: {
+                    label: '{{ photo.parent.data.name }} / {{ photo.name }}'
+                },
                 data: {
                     pageTitle: 'Photos'
                 }

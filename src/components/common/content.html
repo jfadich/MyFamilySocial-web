@@ -11,8 +11,18 @@
         <!-- Page wrapper -->
         <div ng-include="'components/common/topnavbar.html'"></div>
 
-        <!-- Main view  -->
-        <div ui-view></div>
+        <!-- Breadcrumbs -->
+        <div ng-include="'components/common/heading.html'"></div>
+
+        <!-- Page wrapper -->
+        <div class="wrapper wrapper-content">
+            <div class="row">
+
+                <!-- Main view  -->
+                <div ui-view></div>
+
+            </div>
+        </div>
 
         <!-- Footer -->
         <div ng-include="'components/common/footer.html'"></div>

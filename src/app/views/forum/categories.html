@@ -1,79 +1,79 @@
-<div ng-include="'components/common/heading.html'"></div>
-<div class="wrapper wrapper-content">
-    <div class="row">
-        <div class="ibox">
-            <div class="wrapper wrapper-content">
+<div class="ibox">
 
-                <div class="ibox-content m-b-sm border-bottom">
-                    <div class="p-xs col-sm-10">
-                        <div class="pull-left m-r-md">
-                            <i class="fa fa-users text-navy mid-icon"></i>
-                        </div>
-                        <h2>Welcome to Family Discussions</h2>
-                        <span>Feel free to choose topic you're interested in.</span>
+    <!-- masthead -->
+    <div class="ibox-content m-b-sm border-bottom">
+        <div class="p-xs col-sm-10">
+            <div class="pull-left m-r-md">
+                <i class="fa fa-users text-navy mid-icon"></i>
+            </div>
+            <h2>Welcome to Family Discussions</h2>
+            <span>Feel free to choose topic you're interested in.</span>
 
+        </div>
+        <div class="pull-right col-sm-2">
+            <div class="space-25"></div>
+            <a class="btn btn-primary btn-lg"
+               ng-if="main.user.role.data.permissions.forum_createThread"
+               ui-sref="family.forum.createThread">
+
+                <i class="fa fa-plus"></i> Add Topic
+            </a>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+
+    <!-- category list -->
+    <div class="ibox-content forum-container">
+
+        <div class="forum-title">
+            <div class="pull-right forum-desc">
+                <samll>Total posts: 320,800</samll>
+            </div>
+            <h3>Categories</h3>
+        </div>
+
+        <div class="forum-item animated fadeInUp" ng-repeat="category in categories.data">
+            <div class="row">
+                <div class="col-md-9">
+                    <div class="forum-icon">
+                        <i class="{{ category.icon }}"></i>
                     </div>
-                    <div class="pull-right col-sm-2">
-                        <div class="space-25"></div>
-                        <a class="btn btn-primary btn-lg"
-                           ng-if="main.user.role.data.permissions.forum_createThread"
-                           ui-sref="family.forum.createThread">
+                    <a ui-sref="family.forum.category({category_slug: category.slug, reload:true})"
+                       class="forum-item-title">{{ category.name }}</a>
 
-                            <i class="fa fa-plus"></i> Add Topic
-                        </a>
-                    </div>
-                    <div class="clearfix"></div>
+                    <div class="forum-sub-title">{{ category.description }}</div>
                 </div>
+                <div class="col-md-1 forum-info">
+        <span class="views-number">
+            1216
+        </span>
 
-                <div class="ibox-content forum-container">
-
-                    <div class="forum-title">
-                        <div class="pull-right forum-desc">
-                            <samll>Total posts: 320,800</samll>
-                        </div>
-                        <h3>Categories</h3>
+                    <div>
+                        <small>Views</small>
                     </div>
+                </div>
+                <div class="col-md-1 forum-info">
+        <span class="views-number">
+            368
+        </span>
 
-                    <div class="forum-item animated fadeInUp" ng-repeat="category in categories.data">
-                        <div class="row">
-                            <div class="col-md-9">
-                                <div class="forum-icon">
-                                    <i class="{{ category.icon }}"></i>
-                                </div>
-                                <a ui-sref="family.forum.category({category_slug: category.slug, reload:true})" class="forum-item-title">{{ category.name }}</a>
-                                <div class="forum-sub-title">{{ category.description }}</div>
-                            </div>
-                            <div class="col-md-1 forum-info">
-                                        <span class="views-number">
-                                            1216
-                                        </span>
-                                <div>
-                                    <small>Views</small>
-                                </div>
-                            </div>
-                            <div class="col-md-1 forum-info">
-                                        <span class="views-number">
-                                            368
-                                        </span>
-                                <div>
-                                    <small>Topics</small>
-                                </div>
-                            </div>
-                            <div class="col-md-1 forum-info">
-                                        <span class="views-number">
-                                            140
-                                        </span>
-                                <div>
-                                    <small>Posts</small>
-                                </div>
-                            </div>
-                        </div>
+                    <div>
+                        <small>Topics</small>
                     </div>
+                </div>
+                <div class="col-md-1 forum-info">
+        <span class="views-number">
+            140
+        </span>
 
-
+                    <div>
+                        <small>Posts</small>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-</div>
 
+
+    </div>
+
+</div>

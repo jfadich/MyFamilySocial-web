@@ -1,79 +1,89 @@
-<div ng-include="'components/common/heading.html'"></div>
-<div class="wrapper wrapper-content" dropzone="" id="file-dropzone" dz-url="/photos" dz-album="{{ album.id }}">
-    <div class="row">
-        <div class="text-center text-muted"><strong>Drag anywhere to upload photos</strong></div>
+<div dropzone="" id="file-dropzone" dz-url="/photos" dz-album="{{ album.id }}">
+    <div class="ibox" ng-model="album.photos.data">
 
-        <div class="ibox" ng-model="album.photos.data">
+        <!-- Holding area for uploaded photos -->
+        <div id="preview" class="dropzone hide"></div>
 
-            <div class="wrapper wrapper-content">
+        <!-- Album Info -->
+        <div class="ibox-content m-b-sm border-bottom">
+            <div class="p-xs col-sm-9">
+                <div class="media-body">
+                    <h2>{{ album.name}}</h2>
+                    <span>{{ album.description }}</span>
+                </div>
+            </div>
+            <div class="pull-right col-sm-3" id="dz-clickable">
+                <div class="space-25"></div>
+                <a class="btn btn-primary btn-lg"
+                   ng-if="main.user.role.data.permissions.forum_createThread"
+                        >
+                    <i class="fa fa-plus"></i> Add Photos
+                </a>
+            </div>
+            <div class="clearfix"></div>
+            <div class="forum-post-info  animated fadeInUp">
+                <a href="" class="pull-left">
+                    <img alt="image" src="assets/images/common/small-default-profile.jpg"
+                         ng-if="album.owner.data.image.small === undefined" class="m-r-sm ng-cloak">
+                    <img alt="image" ng-src="{{ album.owner.data.image.small }}"
+                         ng-if="album.owner.data.image.small !== undefined" class="m-r-sm ng-cloak">
+                </a>
 
-                <div id="preview" class="dropzone hide"></div><br>
-                <div class="ibox-content m-b-sm border-bottom">
-                    <div class="p-xs col-sm-9">
-                        <div class="media-body">
-                            <h2>{{ album.name}}</h2>
-                            <span>{{ album.description }}</span>
-                        </div>
-                    </div>
-                    <div class="pull-right col-sm-3" id="dz-clickable">
-                        <div class="space-25"></div>
-                        <a class="btn btn-primary btn-lg"
-                           ng-if="main.user.role.data.permissions.forum_createThread"
-                           >
-                            <i class="fa fa-plus"></i>  Add Photos
-                        </a>
-                    </div>
-                    <div class="clearfix"></div>
-                    <div class="forum-post-info  animated fadeInUp">
-                        <a href="" class="pull-left">
-                            <img alt="image" src="assets/images/common/small-default-profile.jpg" ng-if="album.owner.data.image.small === undefined" class="m-r-sm ng-cloak">
-                            <img alt="image" ng-src="{{ album.owner.data.image.small }}" ng-if="album.owner.data.image.small !== undefined" class="m-r-sm ng-cloak">
-                        </a>
-                        <div>
-                            Created by <strong>{{ album.owner.data.first_name }} {{ album.owner.data.last_name }}</strong>
-                            on <small class="text-muted"><i class="fa fa-clock-o"></i> {{ album.created * 1000 | date : short }}</small><br>
-                            <a class="btn btn-default" ng-click="changeDisplay('large')"><i class="glyphicon glyphicon-th-large"></i> </a>
-                            <a class="btn btn-default" ng-click="changeDisplay('small')"><i class="glyphicon glyphicon-th"></i> </a>
-                            <a class="btn btn-default" ng-click="changeDisplay('list')"><i class="glyphicon glyphicon-th-list"></i> </a>
-                        </div>
-
-
-                        <div class="clearfix"></div>
-
-                    </div>
+                <div>
+                    Created by <strong>{{ album.owner.data.first_name }} {{ album.owner.data.last_name }}</strong>
+                    on
+                    <small class="text-muted"><i class="fa fa-clock-o"></i> {{ album.created * 1000 | date : short }}
+                    </small>
+                    <br>
+                    <a class="btn btn-default" ng-click="changeDisplay('large')"><i
+                            class="glyphicon glyphicon-th-large"></i> </a>
+                    <a class="btn btn-default" ng-click="changeDisplay('small')"><i class="glyphicon glyphicon-th"></i>
+                    </a>
+                    <a class="btn btn-default" ng-click="changeDisplay('list')"><i
+                            class="glyphicon glyphicon-th-list"></i> </a>
                 </div>
 
 
+                <div class="clearfix"></div>
 
-                <div class="ibox-content">
-                    <div id="lightboxGallery" ng-click="gallery($event)" ng-if="display == 'large' || display == 'small'">
-                            <a href="{{photo.image.large}}" data-gallery="" ng-repeat="photo in album.photos.data" title="{{photo.name}}">
-                                <img alt="{{photo.name}}" ng-if="display == 'small'" ng-src="{{ photo.image.thumb }}">
-                                <img alt="{{photo.name}}" ng-if="display == 'large'" ng-src="{{ photo.image.medium }}">
-                            </a>
+            </div>
+        </div>
+
+        <div class="text-center text-muted ibox-content"><strong>Drag anywhere to upload photos</strong></div>
+
+        <!-- Album List -->
+        <div class="ibox-content">
+            <div id="lightboxGallery" ng-click="gallery($event)" ng-if="display == 'large' || display == 'small'">
+                <a href="{{photo.image.large}}" data-gallery="" ng-repeat="photo in album.photos.data"
+                   title="{{photo.name}}">
+                    <img alt="{{photo.name}}" ng-if="display == 'small'" ng-src="{{ photo.image.thumb }}">
+                    <img alt="{{photo.name}}" ng-if="display == 'large'" ng-src="{{ photo.image.medium }}">
+                </a>
+            </div>
+            <div class="list-group" ng-if="display == 'list'">
+                <div class="list-group-item" ng-repeat="photo in album.photos.data">
+                    <div class="pull-left m">
+                        <img alt="{{photo.name}}" ng-src="{{ photo.image.small }}">
                     </div>
-                    <div class="list-group" ng-if="display == 'list'">
-                        <div class="list-group-item" ng-repeat="photo in album.photos.data">
-                            <div class="pull-left m">
-                                <img alt="{{photo.name}}" ng-src="{{ photo.image.small }}">
-                            </div>
-                            <div class="media-body">
-                                <h3 class="list-group-item-heading"><a ui-sref="family.photos.photo({photo: photo.id})">{{ photo.name }}</a></h3>
+                    <div class="media-body">
+                        <h3 class="list-group-item-heading"><a ui-sref="family.photos.photo({photo: photo.id})">{{
+                            photo.name }}</a></h3>
 
-                                <p class="list-group-item-text">Uploaded by {{ photo.owner.data.first_name}} {{ photo.owner.data.last_name }}
-                                on {{ photo.created * 1000 | date : short }}</p>
-                                <div style="padding-top: 5px;" ng-if="photo.tags.data.length > 0">
+                        <p class="list-group-item-text">Uploaded by {{ photo.owner.data.first_name}} {{
+                            photo.owner.data.last_name }}
+                            on {{ photo.created * 1000 | date : short }}</p>
+
+                        <div style="padding-top: 5px;" ng-if="photo.tags.data.length > 0">
                                     <span ng-repeat="tag in photo.tags.data">
                                         <button class="btn btn-white btn-xs">{{ tag.name }}</button>
                                     </span>
-                                </div>
-                            </div>
-                            <div class="clearfix"></div>
                         </div>
                     </div>
+                    <div class="clearfix"></div>
                 </div>
             </div>
         </div>
+
     </div>
 </div>
 

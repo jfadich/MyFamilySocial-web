@@ -1,49 +1,59 @@
-<div ng-include="'/components/common/heading.html'"></div>
-<div class="wrapper wrapper-content animated fadeInUp">
-    <div class="row">
-
-        <div class="col-lg-4" ng-repeat="user in users" ng-class="{ clearfix: $index % 3 === 0}">
-            <div class="contact-box">
-                <a ui-sref="family.members.profile({user:user.id})">
-                    <div class="col-sm-4" style="max-width: 110px;">
-                        <div class="text-center">
-                            <img alt="image" class="img-circle m-t-xs img-responsive" ng-src="{{ user.image.thumb }}" ng-if="user.image.thumb !== undefined">
-                            <img alt="image" class="img-circle m-t-xs img-responsive" src="assets/images/common/thumb-default-profile.jpg" ng-if="user.image.thumb === undefined"><br>
-                            {{ user.birthday * 1000 | amDateFormat: 'MMM Do YYYY' }}
-                        </div>
-                    </div>
-                    <div class="col-sm-8">
-                        <h3><strong>{{ user.first_name }} {{ user.last_name }}</strong></h3>
-
-                        <address style="height: 100px;">
-                            <ul class="list-unstyled m-t-md">
-                                <li ng-if="user.email">
-                                    <span class="fa fa-envelope m-r-xs"></span>
-                                    {{ user.email }}
-                                </li>
-                                <li ng-if="user.phone_one">
-                                    <span class="fa fa-phone m-r-xs"></span>
-                                    {{ user.phone_one }}
-                                </li>
-                                <li ng-if="user.phone_two">
-                                    <span class="fa fa-phone m-r-xs"></span>
-                                    {{ user.phone_two }}
-                                </li>
-                                <li class="clearfix" ng-if="user.address">
-                                    <span class="fa fa-home m-r-xs"></span>
-                                    <address class="pull-right" style="width:90%;">
-                                        {{ user.address.street_address }}<br>
-                                        {{ user.address.city }}, {{ user.address.state }} {{ user.address.zip-code }}<br>
-                                    </address>
-
-                                </li>
-                            </ul>
-                        </address>
-
-                    </div>
-                    <div class="clearfix"></div>
-                </a>
-            </div>
+<!-- masthead -->
+<div class="ibox-content m-b-sm border-bottom">
+    <div class="p-xs col-sm-10">
+        <div class="pull-left m-r-md">
+            <i class="fa fa-users text-navy mid-icon"></i>
         </div>
+        <h2>Family Members</h2>
+
+    </div>
+    <div class="clearfix"></div>
+</div>
+
+<div class="col-lg-4" ng-repeat="user in users" ng-class="{ clearfix: $index % 3 === 0}">
+    <div class="contact-box animated fadeInUp">
+        <a ui-sref="family.members.profile({user:user.id})">
+            <div class="col-sm-4" style="max-width: 110px;">
+                <div class="text-center">
+                    <img alt="image" class="img-circle m-t-xs img-responsive" ng-src="{{ user.image.thumb }}"
+                         ng-if="user.image.thumb !== undefined">
+                    <img alt="image" class="img-circle m-t-xs img-responsive"
+                         src="assets/images/common/thumb-default-profile.jpg"
+                         ng-if="user.image.thumb === undefined"><br>
+                    {{ user.birthday * 1000 | amDateFormat: 'MMM Do YYYY' }}
+                </div>
+            </div>
+            <div class="col-sm-8">
+
+                <h3><strong>{{ user.first_name }} {{ user.last_name }}</strong></h3>
+
+                <address style="height: 100px;">
+                    <ul class="list-unstyled m-t-md">
+                        <li ng-if="user.email">
+                            <span class="fa fa-envelope m-r-xs"></span>
+                            {{ user.email }}
+                        </li>
+                        <li ng-if="user.phone_one">
+                            <span class="fa fa-phone m-r-xs"></span>
+                            {{ user.phone_one }}
+                        </li>
+                        <li ng-if="user.phone_two">
+                            <span class="fa fa-phone m-r-xs"></span>
+                            {{ user.phone_two }}
+                        </li>
+                        <li class="clearfix" ng-if="user.address">
+                            <span class="fa fa-home m-r-xs"></span>
+                            <address class="pull-right" style="width:90%;">
+                                {{ user.address.street_address }}<br>
+                                {{ user.address.city }}, {{ user.address.state }} {{ user.address.zip-code }}<br>
+                            </address>
+
+                        </li>
+                    </ul>
+                </address>
+
+            </div>
+            <div class="clearfix"></div>
+        </a>
     </div>
 </div>

@@ -1,47 +1,34 @@
-<div ng-include="'components/common/heading.html'"></div>
-<div class="wrapper wrapper-content">
-    <div class="row">
-        <div class="col-lg-12">
-            <div class="wrapper wrapper-content">
+<div class="ibox-content m-b-sm border-bottom">
+    <div class="p-xs col-sm-9">
+        <div class="pull-left m-r-md">
+            <i class="fa fa-folder-open text-navy mid-icon"></i>
+        </div>
+        <h2>Family Photo Albums</h2>
+        <span><input type="checkbox" ng-model="showEmpty"> Show Empty Albums</span>
 
-                <div class="ibox-content m-b-sm border-bottom">
-                    <div class="p-xs col-sm-9">
-                        <div class="pull-left m-r-md">
-                            <i class="fa fa-folder-open text-navy mid-icon"></i>
-                        </div>
-                        <h2>Family Photo Albums</h2>
-                        <span><input type="checkbox" ng-model="showEmpty"> Show Empty Albums</span>
+    </div>
+    <div class="col-md-3">
+        <div class="space-25"></div>
+        <a class="btn btn-primary btn-lg"
+           ng-if="main.user.role.data.permissions.forum_createThread">
 
-                    </div>
-                    <div class="col-md-3">
-                        <div class="space-25"></div>
-                        <a class="btn btn-primary btn-lg"
-                           ng-if="main.user.role.data.permissions.forum_createThread">
+            <i class="fa fa-plus"></i> Create Album
+        </a>
+    </div>
+    <div class="clearfix"></div>
+</div>
 
-                            <i class="fa fa-plus"></i> Create Album
-                        </a>
-                    </div>
-                    <div class="clearfix"></div>
-                </div>
+<div class="col-md-6 text-center" ng-repeat="album in albums">
+    <div class="ibox" ng-show="showEmpty || album.photos.data.length > 0">
+        <div class="ibox-title">
+            <h5><a style="color:black" ui-sref="family.photos.album({album: album.slug})">{{ album.name }}</a></h5>
 
-                    <div class="col-md-6 text-center" ng-repeat="album in albums">
-                        <div class="ibox float-e-margins" ng-show="showEmpty || album.photos.data.length > 0">
-                            <div class="ibox-title">
-                                <h5><a style="color:black" ui-sref="family.photos.album({album: album.slug})">{{ album.name }}</a></h5>
-                                <div ibox-tools></div>
-                            </div>
-                            <div class="ibox-content">
-                                <span ng-repeat="photo in album.photos.data">
-                                    <img alt="{{photo.name}}" class="visible-xs-inline" ng-src="{{ photo.image.small }}">
-                                    <img alt="{{photo.name}}" class="hidden-xs  animated fadeInUp"  ng-src="{{ photo.image.thumb }}">
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-
-
-            </div>
+        </div>
+        <div class="ibox-content">
+            <span ng-repeat="photo in album.photos.data">
+                <img alt="{{photo.name}}" class="visible-xs-inline" ng-src="{{ photo.image.small }}">
+                <img alt="{{photo.name}}" class="hidden-xs  animated fadeInUp"  ng-src="{{ photo.image.thumb }}">
+            </span>
         </div>
     </div>
 </div>
-
