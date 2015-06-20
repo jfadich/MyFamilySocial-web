@@ -56,7 +56,7 @@
                         if(!self.canRefresh())
                             return $state.go('login');
 
-                        self.refresh().then(
+                        return self.refresh().then(
                             function(response){alert('refreshed');
                                 return $state.go(toState.name,toParams);
                             }, function(response) {

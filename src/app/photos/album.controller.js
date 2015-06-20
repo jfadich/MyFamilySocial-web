@@ -12,15 +12,18 @@
     }
 
     function PhotosController($scope,PhotoService,$state) {
-        $scope.albums = [];
+        $scope.album = { photos: {data: [] } };
         $scope.showEmpty = false;
         $scope.display = 'large';
         var perCard = 4;
 
         PhotoService.getAlbum($state.params.album).then(function(response){
             $scope.album = response.data.data;
-            console.log($scope.album);
         });
+
+        $scope.addPhoto = function() {console.log(Dropzone.forElement('#file-dropzone'));
+
+        };
 
         $scope.gallery = function(event) {console.log(event);
             event = event || window.event;

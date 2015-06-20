@@ -38,7 +38,7 @@ angular.module('inspinia')
             }
         };
     })
-    .directive('pageTitle', function pageTitle($rootScope, $timeout) {
+    .directive('pageTitle', function ($rootScope, $timeout) {
             return {
                 link: function(scope, element) {
                     var listener = function(event, toState, toParams, fromState, fromParams) {
@@ -70,7 +70,35 @@ angular.module('inspinia')
                     ngModel.$validate();
                 });
             }
-        }});
+        }})
 
-
-
+        .directive("dropzone", function(api, token, toastr) {
+            return function(scope, element, attrs) {
+                element.dropzone({
+                    url: api.url(attrs.dzUrl),
+                    maxFilesize: 20,
+                    paramName: "photo",
+                    acceptedFiles: 'image/*',
+                    previewsContainer: '#preview',
+                    clickable: "#dz-clickable",
+                    sending: function (file, xhr, formData) {
+                        xhr.setRequestHeader('Authorization', 'Bearer: ' + token.get());
+                        formData.append("album_id", attrs.dzAlbum);console.log(xhr);
+                    },
+                    init: function () {
+                        this.on('success', function (file, json) {console.log(json);
+                            this.removeFile(file);
+                            toastr.success('Photo uploaded', 'Success');
+                            scope.$apply(function(){
+                                scope.album.photos.data.push(json.data);
+                            });
+                            if(this.files.length == 0)
+                                $('.dropzone').addClass('hide');
+                        });
+                        this.on("addedfile", function (file) {
+                            $('.dropzone').removeClass('hide');
+                        });
+                    }
+                });
+            };
+        });

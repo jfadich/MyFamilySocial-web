@@ -116,9 +116,17 @@
                 }
             })
             .state('family.photos.album', {
-                url: "/:album",
+                url: "/albums/:album",
                 templateUrl: "app/views/photos/showAlbum.html",
                 controller: "PhotosCtrl",
+                data: {
+                    pageTitle: 'Photos'
+                }
+            })
+            .state('family.photos.photo', {
+                url: "/:photo",
+                templateUrl: "app/views/photos/showPhoto.html",
+                controller: "PhotoCtrl",
                 data: {
                     pageTitle: 'Photos'
                 }

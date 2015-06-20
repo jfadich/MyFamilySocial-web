@@ -1,9 +1,13 @@
 <div ng-include="'components/common/heading.html'"></div>
-<div class="wrapper wrapper-content">
+<div class="wrapper wrapper-content" dropzone="" id="file-dropzone" dz-url="/photos" dz-album="{{ album.id }}">
     <div class="row">
-        <div class="ibox">
+        <div class="text-center text-muted"><strong>Drag anywhere to upload photos</strong></div>
+
+        <div class="ibox" ng-model="album.photos.data">
+
             <div class="wrapper wrapper-content">
 
+                <div id="preview" class="dropzone hide"></div><br>
                 <div class="ibox-content m-b-sm border-bottom">
                     <div class="p-xs col-sm-9">
                         <div class="media-body">
@@ -11,12 +15,12 @@
                             <span>{{ album.description }}</span>
                         </div>
                     </div>
-                    <div class="pull-right col-sm-3">
+                    <div class="pull-right col-sm-3" id="dz-clickable">
                         <div class="space-25"></div>
                         <a class="btn btn-primary btn-lg"
                            ng-if="main.user.role.data.permissions.forum_createThread"
-                           ui-sref="family.forum.createThread">
-                            <i class="fa fa-plus"></i> Add Photos
+                           >
+                            <i class="fa fa-plus"></i>  Add Photos
                         </a>
                     </div>
                     <div class="clearfix"></div>
@@ -54,7 +58,7 @@
                                 <img alt="{{photo.name}}" ng-src="{{ photo.image.small }}">
                             </div>
                             <div class="media-body">
-                                <h3 class="list-group-item-heading">{{ photo.name }}</h3>
+                                <h3 class="list-group-item-heading"><a ui-sref="family.photos.photo({photo: photo.id})">{{ photo.name }}</a></h3>
 
                                 <p class="list-group-item-text">Uploaded by {{ photo.owner.data.first_name}} {{ photo.owner.data.last_name }}
                                 on {{ photo.created * 1000 | date : short }}</p>
