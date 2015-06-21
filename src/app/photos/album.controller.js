@@ -13,6 +13,7 @@
 
     function PhotosController($scope,PhotoService,$state) {
         $scope.album = { photos: {data: [] } };
+        $scope.editing_album = false;
         $scope.showEmpty = false;
         $scope.display = 'large';
         var perCard = 4;
@@ -21,8 +22,12 @@
             $scope.album = response.data.data;
         });
 
-        $scope.addPhoto = function() {console.log(Dropzone.forElement('#file-dropzone'));
+        $scope.stopAlbumEdit = function() {
+            $scope.editing_album = false;
+        };
 
+        $scope.editAlbum = function() {
+            $scope.editing_album = true;
         };
 
         $scope.gallery = function(event) {console.log(event);

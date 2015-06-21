@@ -129,6 +129,16 @@
                     pageTitle: 'Photos'
                 }
             })
+            .state('family.photos.createAlbum', {
+                url: "/new",
+                templateUrl: "app/views/photos/createAlbum.html",
+                ncyBreadcrumb: {
+                    label: 'Create New Photo Album'
+                },
+                data: {
+                    pageTitle: 'Create Photo Album'
+                }
+            })
             .state('family.photos.album', {
                 url: "/albums/:album",
                 templateUrl: "app/views/photos/showAlbum.html",

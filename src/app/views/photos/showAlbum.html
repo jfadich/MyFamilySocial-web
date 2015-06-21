@@ -2,30 +2,26 @@
     <div class="ibox" ng-model="album.photos.data">
 
         <!-- Holding area for uploaded photos -->
-        <div id="preview" class="dropzone hide"></div>
+        <div id="preview" class="dropzone hide" style="margin-bottom: 10px;"></div>
 
         <!-- Album Info -->
-        <div class="ibox-content m-b-sm border-bottom">
+        <div class="ibox-content m-b-sm border-bottom" ng-if="!editing_album">
             <div class="p-xs col-sm-9">
                 <div class="media-body">
                     <h2>{{ album.name}}</h2>
                     <span>{{ album.description }}</span>
                 </div>
             </div>
-            <div class="pull-right col-sm-3" id="dz-clickable">
-                <div class="space-25"></div>
-                <a class="btn btn-primary btn-lg"
-                   ng-if="main.user.role.data.permissions.forum_createThread"
-                        >
-                    <i class="fa fa-plus"></i> Add Photos
-                </a>
-            </div>
+
             <div class="clearfix"></div>
             <div class="forum-post-info  animated fadeInUp">
 
                 <profile-picture size="small" user="album.owner.data" a-class="pull-left" img-class="m-r-sm"></profile-picture>
 
                 <div>
+                    <span class=" pull-right">
+                        <button class="btn btn-white btn-xs" ng-if="album.permissions.edit" ng-click="editAlbum()"> <i class="fa fa-pencil"></i> </button>
+                    </span>
                     Created by <strong>{{ album.owner.data.first_name }} {{ album.owner.data.last_name }}</strong>
                     on
                     <small class="text-muted"><i class="fa fa-clock-o"></i> {{ album.created * 1000 | date : short }}
@@ -45,10 +41,24 @@
             </div>
         </div>
 
-        <div class="text-center text-muted ibox-content"><strong>Drag anywhere to upload photos</strong></div>
+        <div ng-include="'/app/views/photos/_albumForm.html'" class="ibox-content m-b-sm border-bottom" ng-if="editing_album"></div>
+
+        <div class="text-center text-muted ibox-content">
+            <div id="dz-clickable">
+                <a class="btn btn-primary"
+                   ng-if="main.user.role.data.permissions.forum_createThread"
+                        >
+                    <i class="fa fa-plus"></i> Add Photos
+                </a>
+            </div>
+            <strong>Drag anywhere to upload photos</strong>
+        </div>
 
         <!-- Album List -->
         <div class="ibox-content">
+            <div ng-show="album.photos.data.length == 0" class="text-center">
+                There's lots of room here for more photos. Click the button above or drag files here to upload photos.
+            </div>
             <div id="lightboxGallery" ng-click="gallery($event)" ng-if="display == 'large' || display == 'small'">
                 <a href="{{photo.image.large}}" data-gallery="" ng-repeat="photo in album.photos.data"
                    title="{{photo.name}}">

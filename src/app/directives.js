@@ -120,6 +120,9 @@ angular.module('inspinia')
                 },
                 link: function(scope, element, attrs) {
                     scope.$watch('user', function() {
+                        if(scope.user === undefined)
+                            return;
+
                         var sizes = ['small', 'thumb', 'medium', 'large', 'card'];
                         var size = attrs.size;
                         if(scope === undefined)

@@ -37,6 +37,10 @@
             </li>
             <li ng-class="{ active: $state.includes('family.photos') }">
                 <a ui-sref="family.photos.albums"><i class="fa fa-photo"></i> <span class="nav-label">Photos</span></a>
+                <ul class="nav nav-second-level" ng-class="{in: $state.includes('family.forum')}">
+                    <li ui-sref-active="active"><a ui-sref="family.photos.albums"><i class="fa fa-folder-open icon-resize-small"></i> Albums</a></li>
+                    <li ui-sref-active="active" ng-if="main.user.role.data.permissions.photos_createAlbum"><a ui-sref="family.photos.createAlbum"><i class="fa fa-plus icon-resize-small"></i> Create Album</a></li>
+                </ul>
             </li>
             <li ng-class="{ active: $state.includes('family.members') }">
                 <a ui-sref="family.members.index"><i class="fa fa-users"></i> <span class="nav-label">Members</span></a>

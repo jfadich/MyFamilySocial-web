@@ -1,30 +1,53 @@
 <div class="ibox-content m-b-sm border-bottom">
+
     <div class="p-xs col-sm-9">
         <div class="pull-left m-r-md">
             <i class="fa fa-folder-open text-navy mid-icon"></i>
         </div>
         <h2>Family Photo Albums</h2>
-        <span><input type="checkbox" ng-model="showEmpty"> Show Empty Albums</span>
 
     </div>
+
     <div class="col-md-3">
         <div class="space-25"></div>
         <a class="btn btn-primary btn-lg"
-           ng-if="main.user.role.data.permissions.forum_createThread">
+           ng-if="main.user.role.data.permissions.forum_createThread"
+           ui-sref="family.photos.createAlbum">
 
             <i class="fa fa-plus"></i> Create Album
         </a>
     </div>
     <div class="clearfix"></div>
+    <div class="row">
+
+        <div class="switch col-md-offset-1 col-md-1">
+            <div class="onoffswitch">
+                <input type="checkbox" ng-model="showEmpty" class="onoffswitch-checkbox" id="shared">
+                <label class="onoffswitch-label" for="shared">
+                    <span class="onoffswitch-inner"> </span>
+                    <span class="onoffswitch-switch"></span>
+                </label>
+            </div>
+        </div>
+        <div class="col-md-2">Show empty albums</div>
+    </div>
+
 </div>
 
-<div class="col-md-6 text-center" ng-repeat="album in albums">
-    <div class="ibox" ng-show="showEmpty || album.photos.data.length > 0">
+<div class="col-md-6 text-center" ng-repeat="album in albums" ng-show="showEmpty || album.photos.data.length > 0">
+    <div class="ibox">
         <div class="ibox-title">
             <h5><a style="color:black" ui-sref="family.photos.album({album: album.slug})">{{ album.name }}</a></h5>
 
         </div>
         <div class="ibox-content">
+            <div ng-show="album.photos.data.length == 0" class="text-center">
+                <br>
+                <h4>There's nothing here</h4>
+
+                <a ui-sref="family.photos.album({album: album.slug})">Click here to add photos</a>
+                <hr>
+            </div>
             <span ng-repeat="photo in album.photos.data">
                 <img alt="{{photo.name}}" class="visible-xs-inline" ng-src="{{ photo.image.small }}">
                 <img alt="{{photo.name}}" class="hidden-xs  animated fadeInUp"  ng-src="{{ photo.image.thumb }}">
