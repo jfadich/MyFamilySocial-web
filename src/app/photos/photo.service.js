@@ -28,6 +28,13 @@
             return api.get(api.url('/photos/'+photo, includes));
         };
 
+        self.updatePhoto = function(photo) {
+            return api.patch(api.url('/photos/' + photo.id), {
+                name: photo.name,
+                description: photo.description,
+                tags: photo.tags
+            })
+        };
     }
 
     angular.module('inspinia')

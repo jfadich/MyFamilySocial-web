@@ -53,7 +53,7 @@
             $scope.$broadcast('show-errors-check-validity');
             var message = '';
             var promise;
-            var toastTitle;console.log($scope.threadForm);
+            var toastTitle;
             if ($scope.threadForm.$valid) {
 
                 thread.tags = $scope.thread.tag_array.map(function(tag){
@@ -81,7 +81,7 @@
                     $scope.stopThreadEdit();
 
                 thread.tags = { data: $scope.thread.tag_array };
-console.log(thread);
+
                 return promise.then(function(response){
                     toastr.success( message, 'Success',{ iconClass: 'toast-comment', allowHtml: true});
                     console.log( response.data);

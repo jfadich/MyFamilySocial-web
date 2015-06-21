@@ -1,4 +1,4 @@
-<div dropzone="" id="file-dropzone" dz-url="/photos" dz-album="{{ album.id }}">
+<div dropzone="" id="file-dropzone" dz-url="/photos" dz-album="{{ album.id }}" dz-permissions="{{ album.permissions.add_photo }}">
     <div class="ibox" ng-model="album.photos.data">
 
         <!-- Holding area for uploaded photos -->
@@ -43,15 +43,17 @@
 
         <div ng-include="'/app/views/photos/_albumForm.html'" class="ibox-content m-b-sm border-bottom" ng-if="editing_album"></div>
 
-        <div class="text-center text-muted ibox-content">
-            <div id="dz-clickable">
-                <a class="btn btn-primary"
-                   ng-if="main.user.role.data.permissions.forum_createThread"
-                        >
+        <!-- Add photo button -->
+        <div id="dz-clickable">
+            <div class="text-center text-muted ibox-content" ng-if="album.permissions.add_photo">
+
+                <a class="btn btn-primary">
                     <i class="fa fa-plus"></i> Add Photos
-                </a>
+                </a><br>
+
+                <strong>Drag anywhere to upload photos</strong>
+
             </div>
-            <strong>Drag anywhere to upload photos</strong>
         </div>
 
         <!-- Album List -->

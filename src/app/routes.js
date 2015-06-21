@@ -150,6 +150,17 @@
                     pageTitle: 'Photos'
                 }
             })
+            .state('family.photos.edit', {
+                url: "/:photo/edit",
+                templateUrl: "app/views/photos/editPhoto.html",
+                controller: "PhotoFormCtrl",
+                ncyBreadcrumb: {
+                    label: '{{ photo.parent.data.name }} / {{ photo.name }}'
+                },
+                data: {
+                    pageTitle: 'Edit Photo'
+                }
+            })
             .state('family.photos.photo', {
                 url: "/:photo",
                 templateUrl: "app/views/photos/showPhoto.html",

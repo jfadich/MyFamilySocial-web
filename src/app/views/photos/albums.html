@@ -43,9 +43,10 @@
         <div class="ibox-content">
             <div ng-show="album.photos.data.length == 0" class="text-center">
                 <br>
-                <h4>There's nothing here</h4>
+                <h3>There's nothing here</h3>
 
-                <a ui-sref="family.photos.album({album: album.slug})">Click here to add photos</a>
+                <a ui-sref="family.photos.album({album: album.slug})" ng-if="album.permissions.add_photo">Click here to add photos</a>
+                <small class="text-muted" ng-if="!album.permissions.add_photo">Maybe {{ album.owner.data.display_name }} will add some pictures</small>
                 <hr>
             </div>
             <span ng-repeat="photo in album.photos.data">

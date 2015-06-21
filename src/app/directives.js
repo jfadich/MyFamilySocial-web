@@ -74,6 +74,9 @@ angular.module('inspinia')
 
         .directive("dropzone", function(api, token, toastr) {
             return function(scope, element, attrs) {
+console.log(attrs, attrs.dzPermissions == "false");
+                if(attrs.dzPermissions !== undefined && attrs.dzPermissions == "false")
+                    return;
 
                 var dzOptions = {
                     url: api.url(attrs.dzUrl),
@@ -129,7 +132,7 @@ angular.module('inspinia')
                             size = 'thumb';
                         else
                             size = sizes.indexOf(size) >= 0 ? size : 'thumb';
-                        console.log(scope.user);
+
                         if(scope.user.image === null || scope.user.image === undefined)
                             var src = 'assets/images/common/'+size+'-default-profile.jpg';
                         else
@@ -141,7 +144,6 @@ angular.module('inspinia')
                         scope.aClass = attrs.aClass;
 
                         scope.imgSource = src;
-                        console.log(scope, attrs);
                     });
                 }
             }

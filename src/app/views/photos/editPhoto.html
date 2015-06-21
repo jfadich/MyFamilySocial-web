@@ -1,0 +1,73 @@
+<form id="editPhoto" name="editPhoto" novalidate>
+    <div class="col-lg-4 pull-right">
+        <div class="ibox">
+            <div class="ibox-content">
+                <div class="animated fadeInUp">
+
+                    <profile-picture size="small" user="photo.owner.data" a-class="pull-left" img-class="m-r-sm"></profile-picture>
+
+                    <div class="media-right">
+                        <strong>{{ photo.owner.data.display_name }}</strong><br>
+                        <small class="text-muted">{{ photo.created * 1000 | date : short }}</small>
+                    </div>
+                    <br>
+
+                    <div class="form-group">
+                    <textarea type="text" name="description" ng-model="photo.description" class="form-control" rows="4">
+                    </textarea>
+                    </div>
+
+                    <input type="text" class="form-control" ng-model="dirty.value"
+                           mass-autocomplete-item="tag_autocomplete">
+                    <br class="clearfix">
+                    <span class="" ng-if="photo.tag_array.length > 0">
+                        <span ng-repeat="tag in photo.tag_array">
+                            <a class="btn btn-white btn-sm" ng-click="removeTag(tag)"><i class="fa fa-close"></i>
+                                &nbsp;{{ tag.name }}</a>
+                        </span>
+                    </span>
+
+                </div>
+            </div>
+        </div>
+
+            <button class="btn btn-primary btn-outline form-control" ng-disabled="editPhoto.$invalid"
+                    ng-click="savePhoto(photo)">
+                <i class="fa fa-check"></i> Save Photo</span>
+            </button>
+<br>
+
+            <button class="btn btn-danger btn-outline form-control" ng-if="photo.permissions.delete">
+                <i class="fa fa-close"></i> Delete
+            </button>
+<br>
+            <button class="btn btn-warning btn-outline form-control" ng-click="stopPhotoEdit()">
+                <i class="fa fa-sign-out"></i> Cancel
+            </button>
+
+    </div>
+
+    <div class="col-lg-8">
+        <div class="ibox">
+            <div class="ibox-content">
+                <div class="animated fadeInUp">
+
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="form-group">
+
+                                <input type="text" ng-model="photo.name" class="form-control" name="name">
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <img ng-src="{{ photo.image.large }}" class="img-responsive center-block">
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
