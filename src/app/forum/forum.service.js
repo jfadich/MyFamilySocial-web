@@ -24,11 +24,6 @@
             return self.getPromise('categories/' + slug, includes);
         };
 
-        self.addReply = function(thread, comment) {
-            return self.postPromise('topic/' + thread, { comment: comment});
-        };
-
-
         self.addThread = function(thread) {
             return self.postPromise('topic/', {
                 title: thread.title,

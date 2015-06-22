@@ -2,7 +2,8 @@
 
     function CommentFeedController($scope, CommentService, toastr) {
 
-        $scope.addReply = function(comment) {
+        $scope.addReply = function(comment, event) {console.log(event);
+            event.target.disabled = true;
             CommentService.addComment(comment.body, $scope.commentParent).then(function(response){
                 $scope.comments.unshift(response.data.data);
                 toastr.success('Reply added Successfully', { iconClass: 'toast-comment'});
@@ -15,9 +16,10 @@
             $scope.editing = reply.id;
         };
 
-        $scope.saveReply = function(reply) {
+        $scope.saveReply = function(reply, event) {
+            event.target.disabled = true;
             $scope.editing = 0;
-            reply.body = reply.edited;console.log(reply);
+            reply.body = reply.edited;
             CommentService.updateComment(reply).then(function(response) {
                 toastr.success('Reply updated Successfully', { iconClass: 'toast-comment'});
                 reply.edited = undefined;

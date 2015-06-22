@@ -10,7 +10,7 @@
         ForumService.getThread($state.params.thread_slug, 'replies.owner,category,owner,tags').then(function(thread){
             $scope.thread = thread.data;
             $scope.commentParent = thread.data;
-            $scope.comments = thread.data.replies.data;console.log(thread.data.replies);
+            $scope.comments = thread.data.replies.data;
           //  $scope.headerTitle = $scope.thread.title;
             $scope.breadcrumbs = [{title: 'Forum', link: 'family.forum.index'},
                 { title: $scope.thread.category.data.name, link: 'family.forum.category({category_slug: thread.category.data.slug})'},
@@ -18,14 +18,6 @@
         }, function(response){
             console.log(response);
         });
-
-        $scope.addReply = function(comment) {
-            ForumService.addReply($scope.thread.slug, comment.body).then(function(response){
-                $scope.comments.push(response.data.data);
-                toastr.success('Reply added Successfully', { iconClass: 'toast-comment'});
-                comment.body = '';
-            });
-        };
 
         $scope.editThread = function(thread) {console.log(thread);
             thread.tag_array = thread.tags.data;

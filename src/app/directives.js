@@ -74,7 +74,7 @@ angular.module('inspinia')
 
         .directive("dropzone", function(api, token, toastr) {
             return function(scope, element, attrs) {
-console.log(attrs, attrs.dzPermissions == "false");
+
                 if(attrs.dzPermissions !== undefined && attrs.dzPermissions == "false")
                     return;
 
@@ -87,7 +87,7 @@ console.log(attrs, attrs.dzPermissions == "false");
                     clickable: "#dz-clickable",
                     sending: function (file, xhr, formData) {
                         xhr.setRequestHeader('Authorization', 'Bearer: ' + token.get());
-                        formData.append("album_id", attrs.dzAlbum);console.log(xhr);
+                        formData.append("album_id", attrs.dzAlbum);
                     },
                     init: function () {
                         this.on('success', function (file, json) {console.log(json);

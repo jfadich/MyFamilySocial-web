@@ -5,7 +5,7 @@
 
         $scope.headerTitle = 'Family Members';
         $scope.breadcrumbs = [{title: 'Family Members', link: '#/members'}];
-        user.getUser($state.params.user).then(function(users){
+        user.getUser($state.params.user, 'profile_pictures,albums.photos').then(function(users){
             $scope.user = users.data;
         });
 

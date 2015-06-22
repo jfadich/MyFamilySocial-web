@@ -30,7 +30,7 @@
             $scope.editing_album = true;
         };
 
-        $scope.gallery = function(event) {console.log(event);
+        $scope.gallery = function(event) {
             event = event || window.event;
             var target = event.target || event.srcElement,
                 link = target.src ? target.parentNode : target,
