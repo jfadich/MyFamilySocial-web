@@ -5,7 +5,7 @@
         $scope.showEmpty = false;
         var perCard = 4;
 
-        PhotoService.getAlbums('photos:limit(4)').then(function(response){
+        PhotoService.getAlbums('photos:limit(4),owner').then(function(response){
             $scope.albums = response.data.data;
             console.log($scope.albums);
         })
@@ -36,7 +36,9 @@
                 link = target.src ? target.parentNode : target,
                 options = {index: link, event: event},
                 links = event.currentTarget.getElementsByTagName('a');
+
             blueimp.Gallery(links, options);
+
         };
 
         $scope.changeDisplay = function(newDisplay) {

@@ -28,15 +28,6 @@
             return self.postPromise('topic/' + thread, { comment: comment});
         };
 
-        self.deleteReply = function(reply) {
-            return api.delete(api.url('/comments/') + reply);
-        };
-
-        self.updateReply = function(reply) {
-            return api.patch(api.url('/comments/') + reply.id, {
-                body: reply.body
-            });
-        };
 
         self.addThread = function(thread) {
             return self.postPromise('topic/', {

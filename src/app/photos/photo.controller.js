@@ -6,6 +6,7 @@
 
         PhotoService.getPhoto($state.params.photo, 'comments.owner,owner,tags,parent').then(function(response){
             $scope.photo = response.data.data;
+            $scope.commentParent = $scope.photo;
             $scope.comments = $scope.photo.comments.data;
             console.log($scope.photo);
         })

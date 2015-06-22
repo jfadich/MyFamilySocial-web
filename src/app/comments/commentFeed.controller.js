@@ -1,6 +1,14 @@
 ;(function () {
 
-    function CommentFeedController($scope, ForumService, toastr) {
+    function CommentFeedController($scope, CommentService, toastr) {
+
+        $scope.addReply = function(comment) {
+            CommentService.addComment(comment.body, $scope.commentParent).then(function(response){
+                $scope.comments.unshift(response.data.data);
+                toastr.success('Reply added Successfully', { iconClass: 'toast-comment'});
+                comment.body = '';
+            });
+        };
 
         $scope.editReply = function(reply) {
             reply.edited = reply.body;
@@ -10,11 +18,10 @@
         $scope.saveReply = function(reply) {
             $scope.editing = 0;
             reply.body = reply.edited;console.log(reply);
-            ForumService.updateReply(reply).then(function(response) {
+            CommentService.updateComment(reply).then(function(response) {
                 toastr.success('Reply updated Successfully', { iconClass: 'toast-comment'});
                 reply.edited = undefined;
             });
-
         };
 
         $scope.deleteReply = function(reply) {
@@ -22,7 +29,7 @@
             if(!confirm('Are you sure you want to delete this reply?')) return;
 
             reply.deleted = true;
-            ForumService.deleteReply(reply.id).then(function(response){
+            CommentService.deleteComment(reply.id).then(function(response){
                 var index = $scope.comments.indexOf(reply);
                 $scope.comments.splice(index, 1);
                 toastr.success('Shhhh, you didn\'t see that', 'Reply deleted successfully');
