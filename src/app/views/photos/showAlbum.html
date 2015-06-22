@@ -11,8 +11,11 @@
                     <h2>{{ album.name}}</h2>
                     <span>{{ album.description }}</span>
                 </div>
-            </div>
 
+            </div>
+            <span ng-if="!album.permissions.add_photo" class="pull-right" tooltip-placement="left" tooltip="Only the owner can add photos to this album">
+                <i class="fa fa-lock"></i>
+            </span>
             <div class="clearfix"></div>
             <div class="forum-post-info  animated fadeInUp">
 
@@ -22,10 +25,14 @@
                     <span class=" pull-right">
                         <button class="btn btn-white btn-xs" ng-if="album.permissions.edit" ng-click="editAlbum()"> <i class="fa fa-pencil"></i> </button>
                     </span>
+
+
+
                     Created by <strong>{{ album.owner.data.first_name }} {{ album.owner.data.last_name }}</strong>
                     on
                     <small class="text-muted"><i class="fa fa-clock-o"></i> {{ album.created * 1000 | date : short }}
                     </small>
+
                     <br>
                     <a class="btn btn-default" ng-click="changeDisplay('large')"><i
                             class="glyphicon glyphicon-th-large"></i> </a>
