@@ -1,7 +1,8 @@
 ;(function () {
 
-    function CategoriesController($scope,categories) {
+    function CategoriesController($scope,categories) {console.log(categories);
         $scope.categories = categories;
+        $scope.total_posts = categories.meta.total_posts;
 
     }
 

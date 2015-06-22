@@ -27,7 +27,7 @@
 
         <div class="forum-title">
             <div class="pull-right forum-desc">
-                <samll>Total posts: 320,800</samll>
+                <samll>Total posts: {{ total_posts }}</samll>
             </div>
             <h3>Categories</h3>
         </div>
@@ -43,31 +43,22 @@
 
                     <div class="forum-sub-title">{{ category.description }}</div>
                 </div>
-                <div class="col-md-1 forum-info">
-        <span class="views-number">
-            1216
-        </span>
-
-                    <div>
-                        <small>Views</small>
-                    </div>
-                </div>
-                <div class="col-md-1 forum-info">
-        <span class="views-number">
-            368
-        </span>
-
-                    <div>
-                        <small>Topics</small>
-                    </div>
-                </div>
-                <div class="col-md-1 forum-info">
-        <span class="views-number">
-            140
-        </span>
+                <div class="col-md-1 forum-info pull-right">
+                    <span class="views-number">
+                        {{ category.post_count }}
+                    </span>
 
                     <div>
                         <small>Posts</small>
+                    </div>
+                </div>
+                <div class="col-md-1 forum-info pull-right">
+                    <span class="views-number">
+                        {{ category.topic_count }}
+                    </span>
+
+                    <div>
+                        <small>Topics</small>
                     </div>
                 </div>
             </div>
