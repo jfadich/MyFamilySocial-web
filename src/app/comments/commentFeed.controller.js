@@ -20,8 +20,9 @@
             event.target.disabled = true;
             $scope.editing = 0;
             reply.body = reply.edited;
-            CommentService.updateComment(reply).then(function(response) {
+            CommentService.updateComment(reply).then(function(response) {console.log(response);
                 toastr.success('Reply updated Successfully', { iconClass: 'toast-comment'});
+                reply.updated = Math.floor(Date.now() / 1000);
                 reply.edited = undefined;
             });
         };

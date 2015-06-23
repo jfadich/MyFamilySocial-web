@@ -58,15 +58,21 @@
                     <i class="fa fa-plus"></i> Add Photos
                 </a><br>
 
-                <strong>Drag anywhere to upload photos</strong>
+                <strong>Drag here to upload photos</strong>
 
             </div>
         </div>
 
         <!-- Album List -->
-        <div class="ibox-content">
+        <div class="ibox-content text-center">
             <div ng-show="album.photos.data.length == 0" class="text-center">
-                There's lots of room here for more photos. Click the button above or drag files here to upload photos.
+                <span ng-if="album.permissions.add_photo">
+                    There's lots of room here for more photos. Click the button above or drag files here to upload photos.
+                </span>
+                <span ng-if="!album.permissions.add_photo">
+                    <h4>It's empty in here</h4>
+                    Maybe {{ album.owner.data.display_name }} will add some pictures
+                </span>
             </div>
             <div id="lightboxGallery" ng-click="gallery($event)" ng-if="display == 'large' || display == 'small'">
                 <a href="{{photo.image.large}}" data-gallery="" ng-repeat="photo in album.photos.data"
@@ -75,7 +81,7 @@
                     <img alt="{{photo.name}}" ng-if="display == 'large'" ng-src="{{ photo.image.medium }}">
                 </a>
             </div>
-            <div class="list-group" ng-if="display == 'list'">
+            <div class="list-group text-left" ng-if="display == 'list'">
                 <div class="list-group-item" ng-repeat="photo in album.photos.data">
                     <div class="pull-left m">
                         <img alt="{{photo.name}}" ng-src="{{ photo.image.small }}">
@@ -97,6 +103,15 @@
                     <div class="clearfix"></div>
                 </div>
             </div>
+
+            <br>
+            <button type="button"
+                    class="btn btn-block btn-outline btn-primary"
+                    ng-click="more()"
+                    ng-if="pages.links.next != null && pages.links.next != undefined">
+                <i class="fa fa-arrow-down"></i> More Photos
+            </button>
+
         </div>
 
     </div>

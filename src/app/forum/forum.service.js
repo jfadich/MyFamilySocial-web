@@ -70,7 +70,11 @@
             if(self.pagination === null || self.pagination.links.next === undefined)
                 return null;
 
-            return self.getPromise(self.pagination.links.next);
+            return self.getPromise(self.pagination.links.next).then(function(response){
+                self.pagination = get_recursive(response.data, 'pagination');
+
+                return response;
+            });
         };
 
         self.url = function(endpoint, includes) {

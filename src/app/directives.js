@@ -75,7 +75,7 @@ angular.module('inspinia')
         .directive("dropzone", function(api, token, toastr) {
             return function(scope, element, attrs) {
 
-                if(attrs.dzPermissions !== undefined && attrs.dzPermissions == "false")
+                if(attrs.dzPermissions === undefined || attrs.dzPermissions == "false")
                     return;
 
                 var dzOptions = {
@@ -90,7 +90,7 @@ angular.module('inspinia')
                         formData.append("album_id", attrs.dzAlbum);
                     },
                     init: function () {
-                        this.on('success', function (file, json) {console.log(json);
+                        this.on('success', function (file, json) {
                             this.removeFile(file);
                             toastr.success('Photo uploaded', 'Success');
                             scope.$apply(function(){
