@@ -1,6 +1,6 @@
 <nav class="navbar-default navbar-static-side" role="navigation">
     <div class="sidebar-collapse">
-        <ul side-navigation class="nav" id="side-menu">
+        <ul side-navigation class="nav metismenu" id="side-menu">
             <li class="nav-header">
 
                 <div class="dropdown profile-element" dropdown>
@@ -37,7 +37,7 @@
             </li>
             <li ng-class="{ active: $state.includes('family.photos') }">
                 <a ui-sref="family.photos.albums"><i class="fa fa-photo"></i> <span class="nav-label">Photos</span></a>
-                <ul class="nav nav-second-level" ng-class="{in: $state.includes('family.forum')}">
+                <ul class="nav nav-second-level" ng-class="{in: $state.includes('family.photos')}">
                     <li ui-sref-active="active"><a ui-sref="family.photos.albums"><i class="fa fa-folder-open icon-resize-small"></i> Albums</a></li>
                     <li ui-sref-active="active" ng-if="main.user.role.data.permissions.photos_createAlbum"><a ui-sref="family.photos.createAlbum"><i class="fa fa-plus icon-resize-small"></i> Create Album</a></li>
                 </ul>

@@ -3,7 +3,6 @@
 (function () {
     angular.module('inspinia', [
         'ngAnimate',
-        'ngCookies',
         'ngTouch',
         'ngSanitize',
         'ngResource',
