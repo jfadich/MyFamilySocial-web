@@ -1,8 +1,8 @@
 ;(function () {
 
-    function authService($http, API_URL, $rootScope, token, toastr, $state, $q) {
+    function authService($http, API_URL, $rootScope, token, toastr, $state, $q, ERRORS) {
         var self = this;
-        self.refreshing = false;
+        self.defer = false;
 
         self.login = function (email, password) {
             return $http.post(API_URL + '/auth/login', {
@@ -33,30 +33,34 @@
         };
 
         self.refresh = function () {
-            if (self.refreshing)
-                return self.refreshing;
-
-            var q = $q.defer();
-            self.refreshing = q.promise;
+            if (self.defer)
+                return self.defer.promise;
+            else {
+                self.defer = $q.defer();
+            }
 
             $http.post(API_URL + '/auth/refresh', {}).then(function (response) {
                 $rootScope.$broadcast('USER_REFRESH', response.data);
-                return q.resolve(response);
+                return self.defer.resolve(response);
             }, function(response) {
                 if(response.data === null || response.data.error === undefined) {
-                    return q.reject('');
+                    return self.defer.reject('');
                 }
 
-                if(response.data.error.error_code == 103)
-                    return q.reject('Invalid session');
+                if(response.data.error.error_code == ERRORS.invalidToken)
+                    return self.defer.reject('Invalid session');
 
-                if(response.data.error.error_code == 104) {
+                if(response.data.error.error_code == ERRORS.unauthorized) {
                     toastr.error('You\'re not authorized to do that');
-                    return q.reject('unauthorized');
+                    return self.defer.reject('unauthorized');
                 }
+
+                return self.defer.reject(response);
+            }).finally(function(){
+                self.defer = false;
             });
 
-            return q.promise;
+            return self.defer.promise;
         };
 
         self.isAuthenticated = function() {
@@ -72,26 +76,20 @@
                 if(toState.data.requireAuth === true)
                 {
                     if(!self.isAuthenticated()) {
+                        if(self.defer)
+                            return;
                         event.preventDefault();
 
                         if(!self.canRefresh())
                             return $state.go('login');
 
-                        if(self.refreshing) {
-                            return self.refreshing.then(function(){
-                                self.request(url, method, data);
-                            });
-                        }
-                        else {
-                            return self.refresh().then(
-                                function () {
-                                    alert('refreshed from state change');
-                                    return $state.go(toState.name, toParams);
-                                }, function () {
-                                    toastr.info('Your session has expired');
-                                    return $state.go('login');
-                                });
-                        }
+                        self.refresh().then(
+                            function () {
+                                return $state.go(toState.name, toParams);
+                            }, function (conso) {console.log(conso);
+                                toastr.info('Your session has expired');
+                                return $state.go('login');
+                        });
                     }
                 }
             });
@@ -100,6 +98,5 @@
 
     angular.module('inspinia')
         .service('auth', authService)
-        .constant('API_URL', 'http://myfamily.dev')
 
 })();

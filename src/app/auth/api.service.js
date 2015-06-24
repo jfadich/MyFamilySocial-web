@@ -51,15 +51,7 @@
                         });
                     }
                     else {
-                        var q = $q.defer();
-
-                        self.refreshToken(url, method, data).then(function(response){
-                            q.resolve(response);
-                        }, function(response){
-                            q.reject(response);
-                        });
-
-                        return q.promise;
+                        return self.refreshToken();
                     }
                 }
 
@@ -84,6 +76,8 @@
                 toastr.info('Your session has expired');
                 return response;
             });
+
+            return self.refreshing;
         };
 
         self.url = function (endpoint, includes) {
