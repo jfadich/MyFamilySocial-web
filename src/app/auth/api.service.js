@@ -3,6 +3,7 @@
 
     function apiService($http, API_URL, auth, $state, toastr, token, $q) {
         var self = this;
+        self.refreshing = false;
 
         self.get = function (endpoint) {
             return self.request(endpoint, 'get');
@@ -44,7 +45,22 @@
                 }
 
                 if (response.data.error.error_code == 102) {
-                    return self.refreshToken(url, method, data);
+                    if(self.refreshing) {
+                        return self.refreshing.then(function(){
+                            self.request(url, method, data);
+                        });
+                    }
+                    else {
+                        var q = $q.defer();
+
+                        self.refreshToken(url, method, data).then(function(response){
+                            q.resolve(response);
+                        }, function(response){
+                            q.reject(response);
+                        });
+
+                        return q.promise;
+                    }
                 }
 
                 if(response.data.error.error_code === 201) {
@@ -61,12 +77,12 @@
         };
 
         self.refreshToken = function (url, method, data) {
-            return auth.refresh().then(function (response) {
+            self.refreshing =  auth.refresh().then(function (response) {
                 alert('refreshed from API!');
                 return self.request(url, method, data);
             }, function (response) {
                 toastr.info('Your session has expired');
-                return $q.reject(response);
+                return response;
             });
         };
 

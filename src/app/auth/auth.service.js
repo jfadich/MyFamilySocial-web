@@ -1,7 +1,8 @@
 ;(function () {
 
-    function authService($http, API_URL, $rootScope, token, toastr, $state) {
+    function authService($http, API_URL, $rootScope, token, toastr, $state, $q) {
         var self = this;
+        self.refreshing = false;
 
         self.login = function (email, password) {
             return $http.post(API_URL + '/auth/login', {
@@ -32,21 +33,30 @@
         };
 
         self.refresh = function () {
-            return $http.post(API_URL + '/auth/refresh', {}).then(function (response) {
+            if (self.refreshing)
+                return self.refreshing;
+
+            var q = $q.defer();
+            self.refreshing = q.promise;
+
+            $http.post(API_URL + '/auth/refresh', {}).then(function (response) {
                 $rootScope.$broadcast('USER_REFRESH', response.data);
-                return response;
+                return q.resolve(response);
             }, function(response) {
                 if(response.data === null || response.data.error === undefined) {
-                    console.log(response);
-                    return $q.reject(response);
+                    return q.reject('');
                 }
 
                 if(response.data.error.error_code == 103)
-                    toastr.error('Invalid session');
+                    return q.reject('Invalid session');
 
-                if(response.data.error.error_code == 104)
+                if(response.data.error.error_code == 104) {
                     toastr.error('You\'re not authorized to do that');
+                    return q.reject('unauthorized');
+                }
             });
+
+            return q.promise;
         };
 
         self.isAuthenticated = function() {
@@ -61,16 +71,16 @@
             function(event, toState, toParams, fromState, fromParams){
                 if(toState.data.requireAuth === true)
                 {
-                    if(!self.isAuthenticated()){
+                    if(!self.isAuthenticated()) {
                         event.preventDefault();
 
                         if(!self.canRefresh())
                             return $state.go('login');
 
                         return self.refresh().then(
-                            function(response){alert('refreshed from state change');
+                            function(){alert('refreshed from state change');
                                 return $state.go(toState.name,toParams);
-                            }, function(response) {
+                            }, function() {
                                 toastr.info('Your session has expired');
                                 return $state.go('login');
                             });
