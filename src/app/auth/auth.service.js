@@ -35,6 +35,17 @@
             return $http.post(API_URL + '/auth/refresh', {}).then(function (response) {
                 $rootScope.$broadcast('USER_REFRESH', response.data);
                 return response;
+            }, function(response) {
+                if(response.data === null || response.data.error === undefined) {
+                    console.log(response);
+                    return $q.reject(response);
+                }
+
+                if(response.data.error.error_code == 103)
+                    toastr.error('Invalid session');
+
+                if(response.data.error.error_code == 104)
+                    toastr.error('You\'re not authorized to do that');
             });
         };
 
@@ -57,7 +68,7 @@
                             return $state.go('login');
 
                         return self.refresh().then(
-                            function(response){alert('refreshed');
+                            function(response){alert('refreshed from state change');
                                 return $state.go(toState.name,toParams);
                             }, function(response) {
                                 toastr.info('Your session has expired');

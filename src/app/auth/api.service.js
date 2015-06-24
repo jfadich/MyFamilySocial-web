@@ -40,14 +40,12 @@
 
             return promise.catch(function (response) {console.log(response);
                 if(response.data === null || response.data.error === undefined) {
-                    console.log(response);
                     return $q.reject(response);
                 }
-                if (response.data.error.error_code == 102)
-                    return self.refreshToken(url, method, data);
 
-                if(response.data.error.error_code == 104)
-                    toastr.error('You\'re not authorized to do that');
+                if (response.data.error.error_code == 102) {
+                    return self.refreshToken(url, method, data);
+                }
 
                 if(response.data.error.error_code === 201) {
                     var errors = response.data.error.message;
@@ -64,11 +62,11 @@
 
         self.refreshToken = function (url, method, data) {
             return auth.refresh().then(function (response) {
-                alert('Your session has refreshed!');
+                alert('refreshed from API!');
                 return self.request(url, method, data);
             }, function (response) {
                 toastr.info('Your session has expired');
-                return $state.go('login');
+                return $q.reject(response);
             });
         };
 
