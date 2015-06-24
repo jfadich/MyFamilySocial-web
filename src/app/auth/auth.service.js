@@ -77,13 +77,21 @@
                         if(!self.canRefresh())
                             return $state.go('login');
 
-                        return self.refresh().then(
-                            function(){alert('refreshed from state change');
-                                return $state.go(toState.name,toParams);
-                            }, function() {
-                                toastr.info('Your session has expired');
-                                return $state.go('login');
+                        if(self.refreshing) {
+                            return self.refreshing.then(function(){
+                                self.request(url, method, data);
                             });
+                        }
+                        else {
+                            return self.refresh().then(
+                                function () {
+                                    alert('refreshed from state change');
+                                    return $state.go(toState.name, toParams);
+                                }, function () {
+                                    toastr.info('Your session has expired');
+                                    return $state.go('login');
+                                });
+                        }
                     }
                 }
             });

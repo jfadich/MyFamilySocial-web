@@ -47,7 +47,7 @@
                 if (response.data.error.error_code == 102) {
                     if(self.refreshing) {
                         return self.refreshing.then(function(){
-                            self.request(url, method, data);
+                            return self.request(url, method, data);
                         });
                     }
                     else {
