@@ -19,7 +19,7 @@
             console.log(response);
         });
 
-        $scope.editThread = function(thread) {console.log(thread);
+        $scope.editThread = function(thread) {
             thread.tag_array = thread.tags.data;
             $scope.editing_thread = true;
         };
@@ -30,9 +30,9 @@
 
 
         $scope.more = function() {
-            var more = ForumService.next();console.log($scope.thread.replies.meta.pagination);
+            var more = ForumService.next();
             if(more !== null){
-                more.then(function(thread){console.log(thread);
+                more.then(function(thread){
                     if(thread.data.replies.data !== null)
                         $scope.comments = $scope.comments.concat(thread.data.replies.data);
 

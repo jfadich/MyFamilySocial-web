@@ -2,7 +2,7 @@
 
     function CommentFeedController($scope, CommentService, toastr) {
 
-        $scope.addReply = function(comment, event) {console.log(event);
+        $scope.addReply = function(comment, event) {
             event.target.disabled = true;
             CommentService.addComment(comment.body, $scope.commentParent).then(function(response){
                 $scope.comments.unshift(response.data.data);
@@ -20,7 +20,7 @@
             event.target.disabled = true;
             $scope.editing = 0;
             reply.body = reply.edited;
-            CommentService.updateComment(reply).then(function(response) {console.log(response);
+            CommentService.updateComment(reply).then(function(response) {
                 toastr.success('Reply updated Successfully', { iconClass: 'toast-comment'});
                 reply.updated = Math.floor(Date.now() / 1000);
                 reply.edited = undefined;

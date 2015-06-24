@@ -84,7 +84,6 @@
 
                 return promise.then(function(response){
                     toastr.success( message, 'Success',{ iconClass: 'toast-comment', allowHtml: true});
-                    console.log( response.data);
                     return $state.go("family.forum.thread", {thread_slug: response.data.data.slug});
                 })
             }

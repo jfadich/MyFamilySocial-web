@@ -11,7 +11,7 @@
             $scope.$broadcast('show-errors-check-validity');
             var message = '';
             var promise;
-            var toastTitle;console.log($scope.threadForm);
+            var toastTitle;
             if ($scope.albumForm.$valid) {
 
                 if(album.id === undefined){
@@ -34,10 +34,8 @@
                 if(typeof $scope.stopAlbumEdit == 'function')
                     $scope.stopAlbumEdit();
 
-                console.log(album);
                 return promise.then(function(response){
                     toastr.success( message, 'Success', {allowHtml: true});
-                    console.log( response.data);
                     return $state.go("family.photos.album", {album: response.data.data.slug});
                 })
             }

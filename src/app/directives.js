@@ -94,7 +94,7 @@ angular.module('inspinia')
                             this.removeFile(file);
                             toastr.success('Photo uploaded', 'Success');
                             scope.$apply(function(){
-                                scope.album.photos.data.push(json.data);
+                                scope.album.photos.data.unshift(json.data);
                             });
                             if(this.files.length == 0)
                                 $('.dropzone').addClass('hide');
