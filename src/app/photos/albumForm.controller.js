@@ -24,8 +24,8 @@
                 }
                 else {
                     promise = PhotoService.updateAlbum(album).then(function (response) {
-                        var album = response.data.data;
-                        toastTitle = album.name.length > 100 ? (album.name.substring(0,100) + '...') : name.title;
+                        var album = response.data.data;console.log(response);
+                        toastTitle = album.name.length > 100 ? (album.name.substring(0,100) + '...') : album.name;
                         message = "'" + toastTitle + "' <b>Saved.</b>";
                         return response
                     });

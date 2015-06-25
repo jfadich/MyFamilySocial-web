@@ -1,6 +1,6 @@
 ;(function () {
 
-    function authService($http, API_URL, $rootScope, token, toastr, $state, $q, ERRORS) {
+    function authService($http, API_URL, $rootScope, token, toastr, $state, $q, ERRORS, $urlRouter) {
         var self = this;
         self.defer = false;
 
@@ -23,6 +23,7 @@
             }).then(function (response) {
                 $rootScope.$broadcast('USER_REGISTERED', response.data);
                 $rootScope.$broadcast('USER_LOGGED_IN', response.data);
+                toastr.info('Thanks for signing Up','Welcome ' + first_name + '!', {timeOut: 20000});
                 return response;
             });
         };
@@ -72,12 +73,13 @@
         };
 
         $rootScope.$on('$stateChangeStart',
-            function(event, toState, toParams, fromState, fromParams){
+            function(event, toState, toParams, fromState, fromParams){console.log(fromState, toState,event);
                 if(toState.data.requireAuth === true)
                 {
                     if(!self.isAuthenticated()) {
                         if(self.defer)
                             return;
+
                         event.preventDefault();
 
                         if(!self.canRefresh())

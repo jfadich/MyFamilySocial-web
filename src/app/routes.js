@@ -205,7 +205,10 @@
             });
         $urlRouterProvider.when('/discussions', '/discussions/categories');
         $urlRouterProvider.when('/members', '/members/index');
-        $urlRouterProvider.otherwise('main');
+        $urlRouterProvider.otherwise(function($injector, $location) {
+            var $state = $injector.get("$state");
+            $state.go("family.main");
+        });
     }
     angular.module('inspinia')
         .config(routes)
