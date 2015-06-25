@@ -38,8 +38,11 @@
     <div class="ibox">
         <div class="ibox-title">
             <h5><a style="color:black" ui-sref="family.photos.album({album: album.slug})">{{ album.name }}</a></h5>
-            <span ng-if="!album.permissions.add_photo" class="pull-right text-muted" tooltip-placement="left" tooltip="Only the owner can add photos to this album">
+            <span ng-if="!album.shared" class="pull-right" tooltip-placement="left" tooltip="Only the owner can add photos to this album">
                 <i class="fa fa-lock"></i>
+            </span>
+             <span ng-if="album.shared" class="pull-right" tooltip-placement="left" tooltip="Anyone can add photos to this album">
+                <i class="fa fa-plus-square"></i>
             </span>
         </div>
         <div class="ibox-content">
