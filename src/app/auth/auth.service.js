@@ -73,7 +73,7 @@
         };
 
         $rootScope.$on('$stateChangeStart',
-            function(event, toState, toParams, fromState, fromParams){console.log(fromState, toState,event);
+            function(event, toState, toParams){
                 if(toState.data.requireAuth === true)
                 {
                     if(!self.isAuthenticated()) {
@@ -88,7 +88,7 @@
                         self.refresh().then(
                             function () {
                                 return $state.go(toState.name, toParams);
-                            }, function (conso) {console.log(conso);
+                            }, function () {
                                 toastr.info('Your session has expired');
                                 return $state.go('login');
                         });

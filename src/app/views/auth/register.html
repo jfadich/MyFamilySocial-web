@@ -38,7 +38,7 @@
                         name="password"
                         type="password"
                         class="form-control"
-                        min="6"
+                        ng-min="6"
                         required
                         >
             </div>
@@ -47,12 +47,15 @@
                         ng-model="newUser.password_confirm"
                         compare-to="newUser.password"
                         placeholder="Confirm Password"
-                        name="password"
+                        name="password_confirm"
                         type="password"
                         class="form-control"
                         min="6"
                         required
                         >
+
+                    <label class="control-label" ng-show="register.password_confirm.$dirty && newUser.password_confirm != newUser.password">Passwords must match</label>
+
             </div>
             <button type="button" ng-click="register_submit()" class="btn btn-primary block full-width m-b" ng-disabled="register.$invalid">Register</button>
 

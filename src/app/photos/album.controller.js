@@ -87,7 +87,7 @@
             $scope.album = response.data.data;
 
             // If the photo that the user is looking for is not in the original request, get it
-            var highlight  = $.grep($scope.album.photos.data, function(e){ return e.id == $state.params.highlightImage; });console.log(highlight);
+            var highlight  = $.grep($scope.album.photos.data, function(e){ return e.id == $state.params.highlightImage; });
             if(highlight.length == 0 && $state.params.highlightImage != 0) {
                 PhotoService.getPhoto($state.params.highlightImage,'parent').then(function (response) {
                     if(response.data.data.parent.data == $scope.album.id)

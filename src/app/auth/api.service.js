@@ -1,7 +1,7 @@
 ;
 (function () {
 
-    function apiService($http, API_URL, auth, $state, toastr, token, $q) {
+    function apiService($http, API_URL, auth, $state, toastr, $q) {
         var self = this;
         self.refreshing = false;
 
@@ -24,10 +24,10 @@
         self.request = function (url, method, data) {
             var promise;
 
-            if (!token.live())
+            if (!auth.canRefresh())
                 return $state.go('login');
 
-            if (token.expired())
+            if (!auth.isAuthenticated())
                 return self.refreshToken(url, method, data);
 
             if (method === 'get')
@@ -51,7 +51,9 @@
                         });
                     }
                     else {
-                        return self.refreshToken();
+                        return self.refreshToken().then(function(){
+                            return self.request(url, method, data);
+                        });
                     }
                 }
 
