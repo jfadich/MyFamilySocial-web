@@ -143,6 +143,7 @@
                 url: "/albums/:album",
                 templateUrl: "app/views/photos/showAlbum.html",
                 controller: "PhotosCtrl",
+                params: { highlightImage: 0 },
                 ncyBreadcrumb: {
                     label: '{{ album.name }}'
                 },

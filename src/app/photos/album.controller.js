@@ -28,11 +28,21 @@
         })
     }
 
-    function PhotosController($scope,PhotoService,$state,api) {
+    function PhotosController($scope,PhotoService,$state,api, $timeout) {
         $scope.album = { photos: {data: [] } };
         $scope.editing_album = false;
         $scope.showEmpty = false;
         $scope.display = 'large';
+
+        //give the image a change to load
+        $timeout(function() {
+            $scope.targetImage = $state.params.highlightImage;console.log($state.params);
+        },1500);
+        //remove the highlight to prevent subviews from redrawing animation
+        $timeout(function() {
+            $scope.targetImage = 0;
+        },3000);
+
 
         $scope.stopAlbumEdit = function() {
             $scope.editing_album = false;
@@ -75,6 +85,16 @@
 
         PhotoService.getAlbum($state.params.album, 'photos.owner,photos.tags,owner').then(function(response){
             $scope.album = response.data.data;
+
+            // If the photo that the user is looking for is not in the original request, get it
+            var highlight  = $.grep($scope.album.photos.data, function(e){ return e.id == $state.params.highlightImage; });console.log(highlight);
+            if(highlight.length == 0 && $state.params.highlightImage != 0) {
+                PhotoService.getPhoto($state.params.highlightImage,'parent').then(function (response) {
+                    if(response.data.data.parent.data == $scope.album.id)
+                        $scope.album.photos.data.unshift(response.data.data);
+                });
+            }
+
             $scope.pages = $scope.album.photos.meta.pagination;
         });
     }

@@ -16,8 +16,6 @@
                 then(function(response){
                     self.pagination = get_recursive(response.data, 'pagination');
                     return response.data;
-                }, function(response){
-                    console.log(response);
                 });
         };
 

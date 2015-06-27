@@ -55,7 +55,7 @@
                 <hr>
             </div>
             <span ng-repeat="photo in album.photos.data">
-                <a ui-sref="family.photos.album({album: album.slug})">
+                <a ui-sref="family.photos.album({album: album.slug, highlightImage: photo.id})">
                     <img alt="{{photo.name}}" class="visible-xs-inline" ng-src="{{ photo.image.small }}">
                     <img alt="{{photo.name}}" class="hidden-xs  animated fadeInUp"  ng-src="{{ photo.image.thumb }}">
                 </a>
