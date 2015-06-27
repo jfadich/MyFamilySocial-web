@@ -3,13 +3,16 @@
     function CommentService(api){
         var self = this;
 
-        self.addComment = function(comment, parent)
-        {
+        self.addComment = function(comment, parent) {
             return api.post(api.url('/comments/'), {
                 body: comment,
                 parent_type: parent.type,
                 parent_id: parent.id
             });
+        };
+
+        self.getComments = function(parent, includes) {
+            return api.get(api.url('/comments/'+parent.type+'/'+parent.id), includes)
         };
 
         self.deleteComment = function(comment) {

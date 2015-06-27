@@ -78,11 +78,13 @@
                 </span>
             </div>
             <div id="lightboxGallery" ng-click="gallery($event)" ng-if="display == 'large' || display == 'small'">
+
                 <a href="{{photo.image.large}}" data-gallery="" ng-repeat="photo in album.photos.data"  ng-class="targetImage == photo.id ? 'animated tada' : ''"
                    title="{{photo.name}}">
                     <img alt="{{photo.name}}" ng-if="display == 'small'" ng-src="{{ photo.image.thumb }}">
                     <img alt="{{photo.name}}" ng-if="display == 'large'" ng-src="{{ photo.image.medium }}">
                 </a>
+
             </div>
             <div class="list-group text-left" ng-if="display == 'list'">
                 <div class="list-group-item" ng-repeat="photo in album.photos.data">

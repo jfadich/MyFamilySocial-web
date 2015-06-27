@@ -109,7 +109,17 @@
                     pageTitle: 'Members'
                 }
             })
-
+            .state('family.members.edit', {
+                url: "/:user",
+                templateUrl: "app/views/users/editProfile.html",
+                controller: "ProfileCtrl",
+                ncyBreadcrumb: {
+                    label: '{{ user.display_name }}'
+                },
+                data: {
+                    pageTitle: 'Members'
+                }
+            })
             .state('family.photos', {
                 url: '/photos',
                 abstract: true,

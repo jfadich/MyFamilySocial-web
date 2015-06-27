@@ -16,17 +16,18 @@
                     <textarea type="text" name="description" ng-model="photo.description" class="form-control" rows="4">
                     </textarea>
                     </div>
-
-                    <input type="text" class="form-control" ng-model="dirty.value"
-                           mass-autocomplete-item="tag_autocomplete">
-                    <br class="clearfix">
-                    <span class="" ng-if="photo.tag_array.length > 0">
-                        <span ng-repeat="tag in photo.tag_array">
-                            <a class="btn btn-white btn-sm" ng-click="removeTag(tag)"><i class="fa fa-close"></i>
-                                &nbsp;{{ tag.name }}</a>
+                    <div class="form-group">
+                        <strong>Tags (comma separated)</strong>
+                        <input type="text" class="form-control" ng-model="dirty.value"
+                               mass-autocomplete-item="tag_autocomplete">
+                        <br class="clearfix">
+                        <span class="" ng-if="photo.tag_array.length > 0">
+                            <span ng-repeat="tag in photo.tag_array">
+                                <a class="btn btn-white btn-sm" ng-click="removeTag(tag)"><i class="fa fa-close"></i>
+                                    &nbsp;{{ tag.name }}</a>
+                            </span>
                         </span>
-                    </span>
-
+                    </div>
                 </div>
             </div>
         </div>

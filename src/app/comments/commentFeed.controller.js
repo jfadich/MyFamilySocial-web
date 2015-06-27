@@ -1,10 +1,10 @@
 ;(function () {
 
-    function CommentFeedController($scope, CommentService, toastr) {
+    function CommentFeedController($scope, CommentService, toastr, api) {
 
         $scope.addReply = function(comment, event) {
             event.target.disabled = true;
-            CommentService.addComment(comment.body, $scope.commentParent).then(function(response){
+            CommentService.addComment(comment.body, $scope.parent).then(function(response){
                 $scope.comments.unshift(response.data.data);
                 toastr.success('Reply added Successfully', { iconClass: 'toast-comment'});
                 comment.body = '';
@@ -43,9 +43,38 @@
             });
         };
 
+        $scope.more = function() {console.log($scope.commentParent);
+            if($scope.meta.pagination != null && $scope.meta.pagination.links != undefined) {
+                if($scope.meta.pagination.links.next != null)
+                    api.get($scope.meta.pagination.links.next).then(function(response) {
+                        $scope.comments = $scope.comments.concat(response.data.data);
+                    })
+            }
+        };
+
         $scope.stopEdit = function() {
             $scope.editing = 0;
         };
+
+        $scope.$watch("parent", function() {
+            if($scope.parent.type != undefined) {
+                CommentService.getComments($scope.parent).then(function(response) {
+                    console.log(response.data);
+                    $scope.comments = response.data.data;
+                    $scope.meta = response.data.meta;
+                })
+            }
+        });
+
+        $scope.sort = function() {
+            $scope.comments.sort(function(a,b) {
+                if (a.created < b.created)
+                    return -1;
+                if (a.created > b.created)
+                    return 1;
+                return 0;
+            });
+        }
     }
 
     angular.module('inspinia')

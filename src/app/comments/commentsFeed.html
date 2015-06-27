@@ -1,5 +1,5 @@
-<div id="comment-feed" ng-controller="CommentFeedCtrl">
-    <form class="ng-pristine ng-valid" ng-if="commentParent.permissions.comment" name="threadReply">
+<div id="comment-feed">
+    <form class="ng-pristine ng-valid" ng-if="parent.permissions.comment" name="threadReply">
         <div class="form-group">
                         <textarea type="text" placeholder="Add reply" name="comment" ng-model="comment.body" class="form-control" rows="4" required="">
                         </textarea>
@@ -59,7 +59,7 @@
         <button type="button"
                 class="btn btn-block btn-outline btn-primary"
                 ng-click="more()"
-                ng-if="comments.length < thread.replies.meta.pagination.total">
+                ng-if="comments.length < meta.pagination.total">
             <i class="fa fa-arrow-down"></i> More replies
         </button>
     </p>
