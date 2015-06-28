@@ -22,16 +22,34 @@
             </div>
         </div>
     </div>
+
+    <br>
+    <button type="button"
+            class="btn btn-block btn-outline btn-primary"
+            ng-click="more()"
+            ng-if="meta.pagination != 'undefined' && meta.pagination.links.next != null">
+        <i class="fa fa-arrow-down"></i> More Photos
+    </button>
+
     <div class="clearfix"></div>
 </div>
 
 <div class="ibox-content text-center" ng-if="display == 'gallery'">
     <div id="lightboxGallery" ng-click="gallery($event)">
 
-        <a href="{{photo.image.large}}" data-gallery="" ng-repeat="photo in photos"  ng-class="targetImage == photo.id ? 'animated tada' : ''"
-           title="{{photo.name}}">
-            <img alt="{{photo.name}}" ng-src="{{ photo.image.medium }}">
-        </a>
+        <div class="col-md-4" ng-repeat="photo in photos">
+            <div class="thumbnail">
+                <a href="{{photo.image.large}}" data-gallery="" ng-class="targetImage == photo.id ? 'animated tada' : ''"
+                                       title="{{photo.name}}">
+                <img alt="{{photo.name}}" ng-src="{{ photo.image.medium }}" class="img-responsive">
+            </a>
+            </div>
+            <div style="position: absolute;bottom:50px;right:50px;z-index:10000">
+                <a ng-click="selectPhoto($index, $event)" class="btn btn-white btn-sm">
+                    <i class="fa fa-comments"></i>
+                </a>
+            </div>
+        </div>
 
     </div>
 
