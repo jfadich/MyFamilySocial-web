@@ -3,6 +3,7 @@
     function ThreadController($scope, ForumService, $state, categories) {
         $scope.categories = categories.data;
         $scope.thread = { owner:{data:{}}};
+        $scope.dirty = {};
         $scope.editing_thread = false;
 
         ForumService.getThread($state.params.thread_slug, 'category,owner,tags').then(function(thread){

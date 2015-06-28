@@ -28,6 +28,10 @@
             return api.get(api.url('/photos/'+photo, includes));
         };
 
+        self.getPhotos = function(parent, includes) {
+            return api.get(api.url('/photos/'+parent.type+'/'+parent.id, includes))
+        };
+
         self.updatePhoto = function(photo) {
             return api.patch(api.url('/photos/' + photo.id), {
                 name: photo.name,

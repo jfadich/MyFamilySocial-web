@@ -1,0 +1,24 @@
+<div ng-if="!currentPhoto" class="ibox">
+
+    <div class="ibox">
+        <div class="ibox-content">
+
+            <div class="col-md-2">
+                <a class="btn btn-primary" ng-click="changeDisplay('gallery')" tooltip="Gallery">
+                    <i class="glyphicon glyphicon-th-large"></i>
+                </a>
+                <a class="btn btn-primary" ng-click="changeDisplay('explore')" tooltip="Explorer">
+                    <i class="glyphicon glyphicon-th-list"></i>
+                </a>
+            </div>
+
+            <div class="clearfix"></div>
+
+        </div>
+    </div>
+
+    <div ng-include="'app/photos/explorer/list.html'"></div>
+
+</div>
+
+<div ng-if="currentPhoto" ng-include="'app/photos/explorer/photo.html'"></div>

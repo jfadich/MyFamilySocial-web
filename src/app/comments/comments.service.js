@@ -12,7 +12,7 @@
         };
 
         self.getComments = function(parent, includes) {
-            return api.get(api.url('/comments/'+parent.type+'/'+parent.id), includes)
+            return api.get(api.url('/comments/'+parent.type+'/'+parent.id, includes))
         };
 
         self.deleteComment = function(comment) {

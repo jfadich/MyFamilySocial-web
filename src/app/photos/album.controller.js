@@ -1,10 +1,9 @@
 ;(function () {
 
-    function AlbumController($scope,PhotoService,api) {
+    function AlbumController($scope,albums,api) {
         $scope.albums = [];
         $scope.showEmpty = false;
         $scope.pages = {};
-        var perCard = 4;
 
         $scope.more = function() {
             var more = $scope.pages.links.next;
@@ -22,21 +21,19 @@
             }
         };
 
-        PhotoService.getAlbums('photos:limit('+perCard+'),owner').then(function(response){
-            $scope.albums = response.data.data;
-            $scope.pages = response.data.meta.pagination;
-        })
+        $scope.albums = albums.data;
+        $scope.pages = albums.meta.pagination;
     }
 
     function PhotosController($scope,PhotoService,$state,api, $timeout) {
         $scope.album = { photos: {data: [] } };
         $scope.editing_album = false;
         $scope.showEmpty = false;
-        $scope.display = 'large';
+        $scope.display = 'gallery';
 
         //give the image a change to load
         $timeout(function() {
-            $scope.targetImage = $state.params.highlightImage;console.log($state.params);
+            $scope.targetImage = $state.params.highlightImage;
         },1500);
         //remove the highlight to prevent subviews from redrawing animation
         $timeout(function() {

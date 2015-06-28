@@ -29,20 +29,12 @@
                         <button class="btn btn-white btn-xs" ng-if="album.permissions.edit" ng-click="editAlbum()"> <i class="fa fa-pencil"></i> </button>
                     </span>
 
-
-
                     Created by <strong>{{ album.owner.data.first_name }} {{ album.owner.data.last_name }}</strong>
                     on
                     <small class="text-muted"><i class="fa fa-clock-o"></i> {{ album.created * 1000 | date : short }}
                     </small>
 
                     <br>
-                    <a class="btn btn-default" ng-click="changeDisplay('large')"><i
-                            class="glyphicon glyphicon-th-large"></i> </a>
-                    <a class="btn btn-default" ng-click="changeDisplay('small')"><i class="glyphicon glyphicon-th"></i>
-                    </a>
-                    <a class="btn btn-default" ng-click="changeDisplay('list')"><i
-                            class="glyphicon glyphicon-th-list"></i> </a>
                 </div>
 
 
@@ -66,58 +58,8 @@
             </div>
         </div>
 
-        <!-- Album List -->
-        <div class="ibox-content text-center">
-            <div ng-show="album.photos.data.length == 0" class="text-center">
-                <span ng-if="album.permissions.add_photo">
-                    There's lots of room here for more photos. Click the button above or drag files here to upload photos.
-                </span>
-                <span ng-if="!album.permissions.add_photo">
-                    <h4>It's empty in here</h4>
-                    Maybe {{ album.owner.data.display_name }} will add some pictures
-                </span>
-            </div>
-            <div id="lightboxGallery" ng-click="gallery($event)" ng-if="display == 'large' || display == 'small'">
 
-                <a href="{{photo.image.large}}" data-gallery="" ng-repeat="photo in album.photos.data"  ng-class="targetImage == photo.id ? 'animated tada' : ''"
-                   title="{{photo.name}}">
-                    <img alt="{{photo.name}}" ng-if="display == 'small'" ng-src="{{ photo.image.thumb }}">
-                    <img alt="{{photo.name}}" ng-if="display == 'large'" ng-src="{{ photo.image.medium }}">
-                </a>
-
-            </div>
-            <div class="list-group text-left" ng-if="display == 'list'">
-                <div class="list-group-item" ng-repeat="photo in album.photos.data">
-                    <div class="pull-left m">
-                        <img alt="{{photo.name}}" ng-src="{{ photo.image.small }}">
-                    </div>
-                    <div class="media-body">
-                        <h3 class="list-group-item-heading"><a ui-sref="family.photos.photo({photo: photo.id})">{{
-                            photo.name }}</a></h3>
-
-                        <p class="list-group-item-text">Uploaded by {{ photo.owner.data.first_name}} {{
-                            photo.owner.data.last_name }}
-                            on {{ photo.created * 1000 | date : short }}</p>
-
-                        <div style="padding-top: 5px;" ng-if="photo.tags.data.length > 0">
-                                    <span ng-repeat="tag in photo.tags.data">
-                                        <button class="btn btn-white btn-xs">{{ tag.name }}</button>
-                                    </span>
-                        </div>
-                    </div>
-                    <div class="clearfix"></div>
-                </div>
-            </div>
-
-            <br>
-            <button type="button"
-                    class="btn btn-block btn-outline btn-primary"
-                    ng-click="more()"
-                    ng-if="pages.links.next != null && pages.links.next != undefined">
-                <i class="fa fa-arrow-down"></i> More Photos
-            </button>
-
-        </div>
+        <photo-explorer parent="album"></photo-explorer>
 
     </div>
 </div>

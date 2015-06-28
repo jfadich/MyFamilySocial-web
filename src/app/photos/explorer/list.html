@@ -1,0 +1,46 @@
+<div class="ibox-content" ng-show="photos.length == 0" class="text-center">
+    <h4>It's empty in here</h4>
+</div>
+
+<div class="ibox-content" ng-if="display == 'explore'">
+    <div class="file-box" ng-repeat="photo in photos">
+        <div class="file-box">
+            <div class="file">
+                <a ng-click="selectPhoto($index)">
+                    <span class="corner"></span>
+
+                    <div class="image">
+                        <img alt="{{ photo.name }}" class="img-responsive" ng-src="{{ photo.image.medium }}">
+                    </div>
+
+                    <div class="file-name">
+                        {{ photo.name }}
+                        <br/>
+                        <small>Added: {{ photo.created * 1000 | date : short }}</small>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="clearfix"></div>
+</div>
+
+<div class="ibox-content text-center" ng-if="display == 'gallery'">
+    <div id="lightboxGallery" ng-click="gallery($event)">
+
+        <a href="{{photo.image.large}}" data-gallery="" ng-repeat="photo in photos"  ng-class="targetImage == photo.id ? 'animated tada' : ''"
+           title="{{photo.name}}">
+            <img alt="{{photo.name}}" ng-src="{{ photo.image.medium }}">
+        </a>
+
+    </div>
+
+    <br>
+    <button type="button"
+            class="btn btn-block btn-outline btn-primary"
+            ng-click="more()"
+            ng-if="meta.pagination != 'undefined' && meta.pagination.links.next != null">
+        <i class="fa fa-arrow-down"></i> More Photos
+    </button>
+
+</div>

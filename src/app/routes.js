@@ -126,6 +126,13 @@
                 ncyBreadcrumb: {
                     label: 'Family Photos'
                 },
+                resolve: {
+                    albums: function (PhotoService) {
+                        return PhotoService.getAlbums('photos:limit(4),owner').then(function(response){
+                            return response.data;
+                        });
+                    }
+                },
                 template: '<ui-view/>'
             } )
             .state('family.photos.albums', {
@@ -147,6 +154,13 @@
                 },
                 data: {
                     pageTitle: 'Create Photo Album'
+                }
+            })
+            .state('family.photos.test', {
+                url: "/test",
+                template: "<photo-explorer parent=\"album\"></photo-explorer>",
+                controller: function(albums, $scope) {
+                    $scope.album = albums.data[5];
                 }
             })
             .state('family.photos.album', {
