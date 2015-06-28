@@ -175,6 +175,18 @@
                     pageTitle: 'Photos'
                 }
             })
+            .state('family.photos.album.explore', {
+                url: "/albums/:album/:photo",
+                templateUrl: "app/views/photos/showAlbum.html",
+                controller: "PhotosCtrl",
+                params: { highlightImage: 0 },
+                ncyBreadcrumb: {
+                    label: '{{ album.name }}'
+                },
+                data: {
+                    pageTitle: '{{ album.name }}'
+                }
+            })
             .state('family.photos.edit', {
                 url: "/:photo/edit",
                 templateUrl: "app/views/photos/editPhoto.html",

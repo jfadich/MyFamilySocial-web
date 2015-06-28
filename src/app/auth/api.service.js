@@ -77,6 +77,8 @@
             }, function (response) {
                 toastr.info('Your session has expired');
                 return response;
+            }).finally(function() {
+                self.refreshing = false;
             });
 
             return self.refreshing;

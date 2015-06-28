@@ -1,8 +1,24 @@
-<div ng-if="!currentPhoto" class="ibox">
+<div class="ibox">
+    <div class="ibox-content">
 
-    <div class="ibox">
-        <div class="ibox-content">
+        <div class="pull-right col-md-2 text-right" ng-if="currentPhoto">
 
+            <div class="btn-group ">
+                <button class="btn btn-white" ng-click="prevPhoto()" ng-disabled="currentIndex === 0">
+                    <i class="fa fa-arrow-left"></i>
+                </button>
+                <button
+                        class="btn btn-white"
+                        ng-click="nextPhoto()"
+                        ng-disabled="currentIndex + 1 === photos.length && meta.pagination.links.next === undefined"
+                        >
+                    <i class="fa fa-arrow-right"></i>
+                </button>
+            </div> |
+            <button class="btn btn-white" ng-click="closeExplorer()"><i class="fa fa-close"></i></button>
+        </div>
+
+        <div class="col-md-10 pull-left">
             <div class="col-md-2">
                 <a class="btn btn-primary" ng-click="changeDisplay('gallery')" tooltip="Gallery">
                     <i class="glyphicon glyphicon-th-large"></i>
@@ -11,11 +27,13 @@
                     <i class="glyphicon glyphicon-th-list"></i>
                 </a>
             </div>
-
-            <div class="clearfix"></div>
-
         </div>
+        <div class="clearfix"></div>
+
     </div>
+</div>
+
+<div ng-if="!currentPhoto" class="ibox">
 
     <div ng-include="'app/photos/explorer/list.html'"></div>
 

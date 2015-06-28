@@ -3,7 +3,6 @@ function PhotoExplorerController($scope, PhotoService, $q, api, $timeout) {
 
     $scope.currentPhoto = false;
     $scope.display = 'gallery';
-    $scope.morePhotos = false;
     $scope.currentIndex = 0;
     $scope.parentId = 0;
 
@@ -16,12 +15,14 @@ function PhotoExplorerController($scope, PhotoService, $q, api, $timeout) {
                 $scope.morePhotos = $scope.photos.length > 1;
 
                 // If the photo that the user is looking for is not in the original request, get it
-                var highlight  = $.grep($scope.photos, function(e){ return e.id == $scope.highlightImage; });
-                if(highlight.length == 0 && $scope.highlightImage != 0) {
-                    PhotoService.getPhoto($scope.highlightImage,'parent').then(function (response) {
-                        if(response.data.data.parent.data == $scope.parent.id)
-                            $scope.photos.unshift(response.data.data);
-                    });
+                if($scope.highlightImage != 0) {
+                    var highlight  = $.grep($scope.photos, function(e){ return e.id == $scope.highlightImage; });
+                    if(highlight.length == 0) {
+                        PhotoService.getPhoto($scope.highlightImage,'parent').then(function (response) {
+                            if(response.data.data.parent.data == $scope.parent.id)
+                                $scope.photos.unshift(response.data.data);
+                        });
+                    }
                 }
             })
         }
@@ -29,11 +30,9 @@ function PhotoExplorerController($scope, PhotoService, $q, api, $timeout) {
 
     $scope.nextPhoto = function() {
         if(typeof $scope.photos[$scope.currentIndex+1] === 'undefined') {
-            $scope.morePhotos = false;
             if(typeof $scope.meta.pagination.links.next !== 'undefined') {
                 $scope.more().then(function() {
                     if(typeof $scope.photos[$scope.currentIndex+1] !== 'undefined') {
-                        $scope.morePhotos = true;
                         $scope.nextPhoto();
                     }
                 });
@@ -42,9 +41,6 @@ function PhotoExplorerController($scope, PhotoService, $q, api, $timeout) {
         else {
             $scope.currentPhoto = $scope.photos[$scope.currentIndex+1];
             $scope.currentIndex += 1;
-            if(typeof $scope.photos[$scope.currentIndex+1] === 'undefined') {
-                $scope.morePhotos = false;
-            }
         }
     };
 
@@ -63,7 +59,6 @@ function PhotoExplorerController($scope, PhotoService, $q, api, $timeout) {
         if($scope.currentIndex >= 0) {
             $scope.currentPhoto = $scope.photos[$scope.currentIndex-1];
             $scope.currentIndex -= 1;
-            $scope.morePhotos = true;
         }
     };
 
@@ -95,16 +90,17 @@ function PhotoExplorerController($scope, PhotoService, $q, api, $timeout) {
 
     $scope.changeDisplay = function(newDisplay) {
         $scope.display = newDisplay;
+        $scope.currentPhoto = false;
     };
 
     //give the image a change to load
     $timeout(function() {
         $scope.targetImage = $scope.highlightImage;
-    },1500);
+    },1000);
     //remove the highlight to prevent subviews from redrawing animation
     $timeout(function() {
         $scope.targetImage = 0;
-    },3000);
+    },2500);
 }
 
 angular.module('inspinia')
