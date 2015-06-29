@@ -1,0 +1,53 @@
+<div ng-if="!editing">
+    <div class="col-lg-4 pull-right">
+        <div class="ibox">
+            <div class="ibox-content">
+                <div class="animated fadeInUp">
+
+                    <profile-picture size="small" user="photo.owner.data" a-class="pull-left" img-class="m-r-sm"></profile-picture>
+
+                    <div class="media-right">
+                        <strong>{{ photo.owner.data.display_name }}</strong><br>
+                        <small class="text-muted">{{ photo.created * 1000 | date : short }}</small>
+                    </div>
+                    <br>
+
+                    <p class="small media-body">
+                        {{ photo.description }}
+                    </p>
+
+                    <ul class="tag-list media-body" style="padding: 0" ng-if="photo.tags.data.length > 0">
+                        <li ng-repeat="tag in photo.tags.data"><a href=""><i class="fa fa-tag"></i> {{ tag.name }}</a>
+                        </li>
+                    </ul>
+                    <br class="clearfix">
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-8">
+        <div class="ibox">
+            <div class="ibox-content">
+                <div class="animated fadeInUp">
+                    <h2>{{ photo.name }}</h2>
+                    <div class="row">
+
+                        <img ng-src="{{ photo.image.large }}" class="img-responsive center-block">
+                    </div>
+
+                    <hr>
+                    <div class="row">
+                        <comment-feed parent="photo"></comment-feed>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div ng-show="editing" ng-include="'app/photos/info/editPhoto.html'">
+
+    </div>

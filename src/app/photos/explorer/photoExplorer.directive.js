@@ -1,6 +1,7 @@
 
 function PhotoExplorerController($scope, PhotoService, $q, api, $timeout) {
 
+    $scope.editingPhoto = false;
     $scope.currentPhoto = false;
     $scope.display = 'gallery';
     $scope.currentIndex = 0;
@@ -28,11 +29,14 @@ function PhotoExplorerController($scope, PhotoService, $q, api, $timeout) {
         }
     });
 
-    $scope.nextPhoto = function() {
+    $scope.nextPhoto = function(event) {
+        $scope.editingPhoto = false;
         if(typeof $scope.photos[$scope.currentIndex+1] === 'undefined') {
+            event.target.disabled = true;
             if(typeof $scope.meta.pagination.links.next !== 'undefined') {
                 $scope.more().then(function() {
                     if(typeof $scope.photos[$scope.currentIndex+1] !== 'undefined') {
+                        event.target.disabled = false;
                         $scope.nextPhoto();
                     }
                 });
@@ -63,6 +67,7 @@ function PhotoExplorerController($scope, PhotoService, $q, api, $timeout) {
     };
 
     $scope.selectPhoto = function(photo) {
+        $scope.editingPhoto = false;
         if(typeof $scope.photos[photo] == 'object') {
             $scope.currentIndex = photo;
             $scope.currentPhoto = $scope.photos[photo];
@@ -72,6 +77,7 @@ function PhotoExplorerController($scope, PhotoService, $q, api, $timeout) {
 
     $scope.closeExplorer = function() {
         $scope.currentPhoto = false;
+        $scope.editingPhoto = false;
         $scope.currentIndex = 0;
     };
 
@@ -91,6 +97,11 @@ function PhotoExplorerController($scope, PhotoService, $q, api, $timeout) {
     $scope.changeDisplay = function(newDisplay) {
         $scope.display = newDisplay;
         $scope.currentPhoto = false;
+        $scope.editingPhoto = false;
+    };
+
+    $scope.editPhoto = function() {
+        $scope.editingPhoto = !$scope.editingPhoto;
     };
 
     //give the image a change to load
