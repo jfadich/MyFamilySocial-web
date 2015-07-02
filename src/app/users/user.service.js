@@ -11,6 +11,27 @@
             return self.getPromise('',includes);
         };
 
+        self.updateUser = function(user) {
+            var userObj = {
+                first_name : user.first_name,
+                last_name : user.last_name,
+                email : user.email,
+                phone_one : user.phone_one,
+                phone_two : user.phone_two,
+                website : user.website,
+                city : user.address.city,
+                state : user.address.state,
+                zip_code : user.address.zip_code,
+                street_address : user.address.street_address
+            };
+
+
+            if(typeof user.birthdate != 'undefined')
+                userObj.birthdate = moment(new Date(user.birthdate)).format('MM/DD/YYYY');
+
+            return api.patch(api.url('/users/') + user.id, userObj);
+        };
+
         self.getPromise = function(endpoint, includes) {
             return api.get(self.url(endpoint, includes)).
                 then(function(response){
@@ -49,6 +70,6 @@
     }
 
     angular.module('inspinia')
-        .service('user', ['api', '$rootScope', userService]);
+        .service('user', ['api', '$rootScope', 'moment', userService]);
 
 })();

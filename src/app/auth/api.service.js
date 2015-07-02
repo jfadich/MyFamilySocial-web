@@ -1,7 +1,7 @@
 ;
 (function () {
 
-    function apiService($http, API_URL, auth, $state, toastr, $q) {
+    function apiService($http, API_URL, auth, $state, toastr, $q, ERRORS) {
         var self = this;
         self.refreshing = false;
 
@@ -44,7 +44,7 @@
                     return $q.reject(response);
                 }
 
-                if (response.data.error.error_code == 102) {
+                if (response.data.error.error_code == ERRORS.expiredToken) {
                     if(self.refreshing) {
                         return self.refreshing.then(function(){
                             return self.request(url, method, data);
@@ -57,7 +57,11 @@
                     }
                 }
 
-                if(response.data.error.error_code === 201) {
+                if(response.data.error.error_code === ERRORS.unauthorized) {
+                    toastr.error('You do not have sufficient privileges to perform this action', 'Unauthorized');
+                }
+
+                if(response.data.error.error_code === ERRORS.invalidEntity) {
                     var errors = response.data.error.message;
 
                     for(var attributes in errors) {

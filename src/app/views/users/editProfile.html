@@ -1,4 +1,4 @@
-<div class="col-md-4" ng-model="user">
+<div class="col-md-4">
     <div class="ibox float-e-margins">
         <div class="ibox-title">
             <h5>Profile Photo</h5>
@@ -31,15 +31,15 @@
             </h5>
         </div>
         <div class="ibox-content">
-            <form method="get" class="form-horizontal">
+            <form class="form-horizontal">
                 <div class="">
                     <div class="form-group">
 
                         <label class="col-sm-2 control-label">First Name</label>
-                        <div class="col-sm-4"><input type="text" class="form-control"></div>
+                        <div class="col-sm-4"><input type="text" class="form-control" ng-model="user.first_name"></div>
 
                         <label class="col-sm-2 control-label">Last Name</label>
-                        <div class="col-sm-4"><input type="text" class="form-control"></div>
+                        <div class="col-sm-4"><input type="text" class="form-control" ng-model="user.last_name"></div>
 
                     </div>
                     <div class="hr-line-dashed"></div>
@@ -50,9 +50,9 @@
                         <div class="col-sm-10">
                             <div class="input-group m-b">
                                 <span class="input-group-addon hidden-xs" tooltip="Show on Profile">
-                                    <input type="checkbox">
+                                    <input type="checkbox" checked>
                                 </span>
-                                <input type="text" class="form-control">
+                                <input type="text" class="form-control" ng-model="user.email">
                             </div>
                         </div>
 
@@ -60,9 +60,9 @@
                         <div class="col-sm-4">
                             <div class="input-group m-b">
                                 <span class="input-group-addon hidden-xs" tooltip="Show on Profile">
-                                    <input type="checkbox">
+                                    <input type="checkbox" checked>
                                 </span>
-                                <input type="text" class="form-control">
+                                <input type="text" class="form-control" ng-model="user.phone_one">
                             </div>
                         </div>
 
@@ -70,9 +70,9 @@
                         <div class="col-sm-4">
                             <div class="input-group m-b">
                                 <span class="input-group-addon hidden-xs" tooltip="Show on Profile">
-                                    <input type="checkbox">
+                                    <input type="checkbox" checked>
                                 </span>
-                                <input type="text" class="form-control">
+                                <input type="text" class="form-control" ng-model="user.phone_two">
                             </div>
                         </div>
 
@@ -86,7 +86,7 @@
                                 <span class="input-group-addon hidden-xs" tooltip="Show on Profile">
                                     <input type="checkbox">
                                 </span>
-                                <input type="text" class="form-control">
+                                <input type="text" class="form-control" ng-model="user.address.street_address">
                             </div>
                         </div>
 
@@ -96,7 +96,7 @@
                                 <span class="input-group-addon hidden-xs" tooltip="Show on Profile">
                                     <input type="checkbox">
                                 </span>
-                                <input type="text" class="form-control">
+                                <input type="text" class="form-control" ng-model="user.address.city">
                             </div>
                         </div>
 
@@ -106,7 +106,7 @@
                                 <span class="input-group-addon hidden-xs" tooltip="Show on Profile">
                                     <input type="checkbox">
                                 </span>
-                                <input type="text" class="form-control">
+                                <input type="text" class="form-control" ng-model="user.address.state">
                             </div>
                         </div>
 
@@ -116,7 +116,7 @@
                                 <span class="input-group-addon hidden-xs" tooltip="Show on Profile">
                                     <input type="checkbox">
                                 </span>
-                                <input type="text" class="form-control">
+                                <input type="text" class="form-control" ng-model="user.address.zip_code">
                             </div>
                         </div>
                     </div>
@@ -129,27 +129,33 @@
                                 <span class="input-group-addon hidden-xs" tooltip="Show on Profile">
                                     <input type="checkbox">
                                 </span>
-                                    <input type="date" class="form-control">
+                                    <input type="date" class="form-control" ng-model="user.birthdate">
                                 </div>
                             </div>
 
                             <label class="col-sm-2 control-label">Website</label>
                             <div class="col-sm-4">
                                 <div class="input-group m-b">
-                                <span class="input-group-addon hidden-xs" tooltip="Show on Profile">
+                                <span class="input-group-addon hidden-xs" tooltip="Show Date on Profile">
                                     <input type="checkbox">
                                 </span>
-                                    <input type="text" class="form-control">
+                                    <input type="text" class="form-control" ng-model="user.website">
                                 </div>
                             </div>
 
                             <label class="col-sm-2 control-label">Role</label>
                             <div class="col-sm-10">
-                                <p class="form-control-static">{{ user.role.data.name}}</p>
+                                <p class="form-control-static">{{ user.role.data.name }}</p>
                             </div>
                         </div>
 
-
+                    <div class="hr-line-dashed"></div>
+                    <div class="form-group">
+                        <div class="col-sm-4 col-sm-offset-2">
+                            <button class="btn btn-white" ng-click="stopEdit()">Cancel</button>
+                            <button class="btn btn-primary" ng-click="saveUser(user)">Save changes</button>
+                        </div>
+                    </div>
 
                     </div>
 

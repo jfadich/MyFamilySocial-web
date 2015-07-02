@@ -1,5 +1,5 @@
 
-function PhotoExplorerController($scope, PhotoService, $q, api, $timeout) {
+function PhotoExplorerController($scope, PhotoService, $q, api, $timeout, toastr) {
 
     $scope.editingPhoto = false;
     $scope.currentPhoto = false;
@@ -22,6 +22,8 @@ function PhotoExplorerController($scope, PhotoService, $q, api, $timeout) {
                         PhotoService.getPhoto($scope.highlightImage,'parent').then(function (response) {
                             if(response.data.data.parent.data == $scope.parent.id)
                                 $scope.photos.unshift(response.data.data);
+                            else
+                                toastr.warning('Photo not found in album');
                         });
                     }
                 }

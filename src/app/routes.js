@@ -156,13 +156,6 @@
                     pageTitle: 'Create Photo Album'
                 }
             })
-            .state('family.photos.test', {
-                url: "/test",
-                template: "<photo-explorer parent=\"album\"></photo-explorer>",
-                controller: function(albums, $scope) {
-                    $scope.album = albums.data[5];
-                }
-            })
             .state('family.photos.album', {
                 url: "/albums/:album",
                 templateUrl: "app/views/photos/showAlbum.html",
