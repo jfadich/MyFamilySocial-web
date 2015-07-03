@@ -24,9 +24,7 @@
 
                 <strong>{{ reply.owner.data.first_name }} {{ reply.owner.data.last_name }}</strong><br>
                 <small class="text-muted">{{ reply.created * 1000 | date : short }}  <span ng-if="reply.created !== reply.updated">[Last Edited {{ reply.updated * 1000 | date : short }}]</span></small>
-                <p>
-                    {{ reply.body }}
-                </p>
+                <p marked="reply.body"></p>
             </div>
 
             <form class="media-body" ng-if="editing == reply.id" name="editThreadReply" novalidate="">

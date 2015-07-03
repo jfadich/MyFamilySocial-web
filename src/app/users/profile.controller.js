@@ -10,7 +10,7 @@
             else
                 users.data.birthdate = NaN;
 
-            $scope.user = users.data;console.log(users.data);
+            $scope.user = users.data;
         });
 
         $scope.saveUser = function (userUpdate) {

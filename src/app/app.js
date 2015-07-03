@@ -13,7 +13,8 @@
         'ui.bootstrap.showErrors',
         'ngSanitize',
         'MassAutoComplete',
-        'ncy-angular-breadcrumb'
+        'ncy-angular-breadcrumb',
+        'hc.marked'
     ])
     .constant('API_URL', 'http://myfamily.dev')
     .constant('ERRORS', {
@@ -29,4 +30,7 @@
             duplicateEntity: 203,
             invalidRelationship: 204
         })
+    .config(['markedProvider', function(markedProvider) {
+        markedProvider.setOptions({gfm: true});
+    }]);
 })();
