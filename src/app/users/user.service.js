@@ -11,7 +11,7 @@
             return self.getPromise('',includes);
         };
 
-        self.updateUser = function(user) {
+        self.updateUser = function(user, includes) {
             var userObj = {
                 first_name : user.first_name,
                 last_name : user.last_name,
@@ -22,14 +22,15 @@
                 city : user.address.city,
                 state : user.address.state,
                 zip_code : user.address.zip_code,
-                street_address : user.address.street_address
+                street_address : user.address.street_address,
+                role : user.role.data.id
             };
 
-
-            if(typeof user.birthdate != 'undefined')
+            var birthdate = moment(new Date(user.birthdate)).format('MM/DD/YYYY');
+            if(birthdate != 'Invalid date')
                 userObj.birthdate = moment(new Date(user.birthdate)).format('MM/DD/YYYY');
 
-            return api.patch(api.url('/users/') + user.id, userObj);
+            return api.patch(api.url('/users/' + user.id, includes), userObj);
         };
 
         self.getPromise = function(endpoint, includes) {

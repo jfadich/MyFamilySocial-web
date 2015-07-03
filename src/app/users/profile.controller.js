@@ -1,7 +1,8 @@
 ;(function () {
 
-    function ProfileController($scope, user, $state) {
+    function ProfileController($scope, user, $state, RoleService) {
         $scope.user = [];
+        $scope.roles = [];
         $scope.editing = false;
 
         user.getUser($state.params.user, 'profile_pictures,albums.photos,role').then(function(users){
@@ -13,9 +14,13 @@
             $scope.user = users.data;
         });
 
+        RoleService.getRoles().then(function(response) {
+            $scope.roles = response.data.data;
+        });
+
         $scope.saveUser = function (userUpdate) {
 
-            user.updateUser(userUpdate).then(function(response) {
+            user.updateUser(userUpdate, 'role').then(function(response) {
                 $scope.editing = false;
 
                 if(typeof response.data.data.birthdate != 'undefined')

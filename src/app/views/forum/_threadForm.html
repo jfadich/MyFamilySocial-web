@@ -10,7 +10,7 @@
         <div class="form-group" show-errors="{ showSuccess: true}">
             <label class="col-sm-2 control-label">Category:</label>
 
-            <div class="col-sm-10">
+            <div ng-class="main.user.role.data.permissions.forum_glueThread ? 'col-sm-8' : 'col-sm-10'">
                 <select class="form-control m-b"
                         name="category"
                         ng-model="thread.category.data.id"
@@ -18,6 +18,20 @@
                         required>
                 </select>
             </div>
+
+
+            <div class="col-sm-1" ng-if="main.user.role.data.permissions.forum_glueThread">
+                <div class="switch">
+                    <div class="onoffswitch">
+                        <input type="checkbox" ng-model="thread.sticky" class="onoffswitch-checkbox" id="shared">
+                        <label class="onoffswitch-label" for="shared">
+                            <span class="onoffswitch-inner"> </span>
+                            <span class="onoffswitch-switch"></span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-1" ng-if="main.user.role.data.permissions.forum_glueThread">Sticky</div>
         </div>
         <div class="form-group" show-errors="{ showSuccess: true}">
             <div class="col-sm-12">

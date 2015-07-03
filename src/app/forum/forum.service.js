@@ -29,6 +29,7 @@
                 title: thread.title,
                 body: thread.body,
                 tags: thread.tags,
+                sticky: thread.sticky,
                 category: thread.category.data.id
             });
         };
@@ -38,6 +39,7 @@
                 title: thread.title,
                 body: thread.body,
                 tags: thread.tags,
+                sticky: thread.sticky,
                 category: thread.category.data.id
             });
         };
