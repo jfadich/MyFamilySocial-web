@@ -10,6 +10,11 @@ function PhotoExplorerController($scope, PhotoService, $q, api, $timeout, toastr
     $scope.$watch("parent", function() {
         if($scope.parent.type != undefined && $scope.parentId != $scope.parent.id) {
             $scope.parentId = $scope.parent.id;
+
+            $scope.$on('photos.upload.' + $scope.parent.type + '.' + $scope.parent.id, function(event, data){
+                $scope.photos.unshift(data);
+            });
+
             PhotoService.getPhotos($scope.parent, 'tags').then(function(response) {
                 $scope.photos = response.data.data;
                 $scope.meta = response.data.meta;

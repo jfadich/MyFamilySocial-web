@@ -3,8 +3,12 @@ function PhotoInfoController($scope, toastr, $state, TagService, PhotoService) {
     $scope.dirty = {};
 
     $scope.$watch("photo", function() {
-        if(typeof $scope.photo == 'object')
+        if(typeof $scope.photo == 'object') {
+            if(typeof $scope.photo.tags == 'undefined') {
+                $scope.photo.tags = { data: [] };
+            }
             $scope.photo.tag_array = $scope.photo.tags.data;
+        }
     });
 
     $scope.tag_autocomplete = {
@@ -48,19 +52,19 @@ function PhotoInfoController($scope, toastr, $state, TagService, PhotoService) {
         var message = '';
         var toastTitle;
 
-            photo.tags = photo.tag_array.map(function(tag){
-                return tag.name;
-            }).join(",");
+        photo.tags = photo.tag_array.map(function(tag){
+            return tag.name;
+        }).join(",");
 
-            return PhotoService.updatePhoto(photo).then(function (response) {
-                var photo = response.data.data;
-                toastTitle = photo.name.length > 100 ? (photo.name.substring(0,100) + '...') : photo.name;
-                message = "'" + toastTitle + "' <b>Saved.</b>";
+        return PhotoService.updatePhoto(photo).then(function (response) {
+            var photo = response.data.data;
+            toastTitle = photo.name.length > 100 ? (photo.name.substring(0,100) + '...') : photo.name;
+            message = "'" + toastTitle + "' <b>Saved.</b>";
 
-                $scope.photo.tags =  { data:$scope.photo.tag_array };
-                toastr.success( message, 'Success',{ iconClass: 'toast-comment', allowHtml: true});
-                $scope.toggleEditingPhoto();
-            });
+            $scope.photo.tags =  { data:$scope.photo.tag_array };
+            toastr.success( message, 'Success',{ iconClass: 'toast-comment', allowHtml: true});
+            $scope.toggleEditingPhoto();
+        });
     };
 
     $scope.toggleEditingPhoto = function() {

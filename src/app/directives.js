@@ -72,7 +72,7 @@ angular.module('inspinia')
             }
         }})
 
-        .directive("dropzone", function(api, token, toastr) {
+        .directive("dropzone", function(api, token, toastr, $rootScope, ERRORS) {
             return function(scope, element, attrs) {
 
                 if(attrs.dzPermissions === undefined || attrs.dzPermissions == "false")
@@ -93,14 +93,24 @@ angular.module('inspinia')
                         this.on('success', function (file, json) {
                             this.removeFile(file);
                             toastr.success('Photo uploaded', 'Success');
-                            scope.$apply(function(){
-                                scope.album.photos.data.unshift(json.data);
-                            });
-                            if(this.files.length == 0)
-                                $('.dropzone').addClass('hide');
+
+                            //if(this.files.length == 0)
+                            //    $('.dropzone').addClass('hide');
+
+                            $rootScope.$broadcast('photos.upload.album.' + attrs.dzAlbum, json.data)
                         });
                         this.on("addedfile", function (file) {
                             $('.dropzone').removeClass('hide');
+                        });
+                        this.on("removedfile", function (file) {
+                            if(this.files.length == 0)
+                                $('.dropzone').addClass('hide');
+                        });
+                        this.on("error", function (file, response) {console.log(response.error.error_code , ERRORS.invalidEntity);
+                            if(response.error.error_code == ERRORS.invalidEntity) {
+                                $(file.previewElement).find('.dz-error-message').text(response.error.message);
+                                        toastr.error(response.error.message);
+                                }
                         });
                     }
                 };

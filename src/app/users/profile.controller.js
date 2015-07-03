@@ -2,7 +2,7 @@
 
     function ProfileController($scope, user, $state) {
         $scope.user = [];
-        $scope.editing = true;
+        $scope.editing = false;
 
         user.getUser($state.params.user, 'profile_pictures,albums.photos,role').then(function(users){
             if(typeof users.data.birthdate != 'undefined')
