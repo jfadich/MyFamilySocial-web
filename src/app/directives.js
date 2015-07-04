@@ -82,7 +82,7 @@ angular.module('inspinia')
                     if (attrs.dzPermissions === undefined || attrs.dzPermissions == "false")
                         return;
 
-                    scope.$watch("dzParent", function() {console.log(scope);
+                    scope.$watch("dzParent", function() {
                         if(scope.dzParent.type != undefined && scope.parentId != scope.dzParent.id) {
                             var dzOptions = {
                                 url: api.url('/photos'),

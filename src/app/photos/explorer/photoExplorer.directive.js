@@ -25,12 +25,15 @@ function PhotoExplorerController($scope, PhotoService, $q, api, $timeout, toastr
                     var highlight  = $.grep($scope.photos, function(e){ return e.id == $scope.highlightImage; });
                     if(highlight.length == 0) {
                         PhotoService.getPhoto($scope.highlightImage,'parent').then(function (response) {
-                            if(response.data.data.parent.data == $scope.parent.id)
+                            if(response.data.data.parent.data == $scope.parent.id) {
                                 $scope.photos.unshift(response.data.data);
+                                highlight = [response.data.data];
+                            }
                             else
                                 toastr.warning('Photo not found in album');
                         });
                     }
+                    $scope.selectPhoto($scope.photos.indexOf(highlight[0]));
                 }
             })
         }
@@ -110,15 +113,6 @@ function PhotoExplorerController($scope, PhotoService, $q, api, $timeout, toastr
     $scope.editPhoto = function() {
         $scope.editingPhoto = !$scope.editingPhoto;
     };
-
-    //give the image a change to load
-    $timeout(function() {
-        $scope.targetImage = $scope.highlightImage;
-    },1000);
-    //remove the highlight to prevent subviews from redrawing animation
-    $timeout(function() {
-        $scope.targetImage = 0;
-    },2500);
 }
 
 angular.module('inspinia')

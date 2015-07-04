@@ -47,13 +47,12 @@
                         <span class="fa fa-link m-r-xs"></span>
                         <a href="http://{{ user.website }}" target="_blank">{{ user.website }}</a>
                     </li>
-                    <li class="clearfix" ng-if="user.address">
+                    <li class="clearfix" ng-if="user.address.city && user.address.state">
                         <span class="fa fa-home m-r-xs"></span>
                         <address class="pull-right" style="width:93%;">
-                            {{ user.address.street_address }}<br>
+                            {{ user.address.street_address }}
                             {{ user.address.city }}, {{ user.address.state }} {{ user.address.zip_code }}<br>
                         </address>
-
                     </li>
                 </ul>
             </div>
@@ -89,7 +88,7 @@
                                         {{ album.name }}
                                     </a><br>
                                     <span ng-repeat="photo in album.photos.data">
-                                        <a ui-sref="family.photos.photo({photo: photo.id})"
+                                        <a ui-sref="family.photos.album({album: album.slug, highlightImage: photo.id })"
                                            title="{{photo.name}}">
                                         <img ng-src="{{photo.image.small}}">
                                             </a>
@@ -98,9 +97,13 @@
                             </ul>
 
                         </div>
+
+                        <div ng-if="user.profile_pictures.data.length == 0 && user.albums.data.length == 0">
+                            <h2>Nothing to see here</h2>
+                        </div>
                     </div>
                 </tab>
-                <tab heading="Activity">
+                <tab heading="Activity" ng-if="false">
                     <div class="panel-body ibox-content">
                         <strong>Donec quam felis</strong>
 
@@ -118,7 +121,6 @@
             </tabset>
 
         </div>
-
     </div>
 </div>
 

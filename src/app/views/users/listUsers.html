@@ -53,3 +53,12 @@
         </a>
     </div>
 </div>
+
+<p>
+    <button type="button"
+            class="btn btn-block btn-outline btn-primary"
+            ng-click="more()"
+            ng-if="users.length < meta.pagination.total">
+        <i class="fa fa-arrow-down"></i> More users
+    </button>
+</p>
