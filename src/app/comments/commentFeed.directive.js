@@ -18,12 +18,11 @@ function CommentFeedController($scope, CommentService, toastr, api) {
     $scope.saveReply = function(reply, event) {
         event.target.disabled = true;
         $scope.editing = 0;
-        CommentService.updateComment(reply).then(function(response) {
-            toastr.success('Reply updated Successfully', { iconClass: 'toast-comment'});
-            var index = $scope.comments.indexOf(reply);
-            $scope.comments[index] = response.data.data;
-            reply = response.data.data;
 
+        CommentService.updateComment({ body:reply.edited, id: reply.id }).then(function(response) {
+            toastr.success('Reply updated Successfully', { iconClass: 'toast-comment'});
+            reply.body = response.data.data.body;
+            reply.updated = response.data.data.updated;
         });
     };
 
