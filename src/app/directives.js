@@ -73,54 +73,61 @@ angular.module('inspinia')
         }})
 
         .directive("dropzone", function(api, token, toastr, $rootScope, ERRORS) {
-            return function(scope, element, attrs) {
+            return {
+                scope: {
+                    dzParent: '='
+                },
+                link: function (scope, element, attrs) {
 
-                if(attrs.dzPermissions === undefined || attrs.dzPermissions == "false")
-                    return;
+                    if (attrs.dzPermissions === undefined || attrs.dzPermissions == "false")
+                        return;
 
-                var dzOptions = {
-                    url: api.url(attrs.dzUrl),
-                    maxFilesize: 20,
-                    paramName: "photo",
-                    acceptedFiles: 'image/*',
-                    previewsContainer: '#preview',
-                    clickable: "#dz-clickable",
-                    sending: function (file, xhr, formData) {
-                        xhr.setRequestHeader('Authorization', 'Bearer: ' + token.get());
-                        formData.append("album_id", attrs.dzAlbum);
-                    },
-                    init: function () {
-                        this.on('success', function (file, json) {
-                            this.removeFile(file);
-                            toastr.success('Photo uploaded', 'Success');
-
-                            //if(this.files.length == 0)
-                            //    $('.dropzone').addClass('hide');
-
-                            $rootScope.$broadcast('photos.upload.album.' + attrs.dzAlbum, json.data)
-                        });
-                        this.on("addedfile", function (file) {
-                            $('.dropzone').removeClass('hide');
-                        });
-                        this.on("removedfile", function (file) {
-                            if(this.files.length == 0)
-                                $('.dropzone').addClass('hide');
-                        });
-                        this.on("error", function (file, response) {console.log(response.error.error_code , ERRORS.invalidEntity);
-                            if(response.error.error_code == ERRORS.invalidEntity) {
-                                $(file.previewElement).find('.dz-error-message').text(response.error.message);
-                                        toastr.error(response.error.message);
+                    scope.$watch("dzParent", function() {console.log(scope);
+                        if(scope.dzParent.type != undefined && scope.parentId != scope.dzParent.id) {
+                            var dzOptions = {
+                                url: api.url('/photos'),
+                                maxFilesize: 20,
+                                paramName: "photo",
+                                acceptedFiles: 'image/*',
+                                previewsContainer: '#preview',
+                                clickable: '#dz-clickable',
+                                sending: function (file, xhr, formData) {
+                                    xhr.setRequestHeader('Authorization', 'Bearer: ' + token.get());
+                                    formData.append('parent_id', scope.dzParent.id);
+                                    formData.append('parent_type', scope.dzParent.type);
+                                },
+                                init: function () {
+                                    this.on('success', function (file, json) {
+                                        this.removeFile(file);
+                                        toastr.success('Photo uploaded', 'Success');console.log(json);
+                                        $rootScope.$broadcast('photos.upload.'+ scope.dzParent.type + '.' + scope.dzParent.id, json.data)
+                                    });
+                                    this.on('addedfile', function (file) {
+                                        $('.dropzone').removeClass('hide');
+                                    });
+                                    this.on('removedfile', function (file) {
+                                        if (this.files.length == 0)
+                                            $('.dropzone').addClass('hide');
+                                    });
+                                    this.on('error', function (file, response) {
+                                        if (response.error.error_code == ERRORS.invalidEntity) {
+                                            $(file.previewElement).find('.dz-error-message').text(response.error.message);
+                                            toastr.error(response.error.message);
+                                        }
+                                    });
                                 }
-                        });
-                    }
-                };
+                            };
 
-                if(attrs.dzOptions !== undefined) {
-                    $.extend(dzOptions, JSON.parse(attrs.dzOptions));
+                            if (attrs.dzOptions !== undefined) {
+                                $.extend(dzOptions, JSON.parse(attrs.dzOptions));
+                            }
+
+                            element.dropzone(dzOptions);
+                        }
+                    });
+
                 }
-
-                element.dropzone(dzOptions);
-            };
+            }
         })
         .directive("profilePicture", function() {
             return {

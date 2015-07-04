@@ -1,4 +1,4 @@
-<div dropzone="" id="file-dropzone" dz-url="/photos" dz-album="{{ album.id }}" dz-permissions="{{ album.permissions.add_photo }}">
+<div dropzone="" id="file-dropzone" dz-parent="album" dz-permissions="{{ album.permissions.add_photo }}">
     <div class="ibox" ng-model="album.photos.data">
 
         <!-- Holding area for uploaded photos -->

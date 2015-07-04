@@ -1,5 +1,8 @@
+<!-- Holding area for uploaded photos -->
+<div id="preview" class="dropzone hide" style="margin-bottom: 10px;"></div>
+
 <div class="col-md-4">
-    <div class="ibox float-e-margins">
+    <div class="ibox float-e-margins" dropzone="" id="file-dropzone" dz-parent="user" dz-permissions="user.permissions.edit">
         <div class="ibox-title">
             <h5>Profile Photo</h5>
         </div>
@@ -16,7 +19,7 @@
                         {{ user.display_name }}</strong>
                     </h3>
                     <h5>
-                        <a class="btn btn-white btn-xs">Drag a photo/click here to change your profile picture</a>
+                        <a class="btn btn-white btn-xs" id="dz-clickable">Drag a photo/click here to change your profile picture</a>
                     </h5>
                 </div>
             </div>

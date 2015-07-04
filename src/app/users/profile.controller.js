@@ -12,6 +12,11 @@
                 users.data.birthdate = NaN;
 
             $scope.user = users.data;
+
+
+            $scope.$on('photos.upload.user.' + $scope.user.id, function(event, data){console.log(data);
+                $scope.user.image= data.image;
+            });
         });
 
         RoleService.getRoles().then(function(response) {
