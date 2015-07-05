@@ -33,17 +33,20 @@
                         <div class="row">
                             <div class="col-md-7 col-xs-8">
 
-                                <profile-picture size="small" user="thread.owner.data" a-class="pull-left" img-class="m-r-sm"></profile-picture>
+                                <profile-picture size="small" user="thread.owner.data" a-class="pull-left" img-class="m-r-sm" class="hidden-xs"></profile-picture>
 
                                 <div class="media-body">
                                 <a ui-sref="family.forum.thread({thread_slug: thread.slug})" class="faq-question">{{ thread.title }}</a>
-                                <small>Added by <strong>{{ thread.owner.data.first_name }} {{ thread.owner.data.last_name }}</strong>
+                                    <span class="label label-info" ng-if="thread.sticky">sticky</span>
+                                <small>
+                                    <profile-picture size="small" user="thread.owner.data" a-class="pull-left" img-class="m-r-sm" class="visible-xs"></profile-picture>
+                                    Added by <strong>{{ thread.owner.data.first_name }} {{ thread.owner.data.last_name }}</strong>
                                     <i class="fa fa-clock-o"></i> <span am-time-ago="thread.created" am-preprocess="unix"></span>
                                 </small>
                                 </div>
                             </div>
                             <div class="col-md-3 hidden-xs">
-                                <span class="label label-info" ng-if="thread.sticky">sticky</span>
+
                                 <span class="text-right pull-right hidden-xs" ng-if="thread.tags.data.length > 0">
                                     <span ng-repeat="tag in thread.tags.data"> <button class="btn btn-white btn-xs">{{ tag.name }}</button> </span>
                                 </span>

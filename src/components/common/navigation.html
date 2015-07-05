@@ -20,7 +20,9 @@
                     </ul>
                 </div>
                 <div class="logo-element">
-                    {{ main.user.first_name[0] }}{{ main.user.last_name[0] }}+
+                    <a ui-sref="family.members.profile({user: user.id})">
+                        {{ main.user.first_name[0] }}{{ main.user.last_name[0] }}+
+                    </a>
                 </div>
 
             </li>

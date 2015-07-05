@@ -76,7 +76,6 @@
 
         self.refreshToken = function (url, method, data) {
             self.refreshing =  auth.refresh().then(function (response) {
-                alert('refreshed from API!');
                 return self.request(url, method, data);
             }, function (response) {
                 toastr.info('Your session has expired');
