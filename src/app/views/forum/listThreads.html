@@ -23,15 +23,15 @@
 
             <div class="ibox-content feed-activity-list">
                 <div class="row feed-element small font-bold text-center">
-                    <div class="col-md-7">Title</div>
-                    <div class="col-md-3 text-right">Tags</div>
-                    <div class="col-md-1">Replies</div>
-                    <div class="col-md-1">Freshness</div>
+                    <div class="col-md-7 col-xs-8">Title</div>
+                    <div class="col-md-3 text-right hidden-xs">Tags</div>
+                    <div class="col-md-1 col-xs-2">Replies</div>
+                    <div class="col-md-1 col-xs-2">Freshness</div>
                 </div>
                 <div class="feed-element animated fadeInUp" ng-repeat="thread in threads.data">
 
                         <div class="row">
-                            <div class="col-md-7">
+                            <div class="col-md-7 col-xs-8">
 
                                 <profile-picture size="small" user="thread.owner.data" a-class="pull-left" img-class="m-r-sm"></profile-picture>
 
@@ -42,17 +42,16 @@
                                 </small>
                                 </div>
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-md-3 hidden-xs">
                                 <span class="label label-info" ng-if="thread.sticky">sticky</span>
-                                <span class="text-right pull-right" ng-if="thread.tags.data.length > 0">
+                                <span class="text-right pull-right hidden-xs" ng-if="thread.tags.data.length > 0">
                                     <span ng-repeat="tag in thread.tags.data"> <button class="btn btn-white btn-xs">{{ tag.name }}</button> </span>
                                 </span>
                             </div>
-                            <div class="col-md-1 text-center">
-
+                            <div class="col-md-1 col-xs-2 text-center">
                                 {{ thread.reply_count }}
                             </div>
-                            <div class="col-md-1 text-center">
+                            <div class="col-md-1 col-xs-2 text-center">
 
                                 <span am-time-ago="thread.freshness" am-preprocess="unix"></span>
                             </div>
