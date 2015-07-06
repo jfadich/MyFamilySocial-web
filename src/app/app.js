@@ -14,7 +14,8 @@
         'ngSanitize',
         'MassAutoComplete',
         'ncy-angular-breadcrumb',
-        'hc.marked'
+        'hc.marked',
+        'sticky'
     ])
     .constant('API_URL', 'http://myfamily.dev')
     .constant('ERRORS', {

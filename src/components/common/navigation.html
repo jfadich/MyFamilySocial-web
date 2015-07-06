@@ -20,9 +20,10 @@
                     </ul>
                 </div>
                 <div class="logo-element">
-                    <a ui-sref="family.members.profile({user: user.id})">
+                    <a ui-sref="family.members.profile({user: main.user.id})">
                         {{ main.user.first_name[0] }}{{ main.user.last_name[0] }}+
                     </a>
+                    <br>
                 </div>
 
             </li>
@@ -47,6 +48,7 @@
             <li ng-class="{ active: $state.includes('family.members') }">
                 <a ui-sref="family.members.index"><i class="fa fa-users"></i> <span class="nav-label">Members</span></a>
             </li>
+
         </ul>
 
     </div>
