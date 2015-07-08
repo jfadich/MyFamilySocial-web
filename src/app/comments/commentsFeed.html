@@ -12,7 +12,7 @@
         <br>
     </form>
 
-    <div class="feed-activity-list">
+    <div class="feed-activity-list" ng-show="parentId != 0">
         <div class="feed-element animated fadeInUp" ng-repeat="reply in comments"  ng-class="{'flipOutX': reply.deleted}">
 
             <profile-picture size="small" user="reply.owner.data" class="pull-left"></profile-picture>
@@ -53,13 +53,29 @@
         </div>
 
     <br>
+
+    </div>
     <p>
+    <div ng-if="commentLoading">
+        <div class="sk-spinner sk-spinner-cube-grid">
+            <div class="sk-cube"></div>
+            <div class="sk-cube"></div>
+            <div class="sk-cube"></div>
+            <div class="sk-cube"></div>
+            <div class="sk-cube"></div>
+            <div class="sk-cube"></div>
+            <div class="sk-cube"></div>
+            <div class="sk-cube"></div>
+            <div class="sk-cube"></div>
+        </div>
+    </div>
+    <div ng-if="comments.length < meta.pagination.total && !commentLoading">
         <button type="button"
                 class="btn btn-block btn-outline btn-primary"
-                ng-click="more()"
-                ng-if="comments.length < meta.pagination.total">
+                ng-click="more()" >
+
             <i class="fa fa-arrow-down"></i> More replies
         </button>
-    </p>
     </div>
+    </p>
 </div>

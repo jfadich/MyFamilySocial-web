@@ -3,12 +3,15 @@
     function ForumController($scope, ForumService, $state) {
         $scope.category = null;
         $scope.threads = [];
+        $scope.threadsLoading = true;
 
         ForumService.getCategory($state.params.category_slug, 'threads.owner,threads.tags').then(function(category){
             $scope.category = category.data;
             $scope.threads = category.data.threads;
         }, function(response){
             console.log(response);
+        }).finally(function(){
+            $scope.threadsLoading = false;
         });
 
         $scope.more = function() {

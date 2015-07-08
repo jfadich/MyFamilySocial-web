@@ -33,6 +33,16 @@
             </div>
             <div class="form-group" show-errors="{ showSuccess: true }">
                 <input
+                        ng-model="newUser.family_code"
+                        placeholder="Family Code"
+                        type="family_code"
+                        name="family_code"
+                        class="form-control"
+                        required
+                        >
+            </div>
+            <div class="form-group" show-errors="{ showSuccess: true }">
+                <input
                         ng-model="newUser.password"
                         placeholder="Password"
                         name="password"
@@ -54,7 +64,7 @@
                         required
                         >
 
-                    <label class="control-label" ng-show="register.password_confirm.$dirty && newUser.password_confirm != newUser.password">Passwords must match</label>
+                <label class="control-label" ng-show="register.password_confirm.$dirty && newUser.password_confirm != newUser.password">Passwords must match</label>
 
             </div>
             <button type="button" ng-click="register_submit()" class="btn btn-primary block full-width m-b" ng-disabled="register.$invalid">Register</button>

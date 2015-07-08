@@ -14,7 +14,7 @@
                         $scope.albums = $scope.albums.concat(album.data );
 
                     if(album.pagination !== undefined)
-                        $scope.pages = album.data.photos.meta.pagination;
+                        $scope.pages = album.meta.pagination;
                     else
                         $scope.pages = {};
                 });

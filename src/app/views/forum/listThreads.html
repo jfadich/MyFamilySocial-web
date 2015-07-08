@@ -28,6 +28,20 @@
                     <div class="col-md-1 col-xs-2">Replies</div>
                     <div class="col-md-1 col-xs-2">Freshness</div>
                 </div>
+                <div ng-if="threadsLoading">
+                    <br>
+                    <div class="sk-spinner sk-spinner-cube-grid">
+                        <div class="sk-cube"></div>
+                        <div class="sk-cube"></div>
+                        <div class="sk-cube"></div>
+                        <div class="sk-cube"></div>
+                        <div class="sk-cube"></div>
+                        <div class="sk-cube"></div>
+                        <div class="sk-cube"></div>
+                        <div class="sk-cube"></div>
+                        <div class="sk-cube"></div>
+                    </div>
+                </div>
                 <div class="feed-element animated fadeInUp" ng-repeat="thread in threads.data">
 
                         <div class="row">
