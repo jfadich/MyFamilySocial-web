@@ -31,7 +31,7 @@ $scope.parentId = 0;
         $scope.editing = 0;
         swal({
                 title: "Are you sure?",
-                text: "Your will not be able to recover this imaginary file!",
+                text: "Your will not be able to recover this comment!",
                 type: "warning",
                 showCancelButton: true,
                 confirmButtonColor: "#DD6B55",
@@ -46,6 +46,7 @@ $scope.parentId = 0;
                         var index = $scope.comments.indexOf(reply);
                         $scope.comments.splice(index, 1);
                         swal("Deleted!", "Shhhh, you didn\'t see that", "success");
+                        $scope.meta--;
                         return response;
 
                     }, function(response){

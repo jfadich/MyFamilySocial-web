@@ -226,7 +226,7 @@
         $urlRouterProvider.when('/members', '/members/index');
         $urlRouterProvider.otherwise(function($injector, $location) {
             var $state = $injector.get("$state");
-            $state.go("family.main");
+            $state.go("family.forum.thread", {thread_slug: 'welcome'});
         });
     }
     angular.module('inspinia')

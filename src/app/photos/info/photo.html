@@ -1,4 +1,20 @@
 <div ng-if="!editing">
+    <div class="col-lg-8 col-xs-12">
+        <div class="ibox">
+            <div class="ibox-content">
+                <div class="animated fadeInUp">
+                    <h2>{{ photo.name }}</h2>
+                    <div class="row">
+
+                        <img ng-src="{{ photo.image.large }}" class="img-responsive center-block">
+                    </div>
+
+                    <hr>
+
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="col-lg-4 pull-right col-xs-12">
         <div class="ibox">
             <div class="ibox-content">
@@ -22,23 +38,6 @@
                     </ul>
                     <br class="clearfix">
                     <comment-feed parent="photo"></comment-feed>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="col-lg-8 col-xs-12">
-        <div class="ibox">
-            <div class="ibox-content">
-                <div class="animated fadeInUp">
-                    <h2>{{ photo.name }}</h2>
-                    <div class="row">
-
-                        <img ng-src="{{ photo.image.large }}" class="img-responsive center-block">
-                    </div>
-
-                    <hr>
-
                 </div>
             </div>
         </div>
