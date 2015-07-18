@@ -9,6 +9,7 @@ function PhotoExplorerController($scope, PhotoService, $q, api, $timeout, toastr
 
     $scope.$watch("parent", function() {
         if($scope.parent.type != undefined && $scope.parentId != $scope.parent.id) {
+            $scope.parentLoading = true;
             $scope.parentId = $scope.parent.id;
 
             $scope.$on('photos.upload.' + $scope.parent.type + '.' + $scope.parent.id, function(event, data){
@@ -35,7 +36,8 @@ function PhotoExplorerController($scope, PhotoService, $q, api, $timeout, toastr
                     }
                     $scope.selectPhoto($scope.photos.indexOf(highlight[0]));
                 }
-            })
+                $scope.parentLoading = false;
+            });
         }
     });
 

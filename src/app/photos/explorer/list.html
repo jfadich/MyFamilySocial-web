@@ -2,7 +2,7 @@
     <h4>It's empty in here</h4>
 </div>
 
-<div class="ibox-content" ng-if="display == 'explore'">
+<div class="ibox-content" ng-show="display == 'explore'">
     <div class="file-box" ng-repeat="photo in photos">
         <div class="file-box">
             <div class="file">
@@ -34,7 +34,7 @@
     <div class="clearfix"></div>
 </div>
 
-<div class="ibox-content text-center" ng-if="display == 'gallery'">
+<div class="ibox-content text-center" ng-show="display == 'gallery'">
     <div id="lightboxGallery" ng-click="gallery($event)">
 
         <div class="col-md-4" ng-repeat="photo in photos">

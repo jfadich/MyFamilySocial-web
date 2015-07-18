@@ -51,7 +51,7 @@ function PhotoInfoController($scope, toastr, $state, TagService, PhotoService) {
     $scope.savePhoto = function(photo) {
         var message = '';
         var toastTitle;
-
+        console.log(event);
         photo.tags = photo.tag_array.map(function(tag){
             return tag.name;
         }).join(",");

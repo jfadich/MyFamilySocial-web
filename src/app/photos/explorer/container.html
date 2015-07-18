@@ -2,6 +2,7 @@
 <div class="ibox border-bottom" sticky style="z-index: 10001">
     <div class="ibox-content">
 
+        <div ng-if="parentLoading" ng-include="'components/common/loadingIcon.html'"></div>
         <div class="pull-right col-md-4 text-right" ng-if="currentPhoto">
 
             <div class="btn-group">

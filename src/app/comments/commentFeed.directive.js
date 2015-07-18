@@ -6,7 +6,7 @@ $scope.parentId = 0;
         event.target.disabled = true;
         CommentService.addComment(comment.body, $scope.parent).then(function(response){
             $scope.comments.unshift(response.data.data);
-            toastr.success('Reply added Successfully', { iconClass: 'toast-comment'});
+            toastr.success('Success','Reply added', { iconClass: 'toast-comment'});
             comment.body = '';
         });
     };
@@ -21,7 +21,7 @@ $scope.parentId = 0;
         $scope.editing = 0;
 
         CommentService.updateComment({ body:reply.edited, id: reply.id }).then(function(response) {
-            toastr.success('Reply updated Successfully', { iconClass: 'toast-comment'});
+            toastr.success('Success','Reply updated', { iconClass: 'toast-comment'});
             reply.body = response.data.data.body;
             reply.updated = response.data.data.updated;
         });
@@ -37,7 +37,6 @@ $scope.parentId = 0;
                 confirmButtonColor: "#DD6B55",
                 confirmButtonText: "Yes, delete it!",
                 cancelButtonText: "No, cancel!",
-                closeOnConfirm: false,
                 closeOnCancel: false },
             function (isConfirm) {
                 if (isConfirm) {
@@ -45,7 +44,7 @@ $scope.parentId = 0;
                     CommentService.deleteComment(reply.id).then(function(response){
                         var index = $scope.comments.indexOf(reply);
                         $scope.comments.splice(index, 1);
-                        swal("Deleted!", "Shhhh, you didn\'t see that", "success");
+                        toastr.success('Deleted!', 'Shhhh, you didn\'t see that', 'success', { iconClass: 'toast-comment'});
                         $scope.meta--;
                         return response;
 
