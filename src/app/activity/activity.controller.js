@@ -22,14 +22,6 @@
 
             return '';
         };
-
-        $scope.includeAlbumPhotos = function(album, limit) {console.log(album);
-            if(album.photos != undefined)
-                return;
-            PhotoService.getPhotos(album,'',limit).then(function(response){
-                album.photos = response.data;console.log(album);
-            })
-        }
     }
 
     angular.module('inspinia')

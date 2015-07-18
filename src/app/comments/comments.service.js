@@ -12,7 +12,11 @@
         };
 
         self.getComments = function(parent, limit) {
-            return api.get(api.url('/comments/'+parent.type+'/'+parent.id+"?limit="+limit))
+            if(limit == undefined)
+                limit = '';
+            else
+                limit = "?limit="+limit;
+            return api.get(api.url('/comments/'+parent.type+'/'+parent.id+limit))
         };
 
         self.deleteComment = function(comment) {
