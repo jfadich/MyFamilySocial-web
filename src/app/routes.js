@@ -14,11 +14,12 @@
                     requireAuth: true
                 }
             })
-            .state('family.main', {
-                url: "/main",
-                templateUrl: "app/views/main.html",
+            .state('family.home', {
+                url: "/home",
+                templateUrl: "app/activity/feed.html",
+                controller: 'ActivityCtrl',
                 data: {
-                    pageTitle: 'Main'
+                    pageTitle: 'Welcome'
                 }
             })
             .state('family.forum', {
@@ -226,7 +227,7 @@
         $urlRouterProvider.when('/members', '/members/index');
         $urlRouterProvider.otherwise(function($injector, $location) {
             var $state = $injector.get("$state");
-            $state.go("family.forum.thread", {thread_slug: 'welcome'});
+            $state.go('family.home');
         });
     }
     angular.module('inspinia')

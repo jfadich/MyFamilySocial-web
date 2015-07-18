@@ -33,6 +33,7 @@
             invalidRelationship: 204
         })
     .config(['markedProvider', function(markedProvider) {
-        markedProvider.setOptions({gfm: true});
-    }]);
+        markedProvider.setOptions({gfm: true}); // enable github flavored markdown
+    }])
+    .value('THROTTLE_MILLISECONDS', 500); // infinate scroll delay
 })();

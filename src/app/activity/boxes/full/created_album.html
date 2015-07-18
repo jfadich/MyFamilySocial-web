@@ -1,0 +1,18 @@
+<div class="social-feed-box">
+
+    <div class="social-avatar">
+        <profile-picture user="activity.actor" class="pull-left"></profile-picture>
+        <div class="media-body">
+            <a href="#" style="display: inline">
+                {{ activity.actor.display_name }}
+            </a> created a photo album <strong><a ui-sref="family.photos.album({album: activity.subject.slug})"> {{ activity.subject.name }} </a></strong>
+            <small class="text-muted">{{ activity.created * 1000 | date : short }}</small>
+
+        </div>
+    </div>
+    <div class="social-body">
+        <p>{{ activity.subject.body | limitTo: 250 }}</p>
+
+    </div>
+
+</div>

@@ -1,0 +1,19 @@
+<div class="social-feed-box">
+
+    <div class="social-avatar">
+        <profile-picture user="activity.actor" class="pull-left"></profile-picture>
+        <div class="media-body">
+            <a href="#" style="display: inline">
+                {{ activity.actor.display_name }}
+            </a> commented on <strong><a ui-sref="family.forum.thread({thread_slug: activity.target.slug})"> {{ activity.target.title }} </a></strong>
+            <small class="text-muted">{{ activity.created * 1000 | date : short }}</small>
+        </div>
+    </div>
+    <div class="social-body">
+        <p>{{ activity.target.body | limitTo: 250 }}</p>
+
+    </div>
+
+    <comment-feed parent="activity.target" limit="3"></comment-feed>
+
+</div>

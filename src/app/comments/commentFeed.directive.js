@@ -60,6 +60,7 @@ function CommentFeedController($scope, CommentService, toastr, api, auth) {
     };
 
     $scope.more = function() {
+        if($scope.commentLoading || $scope.limit != undefined) return;
 
         if($scope.meta.pagination != null && $scope.meta.pagination.links != undefined) {
             if($scope.meta.pagination.links.next != null) {
@@ -82,7 +83,7 @@ function CommentFeedController($scope, CommentService, toastr, api, auth) {
         if($scope.parent.type != undefined && $scope.parentId != $scope.parent.id) {
             $scope.commentLoading = true;
             $scope.parentId = 0;
-            CommentService.getComments($scope.parent).then(function(response) {
+            CommentService.getComments($scope.parent,$scope.limit).then(function(response) {
                 $scope.parentId = response.data.id;
                 $scope.comments = response.data.data;
                 $scope.meta = response.data.meta;
@@ -109,7 +110,8 @@ angular.module('inspinia')
             restrict: 'E',
             templateUrl: "app/comments/commentsFeed.html",
             scope: {
-                parent: '=parent'
+                parent: '=parent',
+                limit: '=limit'
             },
             controller: CommentFeedController
         }});

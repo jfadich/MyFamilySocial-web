@@ -3,6 +3,10 @@ function PhotoExplorerController($scope, PhotoService, $q, api, $timeout, toastr
 
     $scope.editingPhoto = false;
     $scope.currentPhoto = false;
+    $scope.parentLoading = true;
+    $scope.parent = {
+        permissions: {add_photo: false} // disable dropzone until parent enables it
+    };
     $scope.display = 'gallery';
     $scope.currentIndex = 0;
     $scope.parentId = 0;
@@ -36,6 +40,7 @@ function PhotoExplorerController($scope, PhotoService, $q, api, $timeout, toastr
                     }
                     $scope.selectPhoto($scope.photos.indexOf(highlight[0]));
                 }
+            }).finally(function() {
                 $scope.parentLoading = false;
             });
         }
@@ -61,14 +66,21 @@ function PhotoExplorerController($scope, PhotoService, $q, api, $timeout, toastr
     };
 
     $scope.more = function() {
-        if(typeof $scope.meta.pagination.links.next !== 'undefined') {
-            return api.get($scope.meta.pagination.links.next).then(function(response) {
-                $scope.photos = $scope.photos.concat(response.data.data);
-                $scope.meta = response.data.meta;
-            });
+        if($scope.parentLoading) return;
+
+        if($scope.meta.pagination != null && $scope.meta.pagination.links != undefined) {
+            if($scope.meta.pagination.links.next != null) {
+                $scope.parentLoading = true;
+                return api.get($scope.meta.pagination.links.next).then(function(response) {
+                    $scope.photos = $scope.photos.concat(response.data.data);
+                    $scope.meta = response.data.meta;
+                }).finally(function() {
+                    $scope.parentLoading = false;
+                });
+            }
         }
-        else
-            return $q.reject('no more pages');
+
+        return $q.reject('no pages left');
     };
 
     $scope.prevPhoto = function() {

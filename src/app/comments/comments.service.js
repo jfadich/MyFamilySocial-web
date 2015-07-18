@@ -11,8 +11,8 @@
             });
         };
 
-        self.getComments = function(parent, includes) {
-            return api.get(api.url('/comments/'+parent.type+'/'+parent.id, includes))
+        self.getComments = function(parent, limit) {
+            return api.get(api.url('/comments/'+parent.type+'/'+parent.id+"?limit="+limit))
         };
 
         self.deleteComment = function(comment) {

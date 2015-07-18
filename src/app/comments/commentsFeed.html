@@ -1,4 +1,4 @@
-<div id="social-feed-box">
+<div id="social-feed-box" infinite-scroll="more()" infinite-scroll-disabled='commentLoading || !limit'>
 
     <div class="social-footer">
         <form class="ng-pristine ng-valid social-comment" ng-if="parent.permissions.comment" name="threadReply">
@@ -18,7 +18,7 @@
             <br>
         </form>
 
-        <div ng-repeat="reply in comments" ng-class="{'animated flipOutX': reply.deleted}" infinite-scroll="more()" infinite-scroll-disabled='commentLoading'>
+        <div ng-repeat="reply in comments" ng-class="{'animated flipOutX': reply.deleted}">
             <div class="social-comment">
 
                 <profile-picture size="small" user="reply.owner.data" class="pull-left"></profile-picture>
@@ -31,7 +31,7 @@
                         <button class="btn btn-white btn-xs" ng-if="reply.permissions.edit" ng-click="editReply(reply, $event)"> <i class="fa fa-pencil"></i> </button>
                     </span>
                     <p marked="reply.body"></p>
-                    <small class="text-muted">{{ reply.created * 1000 | date : short }}  <span ng-if="reply.created !== reply.updated">[Last Edited {{ reply.updated * 1000 | date : short }}]</small>
+                    <small class="text-muted">{{ reply.created * 1000 | date : short }}  <span ng-if="reply.created !== reply.updated">[Last Edited {{ reply.updated * 1000 | date : short }}]</span></small>
                 </div>
 
                 <form class="media-body" ng-if="editing == reply.id" name="editThreadReply" novalidate="">
@@ -62,7 +62,7 @@
 </div>
     <p>
 
-    <div ng-if="comments.length < meta.pagination.total && !commentLoading">
+    <div ng-if="comments.length < meta.pagination.total && !commentLoading && !limit">
         <button type="button"
                 class="btn btn-block btn-outline btn-primary"
                 ng-click="more()" >
