@@ -15,7 +15,8 @@
         'MassAutoComplete',
         'ncy-angular-breadcrumb',
         'hc.marked',
-        'sticky'
+        'sticky',
+        'infinite-scroll'
     ])
     .constant('API_URL', 'http://myfamily.dev')
     .constant('ERRORS', {

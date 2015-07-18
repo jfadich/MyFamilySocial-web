@@ -1,8 +1,8 @@
 <div id="social-feed-box">
 
     <div class="social-footer">
-        <form class="ng-pristine ng-valid" ng-if="parent.permissions.comment" name="threadReply">
-            <div class="social-comment">
+        <form class="ng-pristine ng-valid social-comment" ng-if="parent.permissions.comment" name="threadReply">
+
                 <profile-picture size="small" user="currentUser" class="pull-left"></profile-picture>
                 <div class="media-body">
                     <textarea type="text" placeholder="Add reply" name="comment" ng-model="comment.body" class="form-control" rows="3" required="">
@@ -14,54 +14,52 @@
                     <div ng-if="commentLoading" ng-include="'components/common/loadingIcon.html'"></div>
                 </div>
 
-            </div>
+
             <br>
         </form>
-    </div>
 
-    <div class="social-footer" ng-if="!commentLoading" ng-repeat="reply in comments" ng-class="{'animated flipOutX': reply.deleted}">
-        <div class="social-comment">
+        <div ng-repeat="reply in comments" ng-class="{'animated flipOutX': reply.deleted}" infinite-scroll="more()" infinite-scroll-disabled='commentLoading'>
+            <div class="social-comment">
 
-            <profile-picture size="small" user="reply.owner.data" class="pull-left"></profile-picture>
+                <profile-picture size="small" user="reply.owner.data" class="pull-left"></profile-picture>
 
-            <div class="media-body" ng-if="editing != reply.id">
-                <a ui-sref="family.members.profile({user: reply.owner.data.id})">
-                    {{ reply.owner.data.display_name }}
-                </a>
-                <span class=" pull-right">
-                    <button class="btn btn-white btn-xs" ng-if="reply.permissions.edit" ng-click="editReply(reply, $event)"> <i class="fa fa-pencil"></i> </button>
-                </span>
-                <p marked="reply.body"></p>
-                <small class="text-muted">{{ reply.created * 1000 | date : short }}  <span ng-if="reply.created !== reply.updated">[Last Edited {{ reply.updated * 1000 | date : short }}]</small>
-            </div>
-
-            <form class="media-body" ng-if="editing == reply.id" name="editThreadReply" novalidate="">
-                <div class="form-group">
-                    <textarea type="text" name="reply" ng-model="reply.edited" class="form-control" rows="4" required="">
-                    </textarea>
+                <div class="media-body" ng-if="editing != reply.id">
+                    <a ui-sref="family.members.profile({user: reply.owner.data.id})">
+                        {{ reply.owner.data.display_name }}
+                    </a>
+                    <span class=" pull-right">
+                        <button class="btn btn-white btn-xs" ng-if="reply.permissions.edit" ng-click="editReply(reply, $event)"> <i class="fa fa-pencil"></i> </button>
+                    </span>
+                    <p marked="reply.body"></p>
+                    <small class="text-muted">{{ reply.created * 1000 | date : short }}  <span ng-if="reply.created !== reply.updated">[Last Edited {{ reply.updated * 1000 | date : short }}]</small>
                 </div>
-                <div class="form-group col-sm-4">
-                    <button class="btn btn-primary btn-outline form-control" ng-disabled="editThreadReply.$invalid" ng-click="saveReply(reply, $event)">
-                        Save Reply
-                    </button>
-                </div>
-                <div class="form-group col-sm-4">
-                    <button class="btn btn-danger btn-outline form-control" ng-if="reply.permissions.delete" ng-click="deleteReply(reply)">
-                        Delete
-                    </button>
-                </div>
-                <div class="form-group col-sm-4">
-                    <button class="btn btn-warning btn-outline form-control" ng-click="stopEdit()">
-                        Cancel
-                    </button>
-                </div>
-                <br>
-            </form>
 
+                <form class="media-body" ng-if="editing == reply.id" name="editThreadReply" novalidate="">
+                    <div class="form-group">
+                        <textarea type="text" name="reply" ng-model="reply.edited" class="form-control" rows="4" required="">
+                        </textarea>
+                    </div>
+                    <div class="form-group col-sm-4">
+                        <button class="btn btn-primary btn-outline form-control" ng-disabled="editThreadReply.$invalid" ng-click="saveReply(reply, $event)">
+                            Save Reply
+                        </button>
+                    </div>
+                    <div class="form-group col-sm-4">
+                        <button class="btn btn-danger btn-outline form-control" ng-if="reply.permissions.delete" ng-click="deleteReply(reply)">
+                            Delete
+                        </button>
+                    </div>
+                    <div class="form-group col-sm-4">
+                        <button class="btn btn-warning btn-outline form-control" ng-click="stopEdit()">
+                            Cancel
+                        </button>
+                    </div>
+                    <br>
+                </form>
+            </div><br>
         </div>
     </div>
 </div>
-
     <p>
 
     <div ng-if="comments.length < meta.pagination.total && !commentLoading">

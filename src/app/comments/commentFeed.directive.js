@@ -1,6 +1,6 @@
 
 function CommentFeedController($scope, CommentService, toastr, api, auth) {
-    $scope.commentLoading = false;
+    $scope.commentLoading = true;
     $scope.currentUser = auth.currentUser();
     $scope.parentId = 0;
 
@@ -60,12 +60,13 @@ function CommentFeedController($scope, CommentService, toastr, api, auth) {
     };
 
     $scope.more = function() {
+
         if($scope.meta.pagination != null && $scope.meta.pagination.links != undefined) {
             if($scope.meta.pagination.links.next != null) {
                 $scope.commentLoading = true;
                 api.get($scope.meta.pagination.links.next).then(function(response) {
                     $scope.comments = $scope.comments.concat(response.data.data);
-                    $scope.meta = response.data.meta;console.log($scope.comments);
+                    $scope.meta = response.data.meta;
                 }).finally(function() {
                     $scope.commentLoading = false;
                 });

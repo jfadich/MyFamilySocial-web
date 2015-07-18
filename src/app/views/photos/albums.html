@@ -34,7 +34,7 @@
 
 </div>
 
-<div class="col-md-6 text-center" ng-repeat="album in albums" ng-show="showEmpty || album.photos.data.length > 0">
+<div class="col-md-6 text-center" ng-repeat="album in albums" ng-show="showEmpty || album.photos.data.length > 0" infinite-scroll="more()" infinite-scroll-disabled='albumLoading'>
     <div class="ibox">
         <div class="ibox-title">
             <h5><a style="color:black" ui-sref="family.photos.album({album: album.slug})">{{ album.name }}</a></h5>

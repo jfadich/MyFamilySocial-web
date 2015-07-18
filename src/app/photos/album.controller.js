@@ -3,21 +3,29 @@
     function AlbumController($scope,albums,api) {
         $scope.albums = [];
         $scope.showEmpty = false;
+        $scope.albumLoading = false;
         $scope.pages = {};
 
         $scope.more = function() {
-            var more = $scope.pages.links.next;
-            if(more !== null && more != undefined){
-                api.get(more).then(function(response){
-                    var album = response.data;
-                    if(album !== null)
-                        $scope.albums = $scope.albums.concat(album.data );
+            if($scope.albumLoading) return;
 
-                    if(album.pagination !== undefined)
-                        $scope.pages = album.meta.pagination;
-                    else
-                        $scope.pages = {};
-                });
+
+            if($scope.pages != null && $scope.pages.links != undefined) {
+                if($scope.pages.links.next != null) {
+                    $scope.albumLoading = true;
+                    api.get($scope.pages.links.next).then(function(response) {
+                        var album = response.data;
+                        if(album !== null)
+                            $scope.albums = $scope.albums.concat(album.data );
+
+                        if(album.pagination !== undefined)
+                            $scope.pages = album.meta.pagination;
+                        else
+                            $scope.pages = {};
+                    }).finally(function() {
+                        $scope.albumLoading = false;
+                    });
+                }
             }
         };
 

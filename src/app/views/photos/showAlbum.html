@@ -1,76 +1,46 @@
-<div dropzone="" id="file-dropzone" dz-parent="album" dz-permissions="{{ album.permissions.add_photo }}">
-    <div class="ibox" ng-model="album.photos.data">
+<div class="ibox" ng-model="album.photos.data">
 
-        <!-- Holding area for uploaded photos -->
-        <div id="preview" class="dropzone hide" style="margin-bottom: 10px;"></div>
-
-        <!-- Album Info -->
-        <div class="ibox-content m-b-sm border-bottom" ng-if="!editing_album">
-            <div class="p-xs col-sm-9">
-                <div class="media-body">
-                    <h2>{{ album.name}}</h2>
-                    <span>{{ album.description }}</span>
-                </div>
-
+    <!-- Album Info -->
+    <div class="ibox-content m-b-sm border-bottom" ng-if="!editing_album">
+        <div class="p-xs col-sm-9">
+            <div class="media-body">
+                <h2>{{ album.name}}</h2>
+                <span>{{ album.description }}</span>
             </div>
-            <span ng-if="!album.shared" class="pull-right" tooltip-placement="left" tooltip="Only the owner can add photos to this album">
-                <i class="fa fa-lock"></i>
-            </span>
-             <span ng-if="album.shared" class="pull-right" tooltip-placement="left" tooltip="Anyone can add photos to this album">
-                <i class="fa fa-plus-square"></i>
-            </span>
-            <div class="clearfix"></div>
-            <div class="forum-post-info  animated fadeIn">
 
-                <profile-picture size="small" user="album.owner.data" a-class="pull-left" img-class="m-r-sm"></profile-picture>
-
-                <div>
-                    <span class=" pull-right">
-                        <button class="btn btn-white btn-xs" ng-if="album.permissions.edit" ng-click="editAlbum()"> <i class="fa fa-pencil"></i> </button>
-                    </span>
-
-                    Created by <strong>{{ album.owner.data.first_name }} {{ album.owner.data.last_name }}</strong>
-                    on
-                    <small class="text-muted"><i class="fa fa-clock-o"></i> {{ album.created * 1000 | date : short }}
-                    </small>
-
-                    <br>
-                </div>
-
-
-                <div class="clearfix"></div>
-
-            </div>
         </div>
+        <span ng-if="!album.shared" class="pull-right" tooltip-placement="left" tooltip="Only the owner can add photos to this album">
+            <i class="fa fa-lock"></i>
+        </span>
+         <span ng-if="album.shared" class="pull-right" tooltip-placement="left" tooltip="Anyone can add photos to this album">
+            <i class="fa fa-plus-square"></i>
+        </span>
+        <div class="clearfix"></div>
+        <div class="forum-post-info  animated fadeIn">
 
-        <div ng-include="'app/views/photos/_albumForm.html'" class="ibox-content m-b-sm border-bottom" ng-if="editing_album"></div>
+            <profile-picture size="small" user="album.owner.data" a-class="pull-left" img-class="m-r-sm"></profile-picture>
 
-        <!-- Add photo button -->
-        <div id="dz-clickable">
-            <div class="text-center text-muted ibox-content" ng-if="album.permissions.add_photo">
+            <div>
+                <span class=" pull-right">
+                    <button class="btn btn-white btn-xs" ng-if="album.permissions.edit" ng-click="editAlbum()"> <i class="fa fa-pencil"></i> </button>
+                </span>
 
-                <a class="btn btn-primary">
-                    <i class="fa fa-plus"></i> Add Photos
-                </a><br>
+                Created by <strong>{{ album.owner.data.first_name }} {{ album.owner.data.last_name }}</strong>
+                on
+                <small class="text-muted"><i class="fa fa-clock-o"></i> {{ album.created * 1000 | date : short }}
+                </small>
 
-                <strong>Drag here to upload photos</strong>
-
+                <br>
             </div>
-        </div><br>
 
 
-        <photo-explorer parent="album" highlight-image="highlightImage"></photo-explorer>
+            <div class="clearfix"></div>
 
+        </div>
     </div>
-</div>
 
+    <div ng-include="'app/views/photos/_albumForm.html'" class="ibox-content m-b-sm border-bottom" ng-if="editing_album"></div>
 
-<div id="blueimp-gallery" class="blueimp-gallery blueimp-gallery-controls">
-    <div class="slides"></div>
-    <h3 class="title"></h3>
-    <a class="prev">‹</a>
-    <a class="next">›</a>
-    <a class="close">×</a>
-    <a class="play-pause"></a>
-    <ol class="indicator"></ol>
+    <photo-explorer parent="album" highlight-image="highlightImage"></photo-explorer>
+
 </div>
