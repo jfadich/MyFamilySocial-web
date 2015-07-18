@@ -1,7 +1,9 @@
 
-function CommentFeedController($scope, CommentService, toastr, api) {
+function CommentFeedController($scope, CommentService, toastr, api, auth) {
     $scope.commentLoading = false;
-$scope.parentId = 0;
+    $scope.currentUser = auth.currentUser();
+    $scope.parentId = 0;
+
     $scope.addReply = function(comment, event) {
         event.target.disabled = true;
         CommentService.addComment(comment.body, $scope.parent).then(function(response){

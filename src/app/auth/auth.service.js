@@ -1,8 +1,9 @@
 ;(function () {
 
-    function authService($http, API_URL, $rootScope, token, toastr, $state, $q, ERRORS, $urlRouter) {
+    function authService($http, API_URL, $rootScope, token, toastr, $state, $q, ERRORS) {
         var self = this;
         self.defer = false;
+        self.currentUser = null;
 
         self.login = function (email, password) {
             return $http.post(API_URL + '/auth/login', {
@@ -70,6 +71,27 @@
 
         self.canRefresh = function() {
             return token.live();
+        };
+
+        self.currentUser = function() {
+            if(!self.isAuthenticated())
+                return null;
+
+            var user = $q.defer();
+
+            if(self.currentUser !== null) {
+                user.resolve(self.currentUser);
+            }
+            else {
+                $http.get(API_URL + '/users/~' ).then(function(user){
+                    self.currentUser = user.data;
+                    user.resolve(self.currentUser);
+                }, function(response){
+                    user.reject(response);
+                });
+            }
+
+            return user.promise;
         };
 
         $rootScope.$on('$stateChangeStart',

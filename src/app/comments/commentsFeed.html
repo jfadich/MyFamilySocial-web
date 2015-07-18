@@ -1,30 +1,38 @@
-<div id="comment-feed">
-    <form class="ng-pristine ng-valid" ng-if="parent.permissions.comment" name="threadReply">
-        <div class="form-group">
-                        <textarea type="text" placeholder="Add reply" name="comment" ng-model="comment.body" class="form-control" rows="4" required="">
-                        </textarea>
-        </div>
-        <div class="form-group">
-            <button class="btn btn-primary form-control" ng-disabled="threadReply.$invalid" ng-click="addReply(comment, $event)">
-                Add Reply
-            </button>
-        </div>
-        <br>
-    </form>
+<div id="social-feed-box">
 
-    <div class="feed-activity-list" ng-show="parentId != 0">
-        <div class="feed-element animated fadeIn" ng-repeat="reply in comments"  ng-class="{'flipOutX': reply.deleted}">
+    <div class="social-footer">
+        <form class="ng-pristine ng-valid" ng-if="parent.permissions.comment" name="threadReply">
+            <div class="social-comment">
+                <profile-picture size="small" user="currentUser" class="pull-left"></profile-picture>
+                <div class="media-body">
+                    <textarea type="text" placeholder="Add reply" name="comment" ng-model="comment.body" class="form-control" rows="3" required="">
+                                </textarea>
+                    <br>
+                    <button class="btn btn-primary btn-sm" ng-disabled="threadReply.$invalid" ng-click="addReply(comment, $event)">
+                        Add Reply
+                    </button>
+                    <div ng-if="commentLoading" ng-include="'components/common/loadingIcon.html'"></div>
+                </div>
+
+            </div>
+            <br>
+        </form>
+    </div>
+
+    <div class="social-footer" ng-if="!commentLoading" ng-repeat="reply in comments" ng-class="{'animated flipOutX': reply.deleted}">
+        <div class="social-comment">
 
             <profile-picture size="small" user="reply.owner.data" class="pull-left"></profile-picture>
 
-            <div class="media-body text-muted" ng-if="editing != reply.id">
-                        <span class=" pull-right">
-                            <button class="btn btn-white btn-xs" ng-if="reply.permissions.edit" ng-click="editReply(reply, $event)"> <i class="fa fa-pencil"></i> </button>
-                        </span>
-
-                <strong>{{ reply.owner.data.first_name }} {{ reply.owner.data.last_name }}</strong><br>
-                <small class="text-muted">{{ reply.created * 1000 | date : short }}  <span ng-if="reply.created !== reply.updated">[Last Edited {{ reply.updated * 1000 | date : short }}]</span></small>
+            <div class="media-body" ng-if="editing != reply.id">
+                <a ui-sref="family.members.profile({user: reply.owner.data.id})">
+                    {{ reply.owner.data.display_name }}
+                </a>
+                <span class=" pull-right">
+                    <button class="btn btn-white btn-xs" ng-if="reply.permissions.edit" ng-click="editReply(reply, $event)"> <i class="fa fa-pencil"></i> </button>
+                </span>
                 <p marked="reply.body"></p>
+                <small class="text-muted">{{ reply.created * 1000 | date : short }}  <span ng-if="reply.created !== reply.updated">[Last Edited {{ reply.updated * 1000 | date : short }}]</small>
             </div>
 
             <form class="media-body" ng-if="editing == reply.id" name="editThreadReply" novalidate="">
@@ -51,12 +59,11 @@
             </form>
 
         </div>
-
-    <br>
-
     </div>
+</div>
+
     <p>
-    <div ng-if="commentLoading" ng-include="'components/common/loadingIcon.html'"></div>
+
     <div ng-if="comments.length < meta.pagination.total && !commentLoading">
         <button type="button"
                 class="btn btn-block btn-outline btn-primary"
@@ -66,4 +73,4 @@
         </button>
     </div>
     </p>
-</div>
+
