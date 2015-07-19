@@ -12,7 +12,7 @@
         }
         else if(auth.isAuthenticated())
         {
-            return $state.go('family.main');
+            return $state.go('family.home');
         }
 
         $scope.login_submit = function()
@@ -21,7 +21,7 @@
 
             if ($scope.login.$valid) {
                 auth.login($scope.credentials.email, $scope.credentials.password).then(function(response){
-                    $state.go('family.main');
+                    $state.go('family.home');
                 }, function(response){
                     toastr.error('Invalid credentials');
                     console.log(response);
@@ -36,7 +36,7 @@
 
             if ($scope.register.$valid) {
                 auth.register($scope.newUser.first_name, $scope.newUser.last_name, $scope.newUser.email, $scope.newUser.password, $scope.newUser.password_confirm).then(function(response){console.log(response);
-                    $state.go('family.main');
+                    $state.go('family.home');
                 }, function(response){
                     if(response.data.error.error_code === 201) {
                         var errors = response.data.error.message;
