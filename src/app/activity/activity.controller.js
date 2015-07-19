@@ -1,12 +1,16 @@
 ;(function () {
 
-    function ActivityController($scope,ActivityService, PhotoService) {
+    function ActivityController($scope,ActivityService, api) {
         var self = this;
         $scope.feed = {};
         $scope.size = 'full';
+        $scope.activityLoading = true;
 
         ActivityService.getFeed().then(function(response){
-            $scope.feed = response.data.data;console.log($scope.feed);
+            $scope.feed = response.data.data;
+            $scope.meta = response.data.meta;
+        }).finally(function(){
+            $scope.activityLoading = false;
         });
 
         $scope.getActivityBox = function(type) {
@@ -21,6 +25,22 @@
                 return 'app/activity/boxes/'+$scope.size+'/'+type+'.html';
 
             return '';
+        };
+
+        $scope.more = function() {
+            if($scope.activityLoading) return;
+
+            if($scope.meta.pagination != null && $scope.meta.pagination.links != undefined) {
+                if($scope.meta.pagination.links.next != null) {
+                    $scope.activityLoading = true;
+                    api.get($scope.meta.pagination.links.next).then(function(response) {
+                        $scope.feed = $scope.feed.concat(response.data.data);
+                        $scope.meta = response.data.meta;
+                    }).finally(function() {
+                        $scope.activityLoading = false;
+                    });
+                }
+            }
         };
     }
 

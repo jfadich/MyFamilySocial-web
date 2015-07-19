@@ -5,7 +5,7 @@
     <div id="preview" class="dropzone hide" style="margin-bottom: 10px;"></div>
 
     <div class="ibox border-bottom" sticky style="z-index: 10001">
-        <div class="ibox-content">
+        <div class="ibox-content" style="padding-left: 0px;padding-right: 0px;">
 
             <div ng-if="parentLoading" ng-include="'components/common/loadingIcon.html'"></div>
             <div class="pull-right col-md-4 text-right" ng-if="currentPhoto">
@@ -31,19 +31,20 @@
             </div>
 
             <div class="col-md-8 pull-left">
-                <a class="btn btn-primary" ng-click="changeDisplay('gallery')" tooltip="Gallery">
-                    <i class="glyphicon glyphicon-th-large"></i>
-                </a>
-                <a class="btn btn-primary" ng-click="changeDisplay('explore')" tooltip="Explorer">
-                    <i class="glyphicon glyphicon-th-list"></i>
-                </a>
-                <span ng-if="parent.permissions.add_photo" id="dz-clickable">
-                    <a class="btn btn-primary">
-                        <i class="fa fa-upload"></i> Add Photos
+                <div class="btn-group ">
+                    <a class="btn btn-primary" ng-click="changeDisplay('gallery')" tooltip="Gallery">
+                        <i class="glyphicon glyphicon-th-large"></i>
                     </a>
-                    <small class="text-muted hidden-xs hidden-sm"> or drag photos anywhere</small>
-                </span>
-
+                   <!--  <a class="btn btn-primary" ng-click="changeDisplay('explore')" tooltip="Explorer">
+                        <i class="glyphicon glyphicon-th-list"></i>
+                    </a> -->
+                    <span ng-if="parent.permissions.add_photo" id="dz-clickable">
+                        <a class="btn btn-primary">
+                            <i class="fa fa-upload"></i> <span class="hidden-xs"> Add Photos</span>
+                        </a>
+                        <small class="text-muted hidden-xs hidden-sm"> or drag photos anywhere</small>
+                    </span>
+                </div>
             </div>
             <div class="clearfix"></div>
 

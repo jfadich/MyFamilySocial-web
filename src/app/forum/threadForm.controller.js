@@ -5,6 +5,9 @@
             $scope.thread = {
                 tags: {
                     data: []
+                },
+                category: {
+                    data: []
                 }
             }
         }
