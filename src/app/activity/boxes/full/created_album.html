@@ -1,4 +1,4 @@
-<div class="social-feed-box">
+<div class="social-feed-box" dropzone="" dz-parent="activity.subject" dz-permissions="{{ activity.subject.add_photo }}">
 
     <div class="social-avatar">
         <profile-picture user="activity.actor" class="pull-left"></profile-picture>
@@ -10,9 +10,12 @@
 
         </div>
     </div>
-    <div class="social-body">
+    <div class="social-body" id="dz-clickable">
         <p>{{ activity.subject.description | limitTo: 250 }}</p>
-
+        <button ng-if="activity.subject.permissions.add_photo" class="btn btn-primary">
+            <i class="fa fa-upload"></i> Upload Photos
+        </button>
+        <small class="text-muted" ng-if="!activity.subject.permissions.add_photo">Maybe {{ album.owner.data.display_name }} will add some pictures</small>
     </div>
 
 </div>

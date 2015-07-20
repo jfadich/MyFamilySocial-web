@@ -1,14 +1,16 @@
 
-<div class="col-md-6 pull-right col-xs-12">
+<div class="col-md-6 pull-right col-xs-12" sticky>
     <h2>Welcome!</h2>
     <p>
-        If it's your first time here be sure to stop by the <a ui-sref="family.forum.thread({thread_slug: 'welcome'})">Welcome Post.</a> Then explore some
 
-        <a class="btn btn-primary btn-sm" ui-sref="family.photos.albums"><i class="fa fa-photo"></i>  Family Albums</a>
+        <a class="btn btn-primary btn-sm" ui-sref="family.photos.albums"><i class="fa fa-photo"></i>  Family Albums</a> <br><br>
 
-        or stop by the <a class="btn btn-primary btn-sm" ui-sref="family.forum.index"><i class="fa fa-photo"></i>  Family Forum</a>
+        <a class="btn btn-primary btn-sm" ui-sref="family.forum.index"><i class="fa fa-comments"></i>  Family Forum</a>
 
     </p>
+
+    <!-- Holding area for uploaded photos -->
+    <div id="preview" class="dropzone hide" style="margin-bottom: 10px;"></div>
 </div>
 <div class="col-md-6 col-xs-12">
 
