@@ -310,6 +310,7 @@ body.mini-navbar .navbar-default .nav > li > .nav-second-level li a {
   color: white;
   display: none;
   padding: 18px 0;
+  width:70px;
 }
 
 .pace-done .navbar-static-side, .pace-done .nav-header, .pace-done li.active, .pace-done #page-wrapper, .pace-done .footer {
@@ -495,4 +496,8 @@ body.canvas-menu nav.navbar-static-side {
 body.canvas-menu.mini-navbar nav.navbar-static-side {
   display: block;
   width: 220px;
+}
+
+.mini-navbar nav.navbar-static-side {
+  width:70px !important; // force nav container to collapse so sticky will work properly
 }
