@@ -68,3 +68,17 @@
     </div>
 
 </div>
+
+<select ng-model="selectedCategory">
+    <option value="{{category.id}}" ng-repeat="category in categories.data">
+        <div class="forum-icon">
+            <i class="{{ category.icon }}"></i>
+        </div>
+        <a ui-sref="family.forum.category({category_slug: category.slug, reload:true})"
+           class="forum-item-title">{{ category.name }}</a>
+
+        <div class="forum-sub-title">{{ category.description }}</div>
+    </option>
+
+</select>
+{{selectedCategory}}

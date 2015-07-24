@@ -38,8 +38,7 @@ function CommentFeedController($scope, CommentService, toastr, api, auth) {
                 showCancelButton: true,
                 confirmButtonColor: "#DD6B55",
                 confirmButtonText: "Yes, delete it!",
-                cancelButtonText: "No, cancel!",
-                closeOnCancel: false },
+                cancelButtonText: "No, cancel!" },
             function (isConfirm) {
                 if (isConfirm) {
                     reply.deleted = true;
@@ -53,8 +52,6 @@ function CommentFeedController($scope, CommentService, toastr, api, auth) {
                     }, function(response){
                         reply.deleted = false;
                     });
-                } else {
-                    swal("Cancelled", "Make up your mind", "error");
                 }
             });
     };

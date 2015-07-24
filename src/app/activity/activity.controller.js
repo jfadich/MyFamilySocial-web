@@ -19,7 +19,8 @@
                 'created_comment_photo',
                 'created_photo_album',
                 'created_forumthread_forumcategory',
-                'created_album'
+                'created_album',
+                'created_photo_user'
             ];
             if(activityTypes.indexOf(type) > -1)
                 return 'app/activity/boxes/'+$scope.size+'/'+type+'.html';
