@@ -1,4 +1,4 @@
-<nav class="navbar-default navbar-static-side" role="navigation" sticky>
+<nav class="navbar-default navbar-static-side" role="navigation" sticky style="z-index: 0">
     <div class="sidebar-collapse">
         <ul class="nav" id="side-menu">
             <li class="nav-header">
@@ -32,7 +32,7 @@
                 <a ui-sref="family.home"><i class="glyphicon glyphicon-home"></i> <span class="nav-label">Home</span> </a>
             </li>
             <li ng-class="{ active: $state.includes('family.forum') }">
-                <a ui-sref="family.forum.index"><i class="fa fa-comments"></i> <span class="nav-label">Discussions</span></a>
+                <a ui-sref="family.forum"><i class="fa fa-comments"></i> <span class="nav-label">Discussions</span></a>
             </li>
             <li ng-class="{ active: $state.includes('family.photos') }">
                 <a ui-sref="family.photos.albums"><i class="fa fa-photo"></i> <span class="nav-label">Photos</span></a>

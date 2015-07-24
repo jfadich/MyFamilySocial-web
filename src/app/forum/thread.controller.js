@@ -5,9 +5,11 @@
         $scope.thread = { owner:{data:{}}};
         $scope.dirty = {};
         $scope.editing_thread = false;
-
+        $scope.threadsLoading = true;
         ForumService.getThread($state.params.thread_slug, 'category,owner,tags').then(function(thread){
             $scope.thread = thread.data;
+        }).finally(function(){
+            $scope.threadsLoading = false;
         });
 
         $scope.editThread = function(thread) {

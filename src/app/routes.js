@@ -24,8 +24,9 @@
             })
             .state('family.forum', {
                 url: '/discussions',
-                abstract: true,
-                template: '<ui-view/>',
+                templateUrl: "app/views/forum/categories.html",
+                controllerAs: "forum",
+                controller: "ForumCtrl",
                 ncyBreadcrumb: {
                     label: 'Forum'
                 },
@@ -35,6 +36,37 @@
                     }
                 }
             } )
+            .state('family.forum.category', {
+                url: "/:category_slug",
+                ncyBreadcrumb: {
+                    label: '{{ forum.currentCategory.name }}'
+                },
+                controller: function($scope, ForumService, $state) {
+                    var self = this;
+                    self.loading = true;
+                    ForumService.getCategory($state.params.category_slug, 'threads.owner,threads.tags').then(function(response){
+                        self.category = response.data;
+                        self.data = response.data.threads.data;
+                        self.meta = response.data.threads.meta;
+                        self.loading = false;
+                    });
+                    return self;
+                },
+                controllerAs: 'threads',
+                templateUrl: "app/views/forum/listThreads.html"
+            })
+            .state('family.forum.thread', {
+                url: "/:category_slug/:thread_slug",
+                templateUrl: "app/views/forum/showThread.html",
+                controllerAs: "currentThread",
+                controller: "ThreadCtrl",
+                ncyBreadcrumb: {
+                    label: '{{thread.title}}'
+                },
+                data: {
+                    pageTitle: 'Forum Thread'
+                }
+            })
             .state('family.forum.index', {
                 url: "/categories",
                 templateUrl: "app/views/forum/categories.html",
@@ -57,7 +89,7 @@
                     pageTitle: 'Create Topic'
                 }
             })
-            .state('family.forum.category', {
+           /* .state('family.forum.category', {
                 url: "/:category_slug",
                 templateUrl: "app/views/forum/listThreads.html",
                 ncyBreadcrumb: {
@@ -71,6 +103,7 @@
             .state('family.forum.thread', {
                 url: "/topics/:thread_slug",
                 templateUrl: "app/views/forum/showThread.html",
+                controllerAs: "ThreadScope",
                 controller: "ThreadCtrl",
                 ncyBreadcrumb: {
                     label: '{{ thread.category.data.name}} / {{thread.title}}'
@@ -79,7 +112,7 @@
                     pageTitle: 'Forum Thread'
                 }
             })
-
+            */
             .state('family.members', {
                 url: '/members',
                 abstract: true,
@@ -223,12 +256,9 @@
                 url: "/logout",
                 controller: "LoginCtrl"
             });
-        $urlRouterProvider.when('/discussions', '/discussions/categories');
+        $urlRouterProvider.when('/discussions/all', '/discussions');
         $urlRouterProvider.when('/members', '/members/index');
-        $urlRouterProvider.otherwise(function($injector, $location) {
-            var $state = $injector.get("$state");
-            $state.go('family.home');
-        });
+        $urlRouterProvider.otherwise('home');
     }
     angular.module('inspinia')
         .config(routes)

@@ -1,28 +1,30 @@
 ;(function () {
 
-    function ForumController($scope, ForumService, $state) {
-        $scope.category = null;
-        $scope.threads = [];
-        $scope.threadsLoading = true;
+    function ForumController($scope, $state, categories) {
+        var self = this;
+        self.categories = categories;
+        self.total_posts = categories.meta.total_posts;
+        self.threads = [];
+        self.all = {
+            id:'all',
+            name: 'All Discussions',
+            description: 'All categories',
+            icon: 'fa fa-asterisk'
+        };
 
-        ForumService.getCategory($state.params.category_slug, 'threads.owner,threads.tags').then(function(category){
-            $scope.category = category.data;
-            $scope.threads = category.data.threads;
-        }, function(response){
-            console.log(response);
-        }).finally(function(){
-            $scope.threadsLoading = false;
-        });
-
-        $scope.more = function() {
-            var more = ForumService.next();
-            if(more !== null){
-                more.then(function(category){
-                    if(category.data.threads.data !== null)
-                        $scope.threads.data = $scope.threads.data.concat(category.data.threads.data );
+        $scope.$on("$stateChangeSuccess", function() {
+            if($state.params.category_slug !== undefined && $state.params.category_slug !== 'all') {
+                angular.forEach(self.categories.data, function(category, key) {
+                    if(category.slug == $state.params.category_slug){
+                        self.currentCategory = category;
+                    }
                 });
             }
-        }
+            else
+                self.currentCategory = $scope.all;
+        });
+
+        return self;
     }
 
     function AddThreadController($scope, ForumService, toastr, $state, categories, TagService) {

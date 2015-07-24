@@ -1,21 +1,21 @@
 <div class="ibox">
     <div class="ibox-content">
         <div class="row">
-            <ul class="list-group col-md-4">
-                <li class="list-group-item animated fadeIn" ng-click="selectCategory('all')" ng-class="{'hide': 'all' == currentCategory.id}">
-                    <span class="badge">{{ total_posts }}</span>
+            <div class="list-group col-md-12">
+                <div class="animated fadeIn col-md-4" ui-sref="family.forum" ng-class="{'hide': 'all' == forum.currentCategory.id || forum.currentCategory.id == undefined}">
+                    <span class="badge pull-right">{{ forum.total_posts }}</span>
                     <div class="forum-icon pull-left">
                         <i class="fa fa-asterisk"></i>
                     </div>
                     <div class="media-body" ng-click="currentCategory = 'all'">
-                        <strong>{{all.name}}</strong>
+                        <strong>{{forum.all.name}}</strong>
 
-                        <div class="forum-sub-title">{{ all.description }}</div>
+                        <div class="forum-sub-title">{{ forum.all.description }}</div>
                     </div>
-                </li>
+                </div>
 
-                <li class="list-group-item animated fadeIn" ng-repeat="category in categories.data" ng-click="selectCategory(category)" ng-class="{'hide': category.id == currentCategory.id}">
-                    <span class="badge">{{ category.topic_count }}</span>
+                <div class="animated fadeIn  col-md-4" ng-repeat="category in forum.categories.data" ui-sref="family.forum.category({category_slug: category.slug})" ng-class="{'hide': category.id == forum.currentCategory.id}">
+                    <span class="badge pull-right">{{ category.topic_count }}</span>
                     <div class="forum-icon pull-left">
                         <i class="{{ category.icon }}"></i>
                     </div>
@@ -23,19 +23,28 @@
                         <strong>{{ category.name }}</strong>
                         <div class="forum-sub-title">{{ category.description }}</div>
                     </div>
-                </li>
-            </ul>
+                </div>
+            </div>
 
             <div class="p-xs col-md-8 animated fadeIn">
                 <div class="pull-left m-r-md">
                     <i class="{{ currentCategory.icon }} mid-icon"></i>
                 </div>
-                <h2>{{ currentCategory.name }}</h2>
-                <span>{{ currentCategory.description }}</span>
+                <h2>{{ forum.currentCategory.name }}</h2>
+                <span>{{ forum.currentCategory.description }}</span>
 
+            </div>
+            <div class="p-xs col-md-4 animated fadeIn pull-right text-right">
+                <div class="space-20"></div>
+                <a class="btn btn-primary btn-lg"
+                   ng-if="main.user.role.data.permissions.forum_createThread"
+                   ui-sref="family.forum.createThread">
+
+                    <i class="fa fa-plus"></i> Add Topic
+                </a>
             </div>
         </div>
     </div>
 
-
+<ui-view></ui-view>
 </div>
