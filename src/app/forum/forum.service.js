@@ -6,7 +6,7 @@
 
         self.getThreads = function(includes)
         {
-            return self.getPromise('', includes);
+            return api.get(self.url('', includes));
         };
 
         self.getThread = function(slug, includes)
@@ -16,7 +16,7 @@
 
         self.getCategories = function(includes)
         {
-            return self.getPromise('categories', includes);
+            return api.get(self.url('categories', includes));
         };
 
         self.getCategory = function(slug, includes)

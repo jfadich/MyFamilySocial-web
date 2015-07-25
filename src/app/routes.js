@@ -35,7 +35,9 @@
                 },
                 resolve: {
                     categories: function(ForumService) {
-                        return ForumService.getCategories();
+                        return ForumService.getCategories().then(function(response){
+                            return response.data;
+                        });
                     }
                 }
             } )
@@ -54,26 +56,7 @@
                 ncyBreadcrumb: {
                     label: '{{ forum.currentCategory.name }}'
                 },
-                controller: function($scope, ForumService, $state) {
-                    var self = this;
-                    self.loading = true;
-                    if($state.params.category_slug == '' || $state.params.category_slug == 'all') {
-                        ForumService.getThreads('owner,tags,category').then(function(response){
-                            self.data = response.data;
-                            self.meta = response.meta;
-                            self.loading = false;
-                        });
-                    } else{
-                        ForumService.getCategory($state.params.category_slug, 'threads.owner,threads.tags').then(function(response){
-                            self.category = response.data;
-                            self.data = response.data.threads.data;
-                            self.meta = response.data.threads.meta;
-                            self.loading = false;
-                        });
-                    }
-
-                    return self;
-                },
+                controller: 'ThreadListCtrl',
                 controllerAs: 'threads',
                 templateUrl: "app/views/forum/listThreads.html"
             })
@@ -100,30 +83,6 @@
                     pageTitle: 'Discussion Categories'
                 }
             })
-           /* .state('family.forum.category', {
-                url: "/:category_slug",
-                templateUrl: "app/views/forum/listThreads.html",
-                ncyBreadcrumb: {
-                    label: '{{category.name}}'
-                },
-                controller: "ForumCtrl",
-                data: {
-                    pageTitle: 'Forum Category'
-                }
-            })
-            .state('family.forum.thread', {
-                url: "/topics/:thread_slug",
-                templateUrl: "app/views/forum/showThread.html",
-                controllerAs: "ThreadScope",
-                controller: "ThreadCtrl",
-                ncyBreadcrumb: {
-                    label: '{{ thread.category.data.name}} / {{thread.title}}'
-                },
-                data: {
-                    pageTitle: 'Forum Thread'
-                }
-            })
-            */
             .state('family.members', {
                 url: '/members',
                 abstract: true,

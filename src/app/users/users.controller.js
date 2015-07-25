@@ -4,8 +4,7 @@
         $scope.categories = [];
         $scope.showUser = 0;
         $scope.usersLoading = true;
-        $scope.headerTitle = 'Family Members';
-        $scope.breadcrumbs = [{title: 'Family Members', link: '#/members'}];
+        $scope.searchUser = '';
         user.getUsers().then(function(users){
             $scope.users = users.data;
             $scope.meta = users.meta;
