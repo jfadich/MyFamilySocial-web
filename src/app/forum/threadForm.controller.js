@@ -1,23 +1,32 @@
 ;(function () {
 
     function ThreadFormController($scope, ForumService, toastr, $state, TagService) {
-        if(typeof $scope.thread != 'object') {
-            $scope.thread = {
+        var self = this;
+        if(!$state.includes('family.forum'))
+            return self;
+
+        if(typeof $scope.currentThread != 'object') {
+            self.thread = {
+                id: 0,
                 tags: {
                     data: []
                 },
                 category: {
-                    data: []
+                    data: {}
                 }
-            }
+            };
+            if($scope.forum.currentCategory.id != 'all')
+                self.thread.category.data.id = $scope.forum.currentCategory.id;
+        } else {
+            self.thread = $scope.currentThread.thread;
         }
-        $scope.thread.tag_array = typeof $scope.thread.tags.data !== 'undefined' ? $scope.thread.tags.data : [];
+        self.thread.tag_array = typeof self.thread.tags.data !== 'undefined' ? self.thread.tags.data : [];
 
-        $scope.dirty = {};
+        self.dirty = {};
 
-        $scope.tag_autocomplete = {
+        self.tag_autocomplete = {
             suggest: function(search) {
-                $scope.tag_results = [];
+                self.tag_results = [];
                 var ix = search.lastIndexOf(','),
                     term = search.substring(ix + 1),
                     terms = search.split(',');
@@ -26,9 +35,9 @@
                     for(var i = 0; i < terms.length - 1; i++)
                     {
                         if(terms[i] !== '')
-                            $scope.thread.tag_array.push({name: terms[i]});
+                            self.thread.tag_array.push({name: terms[i]});
                     }
-                    $scope.dirty.value = term;
+                    self.dirty.value = term;
                 }
                 if(term == '')
                     return;
@@ -36,35 +45,35 @@
                     var tags = response.data.data;
 
                     tags.forEach(function(tag){
-                        $scope.tag_results.push({value: tag.name, label: tag.name});
+                        self.tag_results.push({value: tag.name, label: tag.name});
                     });
-                    return $scope.tag_results;
+                    return self.tag_results;
                 });
             },
             on_select: function(selected) {
-                $scope.thread.tag_array.push({name: selected.value});
-                $scope.dirty = {};
+                self.thread.tag_array.push({name: selected.value});
+                self.dirty = {};
             }
         };
 
-        $scope.removeTag = function(tag) {
-            var index = $scope.thread.tag_array.indexOf(tag);
-            $scope.thread.tag_array.splice(index, 1);
+        self.removeTag = function(tag) {
+            var index = self.thread.tag_array.indexOf(tag);
+            self.thread.tag_array.splice(index, 1);
         };
 
-        $scope.saveThread = function(thread) {
+        self.saveThread = function(thread) {
             $scope.$broadcast('show-errors-check-validity');
             var message = '';
             var promise;
             var toastTitle;
-            if ($scope.threadForm.$valid) {
+            if (self.threadForm.$valid) {
 
-                thread.tags = $scope.thread.tag_array.map(function(tag){
+                self.thread.tags = self.thread.tag_array.map(function(tag){
                     return tag.name;
                 }).join(",");
 
-                if(thread.id === undefined){
-                    promise = ForumService.addThread(thread).then(function (response) {
+                if(self.thread.id === 0){
+                    promise = ForumService.addThread(self.thread).then(function (response) {
                         var thread = response.data.data;
                         toastTitle = thread.title.length > 100 ? (thread.title.substring(0,100) + '...') : thread.title;
                         message = "'" + toastTitle + "' <b>created.</b>";
@@ -72,7 +81,7 @@
                     });
                 }
                 else {
-                    promise = ForumService.updateThread(thread).then(function (response) {
+                    promise = ForumService.updateThread(self.thread).then(function (response) {
                         var thread = response.data.data;
                         toastTitle = thread.title.length > 100 ? (thread.title.substring(0,100) + '...') : thread.title;
                         message = "'" + toastTitle + "' <b>Saved.</b>";
@@ -80,17 +89,18 @@
                     });
                 }
 
-                if(typeof $scope.stopThreadEdit == 'function')
-                    $scope.stopThreadEdit();
+                if(typeof $scope.currentThread == 'object')
+                    $scope.currentThread.stopThreadEdit();
 
-                thread.tags = { data: $scope.thread.tag_array };
+                self.thread.tags = { data: self.thread.tag_array };
 
                 return promise.then(function(response){
                     toastr.success( message, 'Success',{ iconClass: 'toast-comment', allowHtml: true});
-                    return $state.go("family.forum.thread", {thread_slug: response.data.data.slug});
+                    return $state.go("family.forum.category.thread", {thread_slug: response.data.data.slug});
                 })
             }
         };
+        return self;
     }
 
     angular.module('inspinia')

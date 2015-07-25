@@ -38,8 +38,7 @@
                 <div class="space-20"></div>
                 <a class="btn btn-primary btn-lg"
                    ng-if="main.user.role.data.permissions.forum_createThread"
-                   ui-sref="family.forum.createThread">
-
+                   ui-sref="family.forum.category.createThread({category_id: forum.currentCategory.id})">
                     <i class="fa fa-plus"></i> Add Topic
                 </a>
             </div>

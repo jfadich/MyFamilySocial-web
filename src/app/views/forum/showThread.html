@@ -1,19 +1,19 @@
 
-    <div class="ibox" ng-show="thread">
+    <div class="ibox" ng-show="currentThread.thread">
 
-        <div class="ibox-content" ng-if="!editing_thread">
+        <div class="ibox-content" ng-if="!currentThread.editing_thread">
 
             <div>
 
                 <div class="media-body animated fadeIn">
                     <span class=" pull-right">
-                        <button class="btn btn-white btn-xs" ng-if="thread.permissions.edit" ng-click="editThread(thread)"> <i class="fa fa-pencil"></i> </button>
+                        <button class="btn btn-white btn-xs" ng-if="currentThread.thread.permissions.edit" ng-click="currentThread.editThread(currentThread.thread)"> <i class="fa fa-pencil"></i> </button>
                     </span>
-                    <h2>{{thread.title}}</h2>
+                    <h2>{{currentThread.thread.title}}</h2>
 
                 <div class="ibox-content">
 
-                    <p marked="thread.body">
+                    <p marked="currentThread.thread.body">
 
                     </p>
                 </div>
@@ -21,13 +21,13 @@
             </div>
             <div class="forum-post-info  animated fadeIn">
                     <div class="pull-left">
-                    Posted by <strong>{{ thread.owner.data.first_name }} {{ thread.owner.data.last_name }}</strong>
-                    <small class="text-muted">on <i class="fa fa-clock-o"></i> {{ thread.created * 1000 | date : short }} &nbsp;
-                    in <a ui-sref="family.forum.category({category_slug: thread.category.data.slug})">{{thread.category.data.name}}</a>
+                    Posted by <strong>{{ currentThread.thread.owner.data.first_name }} {{ currentThread.thread.owner.data.last_name }}</strong>
+                    <small class="text-muted">on <i class="fa fa-clock-o"></i> {{ currentThread.thread.created * 1000 | date : short }} &nbsp;
+                    in <a ui-sref="family.forum.category({category_slug: currentThread.thread.category.data.slug})">{{currentThread.thread.category.data.name}}</a>
                     </small>
                     </div>
-                    <div ng-if="thread.tags.data.length > 0"> &nbsp;
-                        <span ng-repeat="tag in thread.tags.data">
+                    <div ng-if="currentThread.thread.tags.data.length > 0"> &nbsp;
+                        <span ng-repeat="tag in currentThread.thread.tags.data">
                             <button class="btn btn-white btn-xs">{{ tag.name }}</button>
                         </span>
                     </div>
@@ -36,7 +36,7 @@
             </div>
         </div>
 
-        <div ng-include="'app/views/forum/_threadForm.html'" class="ibox-content" ng-if="editing_thread"></div>
+        <div ng-include="'app/views/forum/_threadForm.html'" class="ibox-content" ng-if="currentThread.editing_thread"></div>
 
-        <comment-feed parent="thread"></comment-feed>
+        <comment-feed parent="currentThread.thread"></comment-feed>
     </div>

@@ -1,4 +1,4 @@
-        <div class="ibox" infinite-scroll="forum.more()" infinite-scroll-disabled='threads.loading' ng-if="!$state.includes('family.forum.category.thread')">
+        <div class="ibox" infinite-scroll="forum.more()" infinite-scroll-disabled='threads.loading' ng-if="!$state.includes('family.forum.category.thread') && !$state.includes('family.forum.category.createThread')">
 
             <div class="ibox-content feed-activity-list">
                 <div class="row feed-element small font-bold text-center">
@@ -59,4 +59,4 @@
 
         </div>
 
-        <ui-view  ng-if="$state.includes('family.forum.category.thread')"></ui-view>
+        <ui-view  ng-if="$state.includes('family.forum.category.thread') || $state.includes('family.forum.category.createThread')"></ui-view>

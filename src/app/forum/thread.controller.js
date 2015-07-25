@@ -1,25 +1,27 @@
 ;(function () {
 
-    function ThreadController($scope, ForumService, $state, categories) {
-        $scope.categories = categories.data;
-        $scope.thread = { owner:{data:{}}};
-        $scope.dirty = {};
-        $scope.editing_thread = false;
-        $scope.threadsLoading = true;
+    function ThreadController($scope, ForumService, $state) {
+        var self = this;
+        self.thread = { owner:{data:{}}};
+        self.dirty = {};
+        self.editing_thread = false;
+        self.threadsLoading = true;
         ForumService.getThread($state.params.thread_slug, 'category,owner,tags').then(function(thread){
-            $scope.thread = thread.data;
+            self.thread = thread.data;
         }).finally(function(){
-            $scope.threadsLoading = false;
+            self.threadsLoading = false;
         });
 
-        $scope.editThread = function(thread) {
-            thread.tag_array = thread.tags.data;
-            $scope.editing_thread = true;
+        self.editThread = function(thread) {
+            self.tag_array = thread.tags.data;
+            self.editing_thread = true;
         };
 
-        $scope.stopThreadEdit = function() {
-            $scope.editing_thread = false;
+        self.stopThreadEdit = function() {
+            self.editing_thread = false;
         };
+
+        return self;
     }
 
     angular.module('inspinia')

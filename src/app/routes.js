@@ -8,7 +8,7 @@
                 url: "",
                 templateUrl: "components/common/content.html",
                 ncyBreadcrumb: {
-                    label: 'Home page'
+                    label: 'Family'
                 },
                 data: {
                     requireAuth: true
@@ -18,6 +18,9 @@
                 url: "/home",
                 templateUrl: "app/activity/feed.html",
                 controller: 'ActivityCtrl',
+                ncyBreadcrumb: {
+                    label: 'Activity'
+                },
                 data: {
                     pageTitle: 'Welcome'
                 }
@@ -36,6 +39,16 @@
                     }
                 }
             } )
+            .state('family.forum.category.createThread', {
+                url: "/new",
+                templateUrl: "app/views/forum/threadForm.html",
+                ncyBreadcrumb: {
+                    label: 'Create New Topic'
+                },
+                data: {
+                    pageTitle: 'Create Topic'
+                }
+            })
             .state('family.forum.category', {
                 url: "/:category_slug",
                 ncyBreadcrumb: {
@@ -70,7 +83,7 @@
                 controllerAs: "currentThread",
                 controller: "ThreadCtrl",
                 ncyBreadcrumb: {
-                    label: '{{thread.title}}'
+                    label: '{{currentThread.thread.title}}'
                 },
                 data: {
                     pageTitle: 'Forum Thread'
@@ -85,17 +98,6 @@
                 },
                 data: {
                     pageTitle: 'Discussion Categories'
-                }
-            })
-            .state('family.forum.createThread', {
-                url: "/new",
-                templateUrl: "app/views/forum/threadForm.html",
-                controller: "AddThreadCtrl",
-                ncyBreadcrumb: {
-                    label: 'Create New Topic'
-                },
-                data: {
-                    pageTitle: 'Create Topic'
                 }
             })
            /* .state('family.forum.category', {
