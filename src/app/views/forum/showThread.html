@@ -12,6 +12,7 @@
                     <h2>{{thread.title}}</h2>
 
                 <div class="ibox-content">
+
                     <p marked="thread.body">
 
                     </p>
@@ -19,17 +20,13 @@
                 </div>
             </div>
             <div class="forum-post-info  animated fadeIn">
-
-                <profile-picture size="small" user="thread.owner.data" a-class="pull-left" img-class="m-r-sm"></profile-picture>
-
-                <div>
-                    Posted by <strong>{{ thread.owner.data.first_name }} {{ thread.owner.data.last_name }}</strong> in
-                    <span>
-                        <i class="{{ thread.category.data.icon }}"></i> <a ui-sref="family.forum.category({category_slug: thread.category.data.slug})">{{ thread.category.data.name }}</a>
-                    </span>
-                    on <small class="text-muted"><i class="fa fa-clock-o"></i> {{ thread.created * 1000 | date : short }}</small>
-                </div>
-                    <div style="padding-top: 5px;" ng-if="thread.tags.data.length > 0">
+                    <div class="pull-left">
+                    Posted by <strong>{{ thread.owner.data.first_name }} {{ thread.owner.data.last_name }}</strong>
+                    <small class="text-muted">on <i class="fa fa-clock-o"></i> {{ thread.created * 1000 | date : short }} &nbsp;
+                    in <a ui-sref="family.forum.category({category_slug: thread.category.data.slug})">{{thread.category.data.name}}</a>
+                    </small>
+                    </div>
+                    <div ng-if="thread.tags.data.length > 0"> &nbsp;
                         <span ng-repeat="tag in thread.tags.data">
                             <button class="btn btn-white btn-xs">{{ tag.name }}</button>
                         </span>

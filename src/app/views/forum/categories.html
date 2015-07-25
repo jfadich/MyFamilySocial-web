@@ -1,5 +1,5 @@
 <div class="ibox">
-    <div class="ibox-content">
+    <div class="ibox-content" ng-if="!$state.includes('family.forum.category.thread')">
         <div class="row">
             <div class="list-group col-md-12">
                 <div class="animated fadeIn col-md-4" ui-sref="family.forum" ng-class="{'hide': 'all' == forum.currentCategory.id || forum.currentCategory.id == undefined}">

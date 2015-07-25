@@ -1,6 +1,6 @@
 ;(function () {
 
-    function ForumController($scope, $state, categories) {
+    function ForumController($scope, $state, categories, ForumService) {
         var self = this;
         self.categories = categories;
         self.total_posts = categories.meta.total_posts;
@@ -13,15 +13,19 @@
         };
 
         $scope.$on("$stateChangeSuccess", function() {
-            if($state.params.category_slug !== undefined && $state.params.category_slug !== 'all') {
-                angular.forEach(self.categories.data, function(category, key) {
+            if($state.params.category_slug !== undefined && $state.params.category_slug !== '') {
+                angular.forEach(self.categories.data, function(category) {
                     if(category.slug == $state.params.category_slug){
                         self.currentCategory = category;
                     }
                 });
             }
-            else
-                self.currentCategory = $scope.all;
+            else {
+                self.currentCategory = self.all;
+            }
+            if($state.current.name == 'family.forum') {
+                return $state.go('family.forum.category')
+            }
         });
 
         return self;

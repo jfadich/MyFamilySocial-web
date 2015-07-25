@@ -44,19 +44,28 @@
                 controller: function($scope, ForumService, $state) {
                     var self = this;
                     self.loading = true;
-                    ForumService.getCategory($state.params.category_slug, 'threads.owner,threads.tags').then(function(response){
-                        self.category = response.data;
-                        self.data = response.data.threads.data;
-                        self.meta = response.data.threads.meta;
-                        self.loading = false;
-                    });
+                    if($state.params.category_slug == '' || $state.params.category_slug == 'all') {
+                        ForumService.getThreads('owner,tags,category').then(function(response){
+                            self.data = response.data;
+                            self.meta = response.meta;
+                            self.loading = false;
+                        });
+                    } else{
+                        ForumService.getCategory($state.params.category_slug, 'threads.owner,threads.tags').then(function(response){
+                            self.category = response.data;
+                            self.data = response.data.threads.data;
+                            self.meta = response.data.threads.meta;
+                            self.loading = false;
+                        });
+                    }
+
                     return self;
                 },
                 controllerAs: 'threads',
                 templateUrl: "app/views/forum/listThreads.html"
             })
-            .state('family.forum.thread', {
-                url: "/:category_slug/:thread_slug",
+            .state('family.forum.category.thread', {
+                url: "/:thread_slug",
                 templateUrl: "app/views/forum/showThread.html",
                 controllerAs: "currentThread",
                 controller: "ThreadCtrl",

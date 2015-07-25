@@ -1,4 +1,4 @@
-        <div class="ibox" infinite-scroll="forum.more()" infinite-scroll-disabled='threads.loading'>
+        <div class="ibox" infinite-scroll="forum.more()" infinite-scroll-disabled='threads.loading' ng-if="!$state.includes('family.forum.category.thread')">
 
             <div class="ibox-content feed-activity-list">
                 <div class="row feed-element small font-bold text-center">
@@ -9,19 +9,19 @@
                 </div>
 
                 <div class="feed-element animated fadeIn" ng-repeat="thread in threads.data">
-
                         <div class="row">
                             <div class="col-md-7 col-xs-8">
 
                                 <profile-picture size="small" user="thread.owner.data" a-class="pull-left" img-class="m-r-sm" class="hidden-xs"></profile-picture>
 
                                 <div class="media-body">
-                                <a ui-sref="family.forum.thread({category_slug: forum.currentCategory.slug,thread_slug: thread.slug})" class="faq-question">{{ thread.title }}</a>
+                                <a ui-sref="family.forum.category.thread({category_slug: forum.currentCategory.slug,thread_slug: thread.slug})" class="faq-question">{{ thread.title }}</a>
                                     <span class="label label-info" ng-if="thread.sticky">sticky</span>
                                 <small>
                                     <profile-picture size="small" user="thread.owner.data" a-class="pull-left" img-class="m-r-sm" class="visible-xs"></profile-picture>
                                     Added by <strong>{{ thread.owner.data.first_name }} {{ thread.owner.data.last_name }}</strong>
-                                    <i class="fa fa-clock-o"></i> <span am-time-ago="thread.created" am-preprocess="unix"></span>
+                                    <span ng-if="forum.currentCategory.id == 'all'">in <i class="{{ thread.category.data.icon }}"></i> {{ thread.category.data.name}}</span>
+                                    <i class="fa fa-clock-o"></i> {{ thread.created * 1000 | date : short }}</span>
                                 </small>
                                 </div>
                             </div>
@@ -58,3 +58,5 @@
             </div>
 
         </div>
+
+        <ui-view  ng-if="$state.includes('family.forum.category.thread')"></ui-view>
