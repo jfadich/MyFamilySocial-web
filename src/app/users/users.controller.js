@@ -13,7 +13,7 @@
         });
 
         $scope.selectUser = function(user) {
-            $scope.showUser = user.id;console.log(user);
+            $scope.showUser = user.id;
         };
 
         $scope.more = function() {

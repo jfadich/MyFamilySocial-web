@@ -130,25 +130,31 @@
                 ncyBreadcrumb: {
                     label: 'Family Photos'
                 },
+                template: '<ui-view/>'
+            } )
+            .state('family.photos.albums', {
+                url: "/albums",
+                templateUrl: "app/photos/albums/index.html",
+                controller: 'AlbumsExplorerCtrl',
+                ncyBreadcrumb: {
+                    label: 'Albums'
+                },
                 resolve: {
                     albums: function (PhotoService) {
-                        return PhotoService.getAlbums('photos:limit(4),owner').then(function(response){
+                        return PhotoService.getAlbums().then(function(response){
                             return response.data;
                         });
                     }
                 },
-                template: '<ui-view/>'
-            } )
-            .state('family.photos.albums', {
-                url: "",
-                templateUrl: "app/views/photos/albums.html",
-                controller: "AlbumCtrl",
-                ncyBreadcrumb: {
-                    label: 'Albums'
-                },
                 data: {
                     pageTitle: 'Photos'
                 }
+            })
+            .state('family.photos.albums.album', {
+                url: "/:album"
+            })
+            .state('family.photos.albums.album.photo', {
+                url: "/:photo"
             })
             .state('family.photos.createAlbum', {
                 url: "/new",

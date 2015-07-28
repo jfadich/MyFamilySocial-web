@@ -47,7 +47,7 @@
                 <div ng-if="threads.loading" ng-include="'components/common/loadingIcon.html'">
 
                 </div>
-                <p>
+                <p ng-if="!threads.loading">
                     <button type="button"
                             class="btn btn-block btn-outline btn-primary"
                             ng-click="threads.more()"

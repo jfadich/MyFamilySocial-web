@@ -4,14 +4,17 @@ function PhotoExplorerController($scope, PhotoService, $q, api, $timeout, toastr
     $scope.editingPhoto = false;
     $scope.currentPhoto = false;
     $scope.parentLoading = true;
-    $scope.parent = {
-        permissions: {add_photo: false} // disable dropzone until parent enables it
-    };
+    if($scope.parent == undefined) {
+        $scope.parent = {
+            permissions: {add_photo: false} // disable dropzone until parent enables it
+        };
+    }
+
     $scope.display = 'gallery';
     $scope.currentIndex = 0;
     $scope.parentId = 0;
 
-    $scope.$watch("parent", function() {
+    $scope.$watch("parent", function() {console.log($scope.parent);
         if($scope.parent.type != undefined && $scope.parentId != $scope.parent.id) {
             $scope.parentLoading = true;
             $scope.parentId = $scope.parent.id;
@@ -26,19 +29,21 @@ function PhotoExplorerController($scope, PhotoService, $q, api, $timeout, toastr
                 $scope.morePhotos = $scope.photos.length > 1;
 
                 // If the photo that the user is looking for is not in the original request, get it
-                if($scope.highlightImage != 0) {
+                if($scope.highlightImage != 0 && $scope.highlightImage != null) {
                     var highlight  = $.grep($scope.photos, function(e){ return e.id == $scope.highlightImage; });
                     if(highlight.length == 0) {
                         PhotoService.getPhoto($scope.highlightImage,'parent').then(function (response) {
-                            if(response.data.data.parent.data == $scope.parent.id) {
+                            if(response.data.data.parent.data.id == $scope.parent.id) {
                                 $scope.photos.unshift(response.data.data);
                                 highlight = [response.data.data];
+                                $scope.selectPhoto($scope.photos.indexOf(highlight[0]));
                             }
                             else
                                 toastr.warning('Photo not found in album');
                         });
                     }
-                    $scope.selectPhoto($scope.photos.indexOf(highlight[0]));
+                    else
+                        $scope.selectPhoto($scope.photos.indexOf(highlight[0]));
                 }
             }).finally(function() {
                 $scope.parentLoading = false;

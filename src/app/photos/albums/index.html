@@ -1,0 +1,42 @@
+<div sticky ng-if="showAlbums" class="col-lg-3 pull-right">
+    <div class="ibox float-e-margins">
+        <div class="ibox-content">
+            <div class="file-manager">
+                <h5>albums</h5>
+                <input type="text" placeholder="Search albums" class="input form-control" ng-model="searchAlbum">
+<br>
+                <ul class="folder-list" style="padding: 0;max-height:250px;" full-scroll>
+                    <li><a ui-sref="family.photos.albums"><i class="fa" ng-class="selectedAlbum == null ? 'fa-folder-open' : 'fa-folder'"></i> All Photos</a></li>
+                    <li ng-repeat="album in albums.data | filter:searchAlbum"><a ui-sref="family.photos.albums.album({album: album.slug})"><i class="fa" ng-class="selectedAlbum.id === album.id ? 'fa-folder-open' : 'fa-folder'"></i> {{ album.name }}</a></li>
+                </ul>
+
+                <div class="clearfix"></div>
+                <div class="hr-line-dashed"></div>
+                <button class="btn btn-primary btn-block">Create Album</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="pull-left" ng-class="showAlbums ? 'col-lg-9' : 'col-lg-12'">
+    <div ng-if="selectedAlbum.type == null || selectedAlbum.type == undefined">
+        <span class="thumbnail col-xs-6 col-sm-3 col-lg-2" ng-repeat="photo in photos" style="margin:3px;">
+
+            <a ng-click="selectAlbum(photo.parent.data)" data-gallery=""
+               title="{{photo.name}}">
+                <img alt="{{photo.name}}" ng-src="{{ photo.image.medium }}" class="img-responsive">
+            </a>
+        </span>
+    </div>
+    <div class="ibox" ng-if="selectedAlbum.type != null">
+        <div class="ibox-content">
+            <span><a class="btn btn-sm btn-white pull-right" href="" ng-click="toggleAlbumList()">Toggle Album List</a></span>
+            <h2>{{selectedAlbum.name}}</h2>
+        </div>
+        <photo-explorer parent="selectedAlbum" highlight-image="selectedPhoto"></photo-explorer>
+    </div>
+</div>
+
+
+
+

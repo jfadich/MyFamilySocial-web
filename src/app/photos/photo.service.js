@@ -24,12 +24,15 @@
             })
         };
 
-        self.getPhoto = function(photo, includes) {
+        self.getPhoto = function(photo, includes) {console.log(photo);
             return api.get(api.url('/photos/'+photo, includes));
         };
 
         self.getPhotos = function(parent, includes) {
-            return api.get(api.url('/photos/'+parent.type+'/'+parent.id, includes))
+            if(parent == null)
+                return api.get(api.url('/photos', includes));
+
+            return api.get(api.url('/photos/'+parent.type+'/'+parent.id, includes));
         };
 
         self.updatePhoto = function(photo) {
