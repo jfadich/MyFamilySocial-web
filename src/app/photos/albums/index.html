@@ -22,7 +22,7 @@
 </div>
 
 <div class="pull-left" ng-class="showAlbums ? 'col-lg-9' : 'col-lg-12'">
-    <div ng-if="selectedAlbum.type == null || selectedAlbum.type == undefined">
+    <div ng-if="selectedAlbum.type == null || selectedAlbum.type == undefined"infinite-scroll="morePhotoList()" infinite-scroll-disabled="photoListLoading" infinite-scroll-immediate-check="false">
         <div class="ibox-content">
             <div class="btn-group ">
                 <a class="btn btn-primary" ng-click="photosDisplay = 'grid'" tooltip="Gallery">
@@ -32,17 +32,19 @@
                     <i class="glyphicon glyphicon-th-list"></i>
                 </a>
             </div>
+            <span><a class="btn btn-sm btn-white pull-right" href="" ng-click="toggleAlbumList()">Toggle Album List</a></span>
         </div>
 
         <div class="ibox-content clear" ng-show="photosDisplay == 'grid'">
-            <span class="thumbnail col-xs-6 col-sm-3 col-lg-2" ng-repeat="photo in photos" style="margin:3px;">
+            <div class="row center-block">
+            <span class="thumbnail col-xs-6 col-sm-3 col-lg-2" ng-repeat="photo in photos" style="margin:5px auto;">
 
                 <a ui-sref="family.photos.albums.album({album: photo.parent.data.slug})" data-gallery=""
                    title="{{photo.name}}">
                     <img alt="{{photo.name}}" ng-src="{{ photo.image.medium }}" class="img-responsive">
                 </a>
             </span>
-
+            </div>
         </div>
 
         <div class="ibox-content clear" ng-show="photosDisplay == 'list'">
@@ -59,6 +61,16 @@
                 </div>
             </div>
         </div>
+        <p>
+        <div ng-if="photoListLoading" ng-include="'components/common/loadingIcon.html'"></div>
+        <div ng-if="meta.pagination != 'undefined' && meta.pagination.links.next != null && !photoListLoading">
+            <button type="button"
+                    class="btn btn-outline btn-primary center-block"
+                    ng-click="morePhotoList()">
+                <i class="fa fa-arrow-down"></i> More photos
+            </button>
+        </div>
+        </p>
     </div>
 
     <div class="ibox" ng-if="selectedAlbum.type != null">

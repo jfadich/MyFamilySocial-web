@@ -21,7 +21,7 @@
         <div class="clearfix"></div>
     </div>
 
-    <div class="ibox-content text-center" ng-show="display == 'gallery'" infinite-scroll="more()" infinite-scroll-disabled="parentLoading">
+    <div class="ibox-content text-center" ng-show="display == 'gallery'" infinite-scroll="more()" infinite-scroll-disabled="parentLoading" infinite-scroll-immediate-check="false">
         <div id="lightboxGallery" ng-click="gallery($event)">
 
             <div class="col-xs-6 col-sm-3" ng-repeat="photo in photos">
@@ -45,7 +45,7 @@
 
     <br>
     <button type="button"
-            class="btn btn-block btn-outline btn-primary"
+            class="btn btn-outline btn-primary center-block"
             ng-click="more()"
             ng-if="meta.pagination != 'undefined' && meta.pagination.links.next != null">
         <i class="fa fa-arrow-down"></i> More Photos

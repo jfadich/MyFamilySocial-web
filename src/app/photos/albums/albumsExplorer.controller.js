@@ -1,7 +1,8 @@
 ;(function () {
 
-    function AlbumsExplorerController(PhotoService, $scope, albums,$state){
+    function AlbumsExplorerController(PhotoService, $scope, albums,$state, api){
         $scope.showAlbums = true;
+        $scope.photoListLoading = true;
         $scope.photosDisplay = 'grid';
         $scope.albums = albums;
         $scope.$on("$stateChangeSuccess", function() {
@@ -24,6 +25,9 @@
                 $scope.selectedPhoto = null;
                 PhotoService.getPhotos(null, 'parent',30).then(function(response){
                     $scope.photos = response.data.data;
+                    $scope.meta = response.data.meta;
+                }).finally(function() {
+                    $scope.photoListLoading = false;
                 })
             }
         });
@@ -34,7 +38,23 @@
 
         $scope.selectAlbum = function(album) {console.log(album);
             $scope.selectedAlbum = album;
-        }
+        };
+
+        $scope.morePhotoList = function() {
+            if($scope.photoListLoading) return;
+
+            if($scope.meta.pagination != null && $scope.meta.pagination.links != undefined) {
+                if($scope.meta.pagination.links.next != null) {
+                    $scope.photoListLoading = true;
+                    return api.get($scope.meta.pagination.links.next).then(function(response) {
+                        $scope.photos = $scope.photos.concat(response.data.data);
+                        $scope.meta = response.data.meta;
+                    }).finally(function() {
+                        $scope.photoListLoading = false;
+                    });
+                }
+            }
+        };
     }
 
     angular.module('inspinia')

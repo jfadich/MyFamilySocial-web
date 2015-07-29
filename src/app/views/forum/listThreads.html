@@ -1,4 +1,4 @@
-        <div class="ibox" infinite-scroll="threads.more()" infinite-scroll-disabled='threads.loading' ng-if="!$state.includes('family.forum.category.thread') && !$state.includes('family.forum.category.createThread')">
+        <div class="ibox" infinite-scroll="threads.more()" infinite-scroll-disabled='threads.loading' infinite-scroll-immediate-check="false" ng-if="!$state.includes('family.forum.category.thread') && !$state.includes('family.forum.category.createThread')">
 
             <div class="ibox-content feed-activity-list">
                 <div class="row feed-element small font-bold text-center">
@@ -49,7 +49,7 @@
                 </div>
                 <p ng-if="!threads.loading">
                     <button type="button"
-                            class="btn btn-block btn-outline btn-primary"
+                            class="btn center-block btn-outline btn-primary"
                             ng-click="threads.more()"
                             ng-if="threads.data.length < threads.meta.pagination.total">
                         <i class="fa fa-arrow-down"></i> More topics

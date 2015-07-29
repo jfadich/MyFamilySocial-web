@@ -34,7 +34,7 @@
             <span>Share Family Update</span>
         </button>
     </div><br>
-<div  infinite-scroll="more()" infinite-scroll-disabled='activityLoading'>
+<div  infinite-scroll="more()" infinite-scroll-disabled='activityLoading' infinite-scroll-immediate-check="false">
     <div ng-repeat="activity in feed">
 
         <div ng-include="getActivityBox(activity.type)" class="animated fadeIn"></div>
@@ -44,7 +44,7 @@
     <div ng-include="'components/common/loadingIcon.html'" ng-if="activityLoading"></div>
     <div ng-if="feed.length < meta.pagination.total && !activityLoading">
         <button type="button"
-                class="btn btn-block btn-outline btn-primary"
+                class="btn center-block btn-outline btn-primary"
                 ng-click="more()" >
 
             <i class="fa fa-arrow-down"></i> More
