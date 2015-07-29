@@ -15,24 +15,24 @@
                 <div class="hr-line-dashed"></div>
                 <div class="steps clearfix">
                     <div class="col-sm-4">
-                        <a class="btn btn-primary form-control" ng-click="pWiz.currentTab = 'info'" ng-class="{'active': pWiz.currentTab == 'info'}">
+                        <a class="btn btn-primary form-control" ng-click="pWiz.changeTab('info')" ng-class="{'active': pWiz.currentTab == 'info'}">
                             Profile Information
                         </a>
                     </div>
                     <div class="col-sm-4">
-                        <a class="btn btn-primary form-control" ng-click="pWiz.currentTab = 'photo'" ng-class="{'active': pWiz.currentTab == 'photo'}">
+                        <a class="btn btn-primary form-control" ng-click="pWiz.changeTab('photo')" ng-class="{'active': pWiz.currentTab == 'photo'}">
                             Profile Photo
                         </a>
                     </div>
                     <div class="col-sm-4">
-                        <a class="btn btn-primary form-control" ng-click="pWiz.currentTab = 'complete'" ng-class="{'active': pWiz.currentTab == 'complete'}">
+                        <a class="btn btn-primary form-control" ng-click="pWiz.changeTab('complete')" ng-class="{'active': pWiz.currentTab == 'complete'}">
                             Where to go from here
                         </a>
                     </div>
                 </div>
                 <div class="wizard">
                     <div class="content">
-                        <form name="signupForm" class="form-horizontal">
+                        <form name="pWiz.wizardForm" class="form-horizontal">
                             <div class="space-25" ng-show="pWiz.currentTab == 'info'">
                                 <h3><strong class="col-sm-offset-1">Contact Info</strong></h3>
                                 <div class="form-group">
