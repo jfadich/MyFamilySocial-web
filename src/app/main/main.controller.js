@@ -6,6 +6,9 @@ angular.module('inspinia')
         self.getUser = function() {
             user.getUser('~', 'role').then(function(user){
                 self.user = user.data;
+                $scope.$on('photos.upload.user.'+self.user.id, function(){
+                    self.getUser();
+                })
             });
         };
 
@@ -18,8 +21,9 @@ angular.module('inspinia')
         $scope.$on('USER_REFRESH', function(event, mass) {
             self.getUser();
         });
-        //$scope.headerTitle = "Home";
 
+
+        return self;
     });
 
 })();

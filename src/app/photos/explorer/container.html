@@ -31,14 +31,14 @@
             </div>
 
             <div class="col-md-8 pull-left">
-                <div class="btn-group ">
+                <div class="btn-group">
                     <a class="btn btn-primary" ng-click="changeDisplay('gallery')" tooltip="Gallery">
                         <i class="glyphicon glyphicon-th-large"></i>
                     </a>
                      <a class="btn btn-primary" ng-click="changeDisplay('list')" tooltip="List">
                         <i class="glyphicon glyphicon-th-list"></i>
                     </a>
-                    <span ng-if="parent.permissions.add_photo" id="dz-clickable">
+                    <span ng-if="parent.permissions.add_photo" id="dz-clickable" class="btn-group">
                         <a class="btn btn-primary">
                             <i class="fa fa-upload"></i> <span class="hidden-xs"> Add Photos</span>
                         </a>

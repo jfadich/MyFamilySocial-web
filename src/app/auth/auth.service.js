@@ -24,7 +24,6 @@
             }).then(function (response) {
                 $rootScope.$broadcast('USER_REGISTERED', response.data);
                 $rootScope.$broadcast('USER_LOGGED_IN', response.data);
-                toastr.info('Thanks for signing Up','Welcome ' + first_name + '!', {timeOut: 20000});
                 return response;
             });
         };

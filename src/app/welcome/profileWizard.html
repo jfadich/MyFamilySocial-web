@@ -1,0 +1,142 @@
+
+<!-- Holding area for uploaded photos -->
+<div id="preview" class="dropzone hide" style="margin-bottom: 10px;"></div>
+<div class="ibox">
+            <div class="ibox-content wizard">
+                <h2>
+                    Thanks for signing up!
+                </h2>
+
+                <p>
+                    Please take a few moments to complete your profile. Contact information for the family is available in the <a ui-sref="family.members.index">Address book</a>
+                    <br/>
+                    You can complete this at any time from your profile page.<br/>
+                </p>
+                <div class="hr-line-dashed"></div>
+                <div class="steps clearfix">
+                    <div class="col-sm-4">
+                        <a class="btn btn-primary form-control" ng-click="pWiz.currentTab = 'info'" ng-class="{'active': pWiz.currentTab == 'info'}">
+                            Profile Information
+                        </a>
+                    </div>
+                    <div class="col-sm-4">
+                        <a class="btn btn-primary form-control" ng-click="pWiz.currentTab = 'photo'" ng-class="{'active': pWiz.currentTab == 'photo'}">
+                            Profile Photo
+                        </a>
+                    </div>
+                    <div class="col-sm-4">
+                        <a class="btn btn-primary form-control" ng-click="pWiz.currentTab = 'complete'" ng-class="{'active': pWiz.currentTab == 'complete'}">
+                            Where to go from here
+                        </a>
+                    </div>
+                </div>
+                <div class="wizard">
+                    <div class="content">
+                        <form name="signupForm" class="form-horizontal">
+                            <div class="space-25" ng-show="pWiz.currentTab == 'info'">
+                                <h3><strong class="col-sm-offset-1">Contact Info</strong></h3>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">Mobile Phone</label>
+                                    <div class="col-sm-4">
+                                        <div class="input-group m-b">
+                                            <input type="text" class="form-control" ng-model="main.user.phone_one">
+                                        </div>
+                                    </div>
+
+                                    <label class="col-sm-2 control-label">Second Phone</label>
+                                    <div class="col-sm-4">
+                                        <div class="input-group m-b">
+                                            <input type="text" class="form-control" ng-model="main.user.phone_two">
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="hr-line-dashed"></div>
+
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">Street Address</label>
+                                    <div class="col-sm-4">
+                                        <div class="input-group m-b">
+                                            <input type="text" class="form-control" ng-model="main.user.address.street_address">
+                                        </div>
+                                    </div>
+
+                                    <label class="col-sm-2 control-label">City</label>
+                                    <div class="col-sm-4">
+                                        <div class="input-group m-b">
+                                            <input type="text" class="form-control" ng-model="main.user.address.city">
+                                        </div>
+                                    </div>
+
+                                    <label class="col-sm-2 control-label">State</label>
+                                    <div class="col-sm-4">
+                                        <div class="input-group m-b">
+                                            <input type="text" class="form-control" ng-model="main.user.address.state">
+                                        </div>
+                                    </div>
+
+                                    <label class="col-sm-2 control-label">Zip</label>
+                                    <div class="col-sm-4">
+                                        <div class="input-group m-b">
+                                            <input type="text" class="form-control" ng-model="main.user.address.zip_code">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="hr-line-dashed"></div>
+                                <a ng-click="pWiz.currentTab = 'photo'" class="btn btn-primary">
+                                    Next
+                                </a>
+                                <a ui-sref="family.home" class="btn btn-default pull-right">
+                                    Skip
+                                </a>
+                            </div>
+
+                            <div class="space-25" ng-if="pWiz.currentTab == 'photo'" dropzone="" id="file-dropzone" dz-parent="main.user" dz-permissions="main.user.permissions.edit">
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <img alt="image" class="img-responsive" src="assets/images/common/full-default-profile.jpg"
+                                             ng-if="main.user.image === undefined" class="m-r-sm ng-cloak">
+                                        <img alt="image" class="img-responsive" ng-src="{{ main.user.image.medium }}" ng-if="main.user.image !== undefined"
+                                             class="m-r-sm ng-cloak">
+                                    </div>
+                                    <div class="col-sm-8 pull-right">
+                                        <h3><strong>Upload a profile picture</strong></h3>
+                                        <p>
+                                            Click the button below, or drag a photo here to change your profile picture.
+                                        </p>
+                                            <h5>
+                                                <a class="btn btn-white" id="dz-clickable"><i class="fa fa-upload"></i> Upload! </a>
+                                            </h5>
+
+                                    </div>
+                                </div>
+                                <div class="hr-line-dashed"></div>
+                                <a ng-click="pWiz.currentTab = 'info'" class="btn btn-default">
+                                    Prev
+                                </a>
+                                <a ng-click="pWiz.currentTab = 'complete'" class="btn btn-primary">
+                                    Next
+                                </a>
+                                <a ui-sref="family.home" class="btn btn-default pull-right">
+                                    Skip
+                                </a>
+                            </div>
+
+                            <div class="space-25" ng-show="pWiz.currentTab == 'complete'">
+                                <div class="col-md-offset-1">
+                                <h3><strong>You're all set!</strong></h3>
+                                <p>
+                                    Now that you're profile is complete you can check out the rest of the site. Head on over to <a ui-sref="family.photos.albums"><strong>Family Photos</strong></a> to see pictures or upload your own. Then join conversations happening in the <a ui-sref="family.forum"><strong>Discussion Board</strong></a>. Or see what's been going on in the <a ui-sref="family.home"><strong>Activity Feed</strong></a>.
+                                </p>
+                                </div>
+                                <div class="hr-line-dashed"></div>
+                                <a ng-click="pWiz.currentTab = 'photo'" class="btn btn-default">
+                                    Prev
+                                </a>
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>

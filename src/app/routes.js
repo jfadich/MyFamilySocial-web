@@ -201,6 +201,18 @@
                     pageTitle: 'Photos'
                 }
             })
+            .state('family.welcome', {
+                url: "/welcome",
+                templateUrl: "app/welcome/profileWizard.html",
+                controller: "ProfileWizardCtrl",
+                controllerAs: 'pWiz',
+                ncyBreadcrumb: {
+                    label: 'Welcome'
+                },
+                data: {
+                    pageTitle: 'Complete your profile'
+                }
+            })
             .state('auth', {
                 url: '/auth',
                 abstract: true,

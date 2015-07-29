@@ -35,8 +35,8 @@
             $scope.$broadcast('show-errors-check-validity');
 
             if ($scope.register.$valid) {
-                auth.register($scope.newUser.first_name, $scope.newUser.last_name, $scope.newUser.email, $scope.newUser.password, $scope.newUser.password_confirm).then(function(response){console.log(response);
-                    $state.go('family.home');
+                auth.register($scope.newUser.first_name, $scope.newUser.last_name, $scope.newUser.email, $scope.newUser.password, $scope.newUser.password_confirm).then(function(response){
+                    $state.go('family.welcome');
                 }, function(response){
                     if(response.data.error.error_code === 201) {
                         var errors = response.data.error.message;

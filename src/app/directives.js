@@ -66,10 +66,11 @@ angular.module('inspinia')
                 link: function (scope, element, attrs) {
 
                     scope.$watch("dzParent", function() {
-                        if (attrs.dzPermissions === undefined || attrs.dzPermissions == "false")
+                        if (attrs.dzPermissions === undefined || attrs.dzPermissions == "false" || scope.dzParent === undefined)
                             return;
 
                         if(scope.dzParent.type != undefined && scope.parentId != scope.dzParent.id) {
+                            scope.parentId = scope.dzParent.id;
                             var dzOptions = {
                                 url: api.url('/photos'),
                                 maxFilesize: 20,
@@ -85,7 +86,7 @@ angular.module('inspinia')
                                 init: function () {
                                     this.on('success', function (file, json) {
                                         this.removeFile(file);
-                                        toastr.success('Photo uploaded', 'Success');console.log(json);
+                                        toastr.success('Photo uploaded', 'Success');
                                         $rootScope.$broadcast('photos.upload.'+ scope.dzParent.type + '.' + scope.dzParent.id, json.data)
                                     });
                                     this.on('addedfile', function (file) {
