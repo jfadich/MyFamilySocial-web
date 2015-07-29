@@ -62,7 +62,9 @@
         return {
 
             request: function (request) {
-                if(request.url.indexOf(API_URL) !== 0 || request.url.indexOf(API_URL + '/auth/login') === 0) {
+                if( request.url == undefined ||
+                    request.url.indexOf(API_URL) !== 0 ||
+                    request.url.indexOf(API_URL + '/auth/login') === 0 ) {
                     return request; // make sure this is an API request
                 }
 

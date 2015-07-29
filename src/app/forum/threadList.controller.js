@@ -10,7 +10,7 @@
                 self.loading = false;
             });
         } else{
-            ForumService.getCategory($state.params.category_slug, 'threads.owner,threads.tags').then(function(response){
+            ForumService.getCategory($state.params.category_slug, 'threads.category,threads.owner,threads.tags').then(function(response){
                 self.data = response.data.threads.data;
                 self.meta = response.data.threads.meta;
                 self.loading = false;

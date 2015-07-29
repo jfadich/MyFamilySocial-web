@@ -2,6 +2,7 @@
 
     function AlbumsExplorerController(PhotoService, $scope, albums,$state){
         $scope.showAlbums = true;
+        $scope.photosDisplay = 'grid';
         $scope.albums = albums;
         $scope.$on("$stateChangeSuccess", function() {
             $scope.selectedPhoto = null;
@@ -21,7 +22,7 @@
             else {
                 $scope.selectedAlbum = null;
                 $scope.selectedPhoto = null;
-                PhotoService.getPhotos(null, 'parent').then(function(response){
+                PhotoService.getPhotos(null, 'parent',30).then(function(response){
                     $scope.photos = response.data.data;
                 })
             }

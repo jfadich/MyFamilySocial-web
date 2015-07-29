@@ -15,7 +15,7 @@
                                 <profile-picture size="small" user="thread.owner.data" a-class="pull-left" img-class="m-r-sm" class="hidden-xs"></profile-picture>
 
                                 <div class="media-body">
-                                <a ui-sref="family.forum.category.thread({category_slug: forum.currentCategory.slug,thread_slug: thread.slug})" class="faq-question">{{ thread.title }}</a>
+                                <a ui-sref="family.forum.category.thread({category_slug: thread.category.data.slug,thread_slug: thread.slug})" class="faq-question">{{ thread.title }}</a>
                                     <span class="label label-info" ng-if="thread.sticky">sticky</span>
                                 <small>
                                     <profile-picture size="small" user="thread.owner.data" a-class="pull-left" img-class="m-r-sm" class="visible-xs"></profile-picture>

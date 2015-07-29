@@ -24,15 +24,18 @@
             })
         };
 
-        self.getPhoto = function(photo, includes) {console.log(photo);
+        self.getPhoto = function(photo, includes) {
             return api.get(api.url('/photos/'+photo, includes));
         };
 
-        self.getPhotos = function(parent, includes) {
+        self.getPhotos = function(parent, includes, count) {
+            var limit = '';
+            if(count != undefined)
+                limit = "?limit="+count;
             if(parent == null)
-                return api.get(api.url('/photos', includes));
+                return api.get(api.url('/photos'+limit, includes));
 
-            return api.get(api.url('/photos/'+parent.type+'/'+parent.id, includes));
+            return api.get(api.url('/photos/'+parent.type+'/'+parent.id+limit, includes));
         };
 
         self.updatePhoto = function(photo) {

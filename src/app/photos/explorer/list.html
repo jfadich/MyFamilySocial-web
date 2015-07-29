@@ -2,26 +2,21 @@
     <h4>It's empty in here</h4>
 </div>
 <div>
-    <div class="ibox-content" ng-show="display == 'explore'">
-        <div class="file-box" ng-repeat="photo in photos">
-            <div class="file-box">
-                <div class="file">
-                    <a ng-click="selectPhoto($index)">
-                        <span class="corner"></span>
+    <div class="ibox-content" ng-show="display == 'list'">
 
-                        <div class="image">
-                            <img alt="{{ photo.name }}" class="img-responsive" ng-src="{{ photo.image.medium }}">
-                        </div>
-
-                        <div class="file-name">
-                            {{ photo.name }}
-                            <br/>
-                            <small>Added: {{ photo.created * 1000 | date : short }}</small>
-                        </div>
+            <div class="list-group">
+                <div class="list-group-item" ng-repeat="photo in photos">
+                    <a ng-click="selectPhoto($index)" class="pull-left">
+                        <img alt="{{ photo.name }}" ng-src="{{ photo.image.small }}">
                     </a>
+                    <div class="media-body" style="padding-left: 10px">
+                        <h4><a ng-click="selectPhoto($index)">{{ photo.name }}</a></h4>
+                        Added by {{ photo.owner.data.display_name }} on {{ photo.created * 1000 | date : short }}
+                    </div>
+
                 </div>
             </div>
-        </div>
+
 
         <div class="clearfix"></div>
     </div>
@@ -29,7 +24,7 @@
     <div class="ibox-content text-center" ng-show="display == 'gallery'" infinite-scroll="more()" infinite-scroll-disabled="parentLoading">
         <div id="lightboxGallery" ng-click="gallery($event)">
 
-            <div class="col-md-4" ng-repeat="photo in photos">
+            <div class="col-xs-6 col-sm-3" ng-repeat="photo in photos">
                 <div class="thumbnail" ng-class="targetImage == photo.id ? 'animated tada' : ''">
                     <a href="{{photo.image.large}}" data-gallery=""
                                            title="{{photo.name}}">
