@@ -39,14 +39,14 @@
                                     <label class="col-sm-2 control-label">Mobile Phone</label>
                                     <div class="col-sm-4">
                                         <div class="input-group m-b">
-                                            <input type="text" class="form-control" ng-model="main.user.phone_one">
+                                            <input type="text" class="form-control" ng-model="pWiz.user.phone_one">
                                         </div>
                                     </div>
 
                                     <label class="col-sm-2 control-label">Second Phone</label>
                                     <div class="col-sm-4">
                                         <div class="input-group m-b">
-                                            <input type="text" class="form-control" ng-model="main.user.phone_two">
+                                            <input type="text" class="form-control" ng-model="pWiz.user.phone_two">
                                         </div>
                                     </div>
 
@@ -57,33 +57,33 @@
                                     <label class="col-sm-2 control-label">Street Address</label>
                                     <div class="col-sm-4">
                                         <div class="input-group m-b">
-                                            <input type="text" class="form-control" ng-model="main.user.address.street_address">
+                                            <input type="text" class="form-control" ng-model="pWiz.user.address.street_address">
                                         </div>
                                     </div>
 
                                     <label class="col-sm-2 control-label">City</label>
                                     <div class="col-sm-4">
                                         <div class="input-group m-b">
-                                            <input type="text" class="form-control" ng-model="main.user.address.city">
+                                            <input type="text" class="form-control" ng-model="pWiz.user.address.city">
                                         </div>
                                     </div>
 
                                     <label class="col-sm-2 control-label">State</label>
                                     <div class="col-sm-4">
                                         <div class="input-group m-b">
-                                            <input type="text" class="form-control" ng-model="main.user.address.state">
+                                            <input type="text" class="form-control" ng-model="pWiz.user.address.state">
                                         </div>
                                     </div>
 
                                     <label class="col-sm-2 control-label">Zip</label>
                                     <div class="col-sm-4">
                                         <div class="input-group m-b">
-                                            <input type="text" class="form-control" ng-model="main.user.address.zip_code">
+                                            <input type="text" class="form-control" ng-model="pWiz.user.address.zip_code">
                                         </div>
                                     </div>
                                 </div>
                                 <div class="hr-line-dashed"></div>
-                                <a ng-click="pWiz.currentTab = 'photo'" class="btn btn-primary">
+                                <a ng-click="pWiz.changeTab('photo')" class="btn btn-primary">
                                     Next
                                 </a>
                                 <a ui-sref="family.home" class="btn btn-default pull-right">

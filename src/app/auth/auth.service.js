@@ -3,7 +3,7 @@
     function authService($http, API_URL, $rootScope, token, toastr, $state, $q, ERRORS) {
         var self = this;
         self.defer = false;
-        self.currentUser = null;
+        self.authedUser = null;
 
         self.login = function (email, password) {
             return $http.post(API_URL + '/auth/login', {
@@ -78,13 +78,13 @@
 
             var user = $q.defer();
 
-            if(self.currentUser !== null) {
-                user.resolve(self.currentUser);
+            if(self.authedUser !== null) {
+                user.resolve(self.authedUser);
             }
             else {
-                $http.get(API_URL + '/users/~' ).then(function(user){
-                    self.currentUser = user.data;
-                    user.resolve(self.currentUser);
+                $http.get(API_URL + '/users/~' ).then(function(userResponse){
+                    self.authedUser = userResponse.data;
+                    user.resolve(self.authedUser);
                 }, function(response){
                     user.reject(response);
                 });

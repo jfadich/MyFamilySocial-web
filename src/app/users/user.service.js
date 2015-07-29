@@ -22,9 +22,11 @@
                 city : user.address.city,
                 state : user.address.state,
                 zip_code : user.address.zip_code,
-                street_address : user.address.street_address,
-                role : user.role.data.id
+                street_address : user.address.street_address
             };
+
+            if(user.role != undefined)
+                userObj.role = user.role.data.id;
 
             var birthdate = moment(new Date(user.birthdate)).format('MM/DD/YYYY');
             if(birthdate != 'Invalid date')
