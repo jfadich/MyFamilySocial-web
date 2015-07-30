@@ -2,8 +2,6 @@
 
     function ThreadFormController($scope, ForumService, toastr, $state, TagService) {
         var self = this;
-        if(!$state.includes('family.forum'))
-            return self;
 
         if(typeof $scope.currentThread != 'object') {
             self.thread = {
@@ -15,7 +13,7 @@
                     data: {}
                 }
             };
-            if($scope.forum.currentCategory.id != 'all')
+            if( $state.includes('family.forum') && $scope.forum.currentCategory.id != 'all')
                 self.thread.category.data.id = $scope.forum.currentCategory.id;
         } else {
             self.thread = $scope.currentThread.thread;

@@ -13,24 +13,24 @@
 </div>
 <div class="col-md-6 col-xs-12">
 
-    <div ng-controller="ThreadFormCtrl" class="ibox-content">
-        <form class="form-horizontal" name="threadForm" novalidate>
+    <div ng-controller="ThreadFormCtrl as shareUpdate" class="ibox-content">
+        <form class="form-horizontal" name="shareUpdate.threadForm" novalidate>
             <div class="form-group" show-errors="{ showSuccess: true}">
                 <label class="col-sm-2 control-label">Subject</label>
 
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" name="title" ng-model="thread.title" required>
+                    <input type="text" class="form-control" name="title" ng-model="shareUpdate.thread.title" required>
                 </div>
             </div>
-           <input type="hidden" ng-model="thread.category.data.id" ng-init="thread.category.data.id=3">
+           <input type="hidden" ng-model="shareUpdate.thread.category.data.id" ng-init="shareUpdate.thread.category.data.id=3">
             <div class="form-group" show-errors="{ showSuccess: true}">
                 <div class="col-sm-12">
-                    <textarea ng-model="thread.body" name="body" class="form-control" rows="5" required></textarea>
+                    <textarea ng-model="shareUpdate.thread.body" name="body" class="form-control" rows="5" required></textarea>
                 </div>
             </div>
         </form>
         <button class="btn btn-primary btn-outline"
-                ng-click="saveThread(thread)">
+                ng-click="shareUpdate.saveThread(thread)">
             <i class="fa fa-check"></i>
             <span>Share Family Update</span>
         </button>
