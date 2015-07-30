@@ -44,7 +44,7 @@
             <div class="row center-block">
             <span class="thumbnail col-xs-6 col-sm-3 col-lg-2" ng-repeat="photo in photos" style="margin:5px auto;">
 
-                <a ui-sref="family.photos.albums.album({album: photo.parent.data.slug})" data-gallery=""
+                <a ui-sref="family.photos.albums.album.photo({album: photo.parent.data.slug, photo: photo.id})" data-gallery=""
                    title="{{photo.name}}">
                     <img alt="{{photo.name}}" ng-src="{{ photo.image.medium }}" class="img-responsive">
                 </a>
@@ -55,11 +55,11 @@
         <div class="ibox-content clear" ng-show="photosDisplay == 'list'">
             <div class="list-group">
                 <div class="list-group-item" ng-repeat="photo in photos">
-                    <a ng-click="selectPhoto($index)" class="pull-left">
+                    <a ui-sref="family.photos.albums.album.photo({album: photo.parent.data.slug, photo: photo.id})" class="pull-left">
                         <img alt="{{ photo.name }}" ng-src="{{ photo.image.small }}">
                     </a>
                     <div class="media-body" style="padding-left: 10px">
-                        <h4><a ng-click="selectPhoto($index)">{{ photo.name }}</a></h4>
+                        <h4><a ui-sref="family.photos.albums.album.photo({album: photo.parent.data.slug, photo: photo.id})">{{ photo.name }}</a></h4>
                         Added by {{ photo.owner.data.display_name }} in {{ photo.parent.data.name }} on {{ photo.created * 1000 | date : short }}
                     </div>
 

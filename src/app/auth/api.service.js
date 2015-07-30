@@ -40,7 +40,9 @@
                 promise = $http.delete(url);
 
             return promise.catch(function (response) {console.log(response);
-                if(response.data === null || response.data.error === undefined) {
+                if(response.data === null ||
+                    response.data === undefined||
+                    response.data.error === undefined) {
                     return $q.reject(response);
                 }
 
