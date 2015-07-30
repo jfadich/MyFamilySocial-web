@@ -1,0 +1,11 @@
+<div class="social-feed-box text-center">
+    <a ui-sref="family.members.profile({user: activity.actor.id})">
+        <h1>{{ activity.actor.display_name }}</h1>
+
+        <div class="m-b-sm">
+            <img alt="image" class="img-circle" ng-src="{{activity.subject.image.thumb}}">
+        </div>
+    </a>
+    <p class="font-bold">changed their profile picture</p>
+
+</div>

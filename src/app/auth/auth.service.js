@@ -30,6 +30,7 @@
 
         self.logout = function() {
             token.destroy();
+            self.authedUser = null;
             $rootScope.$broadcast('USER_LOGGED_OUT');
         };
 

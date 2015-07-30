@@ -3,9 +3,9 @@
     <div class="social-avatar">
         <profile-picture user="activity.actor" class="pull-left"></profile-picture>
         <div class="media-body">
-            <a href="#" style="display: inline">
+            <a ui-sref="family.members.profile({user: activity.actor.id})" style="display: inline">
                 {{ activity.actor.display_name }}
-            </a> commented on <strong><a ui-sref="family.forum.thread({thread_slug: activity.target.slug})"> {{ activity.target.title }} </a></strong>
+            </a> commented on <strong><a ui-sref="family.forum.category.thread({category_slug:activity.target.category.data.slug,thread_slug: activity.target.slug})"> {{ activity.target.title }} </a></strong>
             <small class="text-muted"><span am-time-ago="activity.created" am-preprocess="unix"></span></small>
         </div>
     </div>
