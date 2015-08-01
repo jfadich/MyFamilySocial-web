@@ -1,59 +1,61 @@
 ;(function () {
 
     function AlbumsExplorerController(PhotoService, $scope, albums,$state, api, token){
-        $scope.showAlbums = true;
-        $scope.photoListLoading = true;
-        $scope.photosDisplay = 'grid';
-        $scope.albums = albums;
-        $scope.albums.data = setDownloadLink(albums.data);
+        var self = this;
+        self.showAlbums = true;
+        self.editingAlbum = false;
+        self.photoListLoading = true;
+        self.photosDisplay = 'grid';
+        self.albums = albums;
+        self.albums.data = setDownloadLink(albums.data);
         $scope.$on("$stateChangeSuccess", function() {
-            $scope.selectedPhoto = null;
-            $scope.selectedAlbum = null;
+            self.selectedPhoto = null;
+            self.selectedAlbum = null;
             if($state.params.photo != undefined && $state.params.photo != null) {
                 PhotoService.getPhoto($state.params.photo, 'parent').then(function(response){
-                    $scope.selectedAlbum = response.data.data.parent.data;
-                    setDownloadLink([$scope.selectedAlbum]);
-                    $scope.selectedPhoto = response.data.data.id;
+                    self.selectedAlbum = response.data.data.parent.data;
+                    setDownloadLink([self.selectedAlbum]);
+                    self.selectedPhoto = response.data.data.id;
                 })
             }
             else if($state.params.album != undefined) {
                 PhotoService.getAlbum($state.params.album).then(function(response){
-                    $scope.selectedAlbum = response.data.data;
-                    setDownloadLink([$scope.selectedAlbum]);
-                    $scope.selectedPhoto = null;
+                    self.selectedAlbum = response.data.data;
+                    setDownloadLink([self.selectedAlbum]);
+                    self.selectedPhoto = null;
                 });
             }
             else {
-                $scope.selectedAlbum = null;
-                $scope.selectedPhoto = null;
+                self.selectedAlbum = null;
+                self.selectedPhoto = null;
                 PhotoService.getPhotos(null, 'parent',30).then(function(response){
-                    $scope.photos = response.data.data;
-                    $scope.meta = response.data.meta;
+                    self.photos = response.data.data;
+                    self.meta = response.data.meta;
                 }).finally(function() {
-                    $scope.photoListLoading = false;
+                    self.photoListLoading = false;
                 })
             }
         });
 
-        $scope.toggleAlbumList = function() {
-            $scope.showAlbums = !$scope.showAlbums;
+        self.toggleAlbumList = function() {
+            self.showAlbums = !self.showAlbums;
         };
 
-        $scope.selectAlbum = function(album) {console.log(album);
-            $scope.selectedAlbum = album;
+        self.selectAlbum = function(album) {console.log(album);
+            self.selectedAlbum = album;
         };
 
-        $scope.morePhotoList = function() {
-            if($scope.photoListLoading) return;
+        self.morePhotoList = function() {
+            if(self.photoListLoading) return;
 
-            if($scope.meta.pagination != null && $scope.meta.pagination.links != undefined) {
-                if($scope.meta.pagination.links.next != null) {
-                    $scope.photoListLoading = true;
-                    return api.get($scope.meta.pagination.links.next).then(function(response) {
-                        $scope.photos = $scope.photos.concat(response.data.data);
-                        $scope.meta = response.data.meta;
+            if(self.meta.pagination != null && self.meta.pagination.links != undefined) {
+                if(self.meta.pagination.links.next != null) {
+                    self.photoListLoading = true;
+                    return api.get(self.meta.pagination.links.next).then(function(response) {
+                        self.photos = self.photos.concat(response.data.data);
+                        self.meta = response.data.meta;
                     }).finally(function() {
-                        $scope.photoListLoading = false;
+                        self.photoListLoading = false;
                     });
                 }
             }
@@ -65,8 +67,9 @@
             });
             return albums;
         }
-    }
 
+        return self;
+    }
     angular.module('inspinia')
         .controller('AlbumsExplorerCtrl', AlbumsExplorerController);
 

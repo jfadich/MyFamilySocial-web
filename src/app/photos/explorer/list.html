@@ -41,14 +41,17 @@
         </div>
 
         <div class="clearfix"></div>
+        <div ng-show="parentLoading" ng-include="'components/common/loadingIcon.html'"></div>
+        <div ng-show="!parentLoading">
+            <button type="button"
+                    class="btn btn-outline btn-primary center-block"
+                    ng-click="more()"
+                    ng-if="meta.pagination != 'undefined' && meta.pagination.links.next != null">
+                <i class="fa fa-arrow-down"></i> More Photos
+            </button>
+        </div>
     </div>
 
-    <br>
-    <button type="button"
-            class="btn btn-outline btn-primary center-block"
-            ng-click="more()"
-            ng-if="meta.pagination != 'undefined' && meta.pagination.links.next != null">
-        <i class="fa fa-arrow-down"></i> More Photos
-    </button>
+
 
 </div>

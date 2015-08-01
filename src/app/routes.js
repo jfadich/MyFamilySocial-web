@@ -136,6 +136,7 @@
                 url: "/albums",
                 templateUrl: "app/photos/albums/index.html",
                 controller: 'AlbumsExplorerCtrl',
+                controllerAs: 'albumExplorer',
                 ncyBreadcrumb: {
                     label: 'Albums'
                 },

@@ -30,22 +30,22 @@
     </form>
 
     <div class="media-body"><hr>
-        <div class="form-group col-sm-4">
+        <div class="form-group col-xs-12 col-sm-3 pull-right">
             <button class="btn btn-primary btn-outline form-control" ng-disabled="albumForm.$invalid"
-                    ng-click="saveAlbum(album)">
+                    ng-click="saveAlbum(album);albumExplorer.editingAlbum = false">
                 <i class="fa fa-check"></i>
                 <span ng-if="album.id">Save Album</span>
                 <span ng-if="!album.id">Create Album</span>
             </button>
         </div>
-        <div class="form-group col-sm-4" ng-if="album.id">
-            <button class="btn btn-danger btn-outline form-control" ng-if="album.permissions.delete">
-                <i class="fa fa-close"></i> Delete
+        <div class="form-group col-xs-12 col-sm-3  pull-right" ng-if="album.id">
+            <button class="btn btn-warning btn-outline form-control" ng-click="albumExplorer.editingAlbum = false">
+                <i class="fa fa-sign-out"></i> Cancel
             </button>
         </div>
-        <div class="form-group col-sm-4" ng-if="album.id">
-            <button class="btn btn-warning btn-outline form-control" ng-click="stopAlbumEdit()">
-                <i class="fa fa-sign-out"></i> Cancel
+        <div class="form-group col-xs-12 col-sm-3  pull-left" ng-if="album.id">
+            <button class="btn btn-danger btn-outline form-control" ng-if="album.permissions.delete">
+                <i class="fa fa-close"></i> Delete
             </button>
         </div>
         <br>

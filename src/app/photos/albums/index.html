@@ -1,18 +1,25 @@
-<div sticky  media-query="min-width: 768px" ng-if="showAlbums" class="col-lg-3 pull-right">
+<div class="row">
+<div sticky  media-query="min-width: 768px" ng-if="albumExplorer.showAlbums" class="col-lg-3 col-xs-12 pull-right">
     <div class="ibox float-e-margins">
         <div class="ibox-content">
             <div class="file-manager">
                 <h5>albums</h5>
-                <input type="text" placeholder="Search albums" class="input form-control" ng-model="searchAlbum">
+                <input type="text" placeholder="Search albums" class="input form-control" ng-model="albumExplorer.searchAlbum">
 <br>
                 <ul class="folder-list" style="padding: 0;max-height:250px;" full-scroll>
-                    <li><a ui-sref="family.photos.albums"><i class="fa" ng-class="selectedAlbum == null ? 'fa-folder-open' : 'fa-folder'"></i> All Photos</a></li>
-                    <li ng-repeat="album in albums.data | filter:searchAlbum"><a ui-sref="family.photos.albums.album({album: album.slug})"><i class="fa" ng-class="selectedAlbum.id === album.id ? 'fa-folder-open' : 'fa-folder'"></i> {{ album.name }}</a></li>
+                    <li><a ui-sref="family.photos.albums"><i class="fa" ng-class="albumExplorer.selectedAlbum == null ? 'fa-folder-open' : 'fa-folder'"></i> All Photos</a></li>
+                    <li ng-repeat="album in albumExplorer.albums.data | filter:albumExplorer.searchAlbum">
+                        <a ui-sref="family.photos.albums.album({album: album.slug})">
+                            <i class="fa" ng-class="albumExplorer.selectedAlbum.id === album.id ? 'fa-folder-open' : 'fa-folder'"></i>
+                            {{ album.name }}
+                            <i class="fa fa-lock pull-right" ng-if="!album.shared" tooltip-placement="left" tooltip="Only the owner can add photos to this album"></i>
+                        </a>
+                    </li>
                 </ul>
 
                 <div class="clearfix"></div>
                 <div class="hr-line-dashed"></div>
-                <button class="btn btn-primary btn-block" ng-if="main.user.role.data.permissions.photos_createAlbum"ui-sref="family.photos.createAlbum">
+                <button class="btn btn-primary btn-block" ng-if="main.user.role.data.permissions.photos_createAlbum" ui-sref="family.photos.createAlbum">
 
                     <i class="fa fa-plus"></i> Create Album
                     </button>
@@ -21,28 +28,28 @@
     </div>
 </div>
 
-<div class="pull-left col-xs-12" ng-class="showAlbums ? 'col-lg-9' : 'col-lg-12'">
-    <div ng-if="selectedAlbum.type == null || selectedAlbum.type == undefined"infinite-scroll="morePhotoList()" infinite-scroll-disabled="photoListLoading" infinite-scroll-immediate-check="false">
+<div class="pull-left col-xs-12" ng-class="albumExplorer.showAlbums ? 'col-lg-9' : 'col-lg-12'">
+    <div ng-if="albumExplorer.selectedAlbum.type == null || albumExplorer.selectedAlbum.type == undefined"infinite-scroll="albumExplorer.morePhotoList()" infinite-scroll-disabled="albumExplorer.photoListLoading" infinite-scroll-immediate-check="false">
         <div class="ibox">
             <div class="ibox-content">
-                <span><a class="btn btn-sm btn-white pull-right" href="" ng-click="toggleAlbumList()">Toggle Album List</a></span>
+                <span><a class="btn btn-xs btn-white pull-right" href="" ng-click="albumExplorer.toggleAlbumList()"><i class="fa fa-bars"></i></a></span>
                 <h2>All photos</h2>
             </div>
 
         <div class="ibox-content">
             <div class="btn-group ">
-                <a class="btn btn-primary" ng-click="photosDisplay = 'grid'" tooltip="Gallery">
+                <a class="btn btn-primary" ng-click="albumExplorer.photosDisplay = 'grid'" tooltip="Gallery">
                     <i class="glyphicon glyphicon-th-large"></i>
                 </a>
-                <a class="btn btn-primary" ng-click="photosDisplay = 'list'" tooltip="List">
+                <a class="btn btn-primary" ng-click="albumExplorer.photosDisplay = 'list'" tooltip="List">
                     <i class="glyphicon glyphicon-th-list"></i>
                 </a>
             </div>
         </div>
         </div>
-        <div class="ibox-content clear" ng-show="photosDisplay == 'grid'">
+        <div class="ibox-content clear" ng-show="albumExplorer.photosDisplay == 'grid'">
             <div class="row center-block">
-            <span class="thumbnail col-xs-6 col-sm-3 col-lg-2" ng-repeat="photo in photos" style="margin:5px auto;">
+            <span class="thumbnail col-xs-6 col-sm-3 col-lg-2" ng-repeat="photo in albumExplorer.photos" style="margin:7px auto;">
 
                 <a ui-sref="family.photos.albums.album.photo({album: photo.parent.data.slug, photo: photo.id})" data-gallery=""
                    title="{{photo.name}}">
@@ -50,11 +57,21 @@
                 </a>
             </span>
             </div>
+            <p>
+            <div ng-if="albumExplorer.photoListLoading" ng-include="'components/common/loadingIcon.html'"></div>
+            <div ng-if="albumExplorer.meta.pagination != 'undefined' && albumExplorer.meta.pagination.links.next != null && !albumExplorer.photoListLoading">
+                <button type="button"
+                        class="btn btn-outline btn-primary center-block"
+                        ng-click="albumExplorer.morePhotoList()">
+                    <i class="fa fa-arrow-down"></i> More photos
+                </button>
+            </div>
+            </p>
         </div>
 
-        <div class="ibox-content clear" ng-show="photosDisplay == 'list'">
+        <div class="ibox-content clear" ng-show="albumExplorer.photosDisplay == 'list'">
             <div class="list-group">
-                <div class="list-group-item" ng-repeat="photo in photos">
+                <div class="list-group-item" ng-repeat="photo in albumExplorer.photos">
                     <a ui-sref="family.photos.albums.album.photo({album: photo.parent.data.slug, photo: photo.id})" class="pull-left">
                         <img alt="{{ photo.name }}" ng-src="{{ photo.image.small }}">
                     </a>
@@ -65,32 +82,45 @@
 
                 </div>
             </div>
+            <p>
+            <div ng-if="albumExplorer.photoListLoading" ng-include="'components/common/loadingIcon.html'"></div>
+            <div ng-if="albumExplorer.meta.pagination != 'undefined' && albumExplorer.meta.pagination.links.next != null && !albumExplorer.photoListLoading">
+                <button type="button"
+                        class="btn btn-outline btn-primary center-block"
+                        ng-click="albumExplorer.morePhotoList()">
+                    <i class="fa fa-arrow-down"></i> More photos
+                </button>
+            </div>
+            </p>
         </div>
-        <p>
-        <div ng-if="photoListLoading" ng-include="'components/common/loadingIcon.html'"></div>
-        <div ng-if="meta.pagination != 'undefined' && meta.pagination.links.next != null && !photoListLoading">
-            <button type="button"
-                    class="btn btn-outline btn-primary center-block"
-                    ng-click="morePhotoList()">
-                <i class="fa fa-arrow-down"></i> More photos
-            </button>
-        </div>
-        </p>
+
     </div>
 
-    <div class="ibox" ng-if="selectedAlbum.type != null">
+    <div class="ibox" ng-if="albumExplorer.selectedAlbum.type != null && !albumExplorer.editingAlbum">
         <div class="ibox-content">
-            <span><a class="btn btn-sm btn-white pull-right" href="" ng-click="toggleAlbumList()">Toggle Album List</a></span>
-            <h2>{{selectedAlbum.name}}</h2>
-            <p>{{ selectedAlbum.description }}</p>
-            <a class="btn btn-info btn-sm" href="{{selectedAlbum.downloadLink}}">
+
+            <span class="pull-right">
+                <a class="btn btn-white btn-xs" ng-if="albumExplorer.selectedAlbum.permissions.edit" ng-click="albumExplorer.editingAlbum = true"> <i class="fa fa-pencil"></i> </a>
+                <a class="btn btn-xs btn-white" href="" ng-click="albumExplorer.toggleAlbumList()"><i class="fa fa-bars"></i></a>
+            </span>
+            <h2>
+                <span ng-if="!albumExplorer.selectedAlbum.shared" tooltip="Only the owner can add photos to this album">
+                    <i class="fa fa-lock"></i>
+                </span>
+
+                {{albumExplorer.selectedAlbum.name}}
+            </h2>
+            <p>{{ albumExplorer.selectedAlbum.description }}</p>
+            <a class="btn btn-info btn-sm" href="{{albumExplorer.selectedAlbum.downloadLink}}" ng-if="albumExplorer.selectedAlbum.shared">
                 <i class="fa fa-download"></i> Download Album
             </a>
         </div>
-        <photo-explorer parent="selectedAlbum" highlight-image="selectedPhoto"></photo-explorer>
+        <photo-explorer parent="albumExplorer.selectedAlbum" highlight-image="albumExplorer.selectedPhoto" ng-if="albumExplorer.selectedAlbum.type != null && !albumExplorer.editingAlbum"></photo-explorer>
     </div>
+
+    <div ng-include="'app/views/photos/_albumForm.html'" class="ibox-content m-b-sm border-bottom" ng-if="albumExplorer.editingAlbum" ng-init="album = albumExplorer.selectedAlbum"></div>
 </div>
 
 
 
-
+</div>

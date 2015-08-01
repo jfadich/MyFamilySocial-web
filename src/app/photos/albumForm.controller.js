@@ -36,7 +36,7 @@
 
                 return promise.then(function(response){
                     toastr.success( message, 'Success', {allowHtml: true});
-                    return $state.go("family.photos.album", {album: response.data.data.slug});
+                    // $state.go("family.photos.albums.album", {album: response.data.data.slug});
                 })
             }
         };

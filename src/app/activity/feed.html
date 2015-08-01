@@ -1,11 +1,9 @@
-
+<div class="row">
 <div class="col-md-6 pull-right col-xs-12" sticky media-query="min-width: 768px">
-
-        <h2>Welcome!</h2>
-        <p>
-            <a class="btn btn-primary btn-sm" ui-sref="family.photos.albums"><i class="fa fa-photo"></i>  Family Albums</a>
-            <a class="btn btn-primary btn-sm" ui-sref="family.forum.index"><i class="fa fa-comments"></i>  Family Forum</a>
-            <a class="btn btn-primary btn-sm" ui-sref="family.members.index"><i class="fa fa-users"></i>  Address Book</a>
+        <p class="space-15">
+            <a class="btn btn-primary btn-sm" ui-sref="family.photos.albums"><i class="fa fa-photo"></i>  <span class="hidden-xs"> Family Albums</span></a>
+            <a class="btn btn-primary btn-sm" ui-sref="family.forum.index"><i class="fa fa-comments"></i> <span class="hidden-xs"> Family Forum</span></a>
+            <a class="btn btn-primary btn-sm" ui-sref="family.members.index"><i class="fa fa-users"></i> <span class="hidden-xs"> Address Book</span></a>
         </p>
 
     <!-- Holding area for uploaded photos -->
@@ -25,7 +23,7 @@
            <input type="hidden" ng-model="shareUpdate.thread.category.data.id" ng-init="shareUpdate.thread.category.data.id=3">
             <div class="form-group" show-errors="{ showSuccess: true}">
                 <div class="col-sm-12">
-                    <textarea ng-model="shareUpdate.thread.body" name="body" class="form-control" rows="5" required></textarea>
+                    <textarea ng-model="shareUpdate.thread.body" name="body" class="form-control" rows="4" required></textarea>
                 </div>
             </div>
         </form>
@@ -52,5 +50,7 @@
         </button>
     </div>
     </p>
+
+</div>
 
 </div>

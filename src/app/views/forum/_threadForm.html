@@ -57,22 +57,22 @@
     </form>
 
     <div class="media-body"><hr>
-        <div class="form-group col-sm-4">
-            <button class="btn btn-primary btn-outline form-control" ng-disabled="threadForm.$invalid"
+        <div class="form-group col-xs-12 col-sm-3 pull-right">
+            <button class="btn btn-outline btn-primary form-control" ng-disabled="threadForm.$invalid"
                     ng-click="form.saveThread(thread)">
                 <i class="fa fa-check"></i>
                 <span ng-if="form.thread.id">Save Topic</span>
                 <span ng-if="!form.thread.id">Create Topic</span>
             </button>
         </div>
-        <div class="form-group col-sm-4" ng-if="form.thread.id">
-            <button class="btn btn-danger btn-outline form-control" ng-if="form.thread.permissions.delete">
-                <i class="fa fa-close"></i> Delete
+        <div class="form-group col-xs-12 col-sm-3 pull-right" ng-if="form.thread.id">
+            <button class="btn btn-outline btn-warning form-control" ng-click="currentThread.stopThreadEdit()">
+                <i class="fa fa-sign-out"></i> Cancel
             </button>
         </div>
-        <div class="form-group col-sm-4" ng-if="form.thread.id">
-            <button class="btn btn-warning btn-outline form-control" ng-click="currentThread.stopThreadEdit()">
-                <i class="fa fa-sign-out"></i> Cancel
+        <div class="form-group col-xs-12 col-sm-3" ng-if="form.thread.id">
+            <button class="btn btn-outline btn-danger form-control" ng-if="form.thread.permissions.delete">
+                <i class="fa fa-close"></i> Delete
             </button>
         </div>
         <br>

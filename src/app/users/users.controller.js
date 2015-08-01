@@ -1,6 +1,6 @@
 ;(function () {
 
-    function UsersController($scope, user, api) {
+    function UsersController($scope, user, api, $location, $anchorScroll) {
         $scope.categories = [];
         $scope.showUser = 0;
         $scope.usersLoading = true;
@@ -14,6 +14,8 @@
 
         $scope.selectUser = function(user) {
             $scope.showUser = user.id;
+            $location.hash('userBox');
+            $anchorScroll();
         };
 
         $scope.more = function() {
