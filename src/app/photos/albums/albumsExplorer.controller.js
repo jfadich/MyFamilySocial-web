@@ -1,22 +1,25 @@
 ;(function () {
 
-    function AlbumsExplorerController(PhotoService, $scope, albums,$state, api){
+    function AlbumsExplorerController(PhotoService, $scope, albums,$state, api, token){
         $scope.showAlbums = true;
         $scope.photoListLoading = true;
         $scope.photosDisplay = 'grid';
         $scope.albums = albums;
+        $scope.albums.data = setDownloadLink(albums.data);
         $scope.$on("$stateChangeSuccess", function() {
             $scope.selectedPhoto = null;
             $scope.selectedAlbum = null;
-            if($state.params.photo != undefined && $state.params.photo != null) {console.log($state.params.photo);
+            if($state.params.photo != undefined && $state.params.photo != null) {
                 PhotoService.getPhoto($state.params.photo, 'parent').then(function(response){
                     $scope.selectedAlbum = response.data.data.parent.data;
+                    setDownloadLink([$scope.selectedAlbum]);
                     $scope.selectedPhoto = response.data.data.id;
                 })
             }
             else if($state.params.album != undefined) {
                 PhotoService.getAlbum($state.params.album).then(function(response){
                     $scope.selectedAlbum = response.data.data;
+                    setDownloadLink([$scope.selectedAlbum]);
                     $scope.selectedPhoto = null;
                 });
             }
@@ -55,6 +58,13 @@
                 }
             }
         };
+
+        function setDownloadLink(albums) {
+            albums.forEach(function(album){
+                album.downloadLink = api.url('/albums/'+ album.slug + '/download?token='+token.get());
+            });
+            return albums;
+        }
     }
 
     angular.module('inspinia')

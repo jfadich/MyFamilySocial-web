@@ -83,6 +83,9 @@
             <span><a class="btn btn-sm btn-white pull-right" href="" ng-click="toggleAlbumList()">Toggle Album List</a></span>
             <h2>{{selectedAlbum.name}}</h2>
             <p>{{ selectedAlbum.description }}</p>
+            <a class="btn btn-info btn-sm" href="{{selectedAlbum.downloadLink}}">
+                <i class="fa fa-download"></i> Download Album
+            </a>
         </div>
         <photo-explorer parent="selectedAlbum" highlight-image="selectedPhoto"></photo-explorer>
     </div>
