@@ -1,48 +1,30 @@
-<nav class="navbar-default navbar-static-side" role="navigation" sticky style="z-index: 0">
-    <div class="sidebar-collapse">
-        <ul class="nav" id="side-menu">
-            <li class="nav-header">
-
-                <div class="dropdown profile-element" dropdown>
-                    <span>
-                        <profile-picture size="small" user="main.user" img-class="m-r-sm img-circle"></profile-picture>
-                    </span>
-                    <a class="dropdown-toggle" dropdown-toggle href>
-                            <span class="clear">
-                                <span class="block m-t-xs">
-                                    <strong class="font-bold">{{main.user.display_name}}<b class="caret"></b></strong>
-                             </span>
-                                <span class="text-muted text-xs block">{{ main.user.email }}</span>
-                            </span>
-                    </a>
-                    <ul class="dropdown-menu animated fadeInDown m-t-xs">
-                        <li><a ui-sref="logout">Logout</a></li>
-                    </ul>
-                </div>
-                <div class="logo-element text-center">
-                    <a ui-sref="family.members.profile({user: main.user.id})">
-                        {{ main.user.first_name[0] }}{{ main.user.last_name[0] }}+
-                    </a>
-                    <br>
-                </div>
-
-            </li>
-
+<nav class="navbar navbar-fixed-top" role="navigation">
+    <div class="navbar-header">
+        <a class="navbar-brand hidden-xs" style="height: auto">
+            <div class="img-container" style="max-width: 30px;">
+            <profile-picture size="small" user="main.user" img-class="img-responsive"></profile-picture>
+            </div>
+            {{ main.user.first_name[0] }}{{ main.user.last_name[0] }}+<br>
+        </a>
+        <ul class="nav navbar-nav">
             <li ui-sref-active="active">
-                <a ui-sref="family.home"><i class="glyphicon glyphicon-home"></i> <span class="nav-label">Home</span> </a>
-            </li>
-            <li ng-class="{ active: $state.includes('family.forum') }">
-                <a ui-sref="family.forum"><i class="fa fa-comments"></i> <span class="nav-label">Discussions</span></a>
+                <a ui-sref="family.home"><i class="fa fa-home fa-2x"></i><span class="nav-label hidden-xs"><br>Home</span></a>
             </li>
             <li ng-class="{ active: $state.includes('family.photos') }">
-                <a ui-sref="family.photos.albums"><i class="fa fa-photo"></i> <span class="nav-label">Photos</span></a>
-
+                <a ui-sref="family.photos.albums"><i class="fa fa-photo fa-2x"></i> <span class="nav-label hidden-xs"><br>Photos</span></a>
+            </li>
+            <li ng-class="{ active: $state.includes('family.events') }">
+                <a><i class="fa fa-calendar fa-2x"></i> <span class="nav-label hidden-xs"><br>Calender</span></a>
+            </li>
+            <li ng-class="{ active: $state.includes('family.events') }">
+                <a><i class="fa fa-list fa-2x"></i> <span class="nav-label hidden-xs"><br>Recipies</span></a>
             </li>
             <li ng-class="{ active: $state.includes('family.members') }">
-                <a ui-sref="family.members.index"><i class="fa fa-users"></i> <span class="nav-label">Address Book</span></a>
+                <a ui-sref="family.members.index"><i class="fa fa-users fa-2x"></i> <span class="nav-label hidden-xs"><br>Address Book</span></a>
             </li>
 
         </ul>
 
     </div>
+
 </nav>
