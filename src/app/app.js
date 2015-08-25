@@ -33,7 +33,17 @@
             invalidRelationship: 204
         })
     .config(['markedProvider', function(markedProvider) {
-        markedProvider.setOptions({gfm: true}); // enable github flavored markdown
+        markedProvider
+            .setOptions({gfm: true});
+            markedProvider            .setRenderer({
+                link: function(href, title, text) {
+                    var regX = new RegExp(location.host);
+                    if(regX.test(href))
+                        return "<a href='" + href + "' title='" + title + "'>" + text + "</a>";
+
+                    return "<a href='" + href + "' title='" + title + "' target='_blank'>" + text + "</a>";
+                }
+            });
     }])
     .value('THROTTLE_MILLISECONDS', 500); // infinate scroll delay
 })();

@@ -94,6 +94,31 @@
             return user.promise;
         };
 
+        self.authenticate = function() {
+            var promise = $q.defer();
+
+            if (!self.canRefresh()) {
+                promise.reject();
+                return $state.go('login');
+            }
+
+            if (!self.isAuthenticated()) {
+                return self.refresh().then(
+                    function (response) {
+                        return promise.resolve(response);
+                    }, function (response) {
+                        return promise.reject(response)
+                    });
+            }
+            else {
+                return promise.resolve();
+            }
+
+
+
+            return promise;
+        };
+
         $rootScope.$on('$stateChangeStart',
             function(event, toState, toParams){
                 if(toState.data.requireAuth === true)
