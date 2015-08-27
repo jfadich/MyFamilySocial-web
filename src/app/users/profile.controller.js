@@ -1,11 +1,11 @@
 ;(function () {
 
-    function ProfileController($scope, user, $state, RoleService) {
+    function ProfileController($scope, UserService, $state, RoleService) {
         $scope.user = [];
         $scope.roles = [];
         $scope.editing = false;
 
-        user.getUser($state.params.user, 'profile_pictures,albums.photos,role').then(function(users){
+        UserService.getUser($state.params.user, 'profile_pictures,albums.photos,role').then(function(users){
             if(typeof users.data.birthdate != 'undefined')
                 users.data.birthdate = new Date(users.data.birthdate *1000);
             else
@@ -25,15 +25,15 @@
 
         $scope.saveUser = function (userUpdate) {
 
-            user.updateUser(userUpdate, 'role').then(function(response) {
+            UserService.updateUser(userUpdate, 'role').then(function(response) {
                 $scope.editing = false;
 
-                if(typeof response.data.data.birthdate != 'undefined')
-                    response.data.data.birthdate = new Date(response.data.data.birthdate *1000);
+                if(typeof response.data.birthdate != 'undefined')
+                    response.data.birthdate = new Date(response.data.data.birthdate *1000);
                 else
-                    response.data.data.birthdate = NaN;
+                    response.data.birthdate = NaN;
 
-                $scope.user = response.data.data;
+                $scope.user = response.data;
             })
         };
 

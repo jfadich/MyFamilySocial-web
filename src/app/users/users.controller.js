@@ -1,11 +1,11 @@
 ;(function () {
 
-    function UsersController($scope, user, api, $location, $anchorScroll) {
+    function UsersController($scope, UserService, api, $location, $anchorScroll) {
         $scope.categories = [];
         $scope.showUser = 0;
         $scope.usersLoading = true;
         $scope.searchUser = '';
-        user.getUsers().then(function(users){
+        UserService.getUser().then(function(users){
             $scope.users = users.data;
             $scope.meta = users.meta;
         }).finally(function(){
@@ -14,7 +14,6 @@
 
         $scope.selectUser = function(user) {
             $scope.showUser = user.id;
-            $location.hash('userBox');
             $anchorScroll();
         };
 

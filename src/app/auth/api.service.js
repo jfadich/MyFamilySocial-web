@@ -66,9 +66,13 @@
                 if(response.data.error.error_code === ERRORS.invalidEntity) {
                     var errors = response.data.error.message;
 
-                    for(var attributes in errors) {
-                        for(var message in errors[attributes])
-                            toastr.error(errors[attributes][message]);
+                    if($.isArray(errors)) {
+                        for(var attributes in errors) {
+                            for(var message in errors[attributes])
+                                toastr.error(errors[attributes][message]);
+                        }
+                    } else {
+                        toastr.error(errors);
                     }
                 }
 
@@ -101,6 +105,70 @@
             }
 
             return url;
+        };
+
+        self.preFlight = function()
+        {
+            var defer = $q.defer();
+
+            if (!auth.canRefresh()) {
+                defer.reject('Not authenticated');
+                return $state.go('login');
+            }
+
+            if (!auth.isAuthenticated())
+                return self.refreshToken(url, method, data).then(function(response){
+                    defer.resolve(response);
+                });
+            else
+                defer.resolve();
+
+            return defer.promise;
+        };
+
+        self.catch = function(response) {console.log(response);
+            if(response.data === null ||
+                response.data === undefined||
+                response.data.error === undefined) {
+                return $q.reject(response);
+            }
+
+            if (response.data.error.error_code == ERRORS.expiredToken) {
+                if(self.refreshing) {
+                    return self.refreshing.then(function(){
+                        return self.request(url, method, data);
+                    });
+                }
+                else {
+                    return self.refreshToken().then(function(){
+                        return self.request(url, method, data);
+                    });
+                }
+            }
+
+            if(response.data.error.error_code === ERRORS.unauthorized) {
+                toastr.error('You do not have sufficient privileges to perform this action', 'Unauthorized');
+            }
+
+            if(response.data.error.error_code === ERRORS.invalidEntity) {
+                var errors = response.data.error.message;
+
+                if($.isArray(errors)) {
+                    for(var attributes in errors) {
+                        for(var message in errors[attributes])
+                            toastr.error(errors[attributes][message]);
+                    }
+                } else {
+                    toastr.error(errors);
+                }
+
+            }
+
+            return $q.reject(response);
+        };
+
+        self.postFlight = function(response) {
+            return response;
         }
 
     }

@@ -1,10 +1,10 @@
 ;(function () {
 
 angular.module('inspinia')
-  .controller('MainCtrl', function ($scope, user, auth) {
+  .controller('MainCtrl', function ($scope, UserService, auth) {
         var self = this;
         self.getUser = function() {
-            user.getUser('~', 'role').then(function(user){
+            UserService.getUser('~', 'role').then(function(user){
                 self.user = user.data;
                 $scope.$on('photos.upload.user.'+self.user.id, function(){
                     self.getUser();
