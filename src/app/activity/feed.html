@@ -1,38 +1,42 @@
 <div class="row">
-<div class="col-md-6 pull-right col-xs-12" sticky media-query="min-width: 768px">
-        <p class="space-15">
-            <a class="btn btn-primary btn-sm" ui-sref="family.photos.albums"><i class="fa fa-photo"></i>  <span class="hidden-xs"> Family Albums</span></a>
-            <a class="btn btn-primary btn-sm" ui-sref="family.forum"><i class="fa fa-comments"></i><span class="hidden-xs"> Family Forum</span></a>
-            <a class="btn btn-primary btn-sm" ui-sref="family.members.index"><i class="fa fa-users"></i> <span class="hidden-xs"> Address Book</span></a>
-        </p>
-
+<div class="col-md-6 pull-right col-xs-12" sticky media-query="min-width: 768px" offset="90">
+    <tabset class="ibox-content">
+        <tab heading="Share Note">
+            <br>
+            <div ng-controller="ThreadFormCtrl as shareUpdate">
+                <form class="form-horizontal" name="shareUpdate.threadForm" novalidate>
+                    <input type="hidden" ng-model="shareUpdate.thread.category.data.id" ng-init="shareUpdate.thread.category.data.id=3">
+                    <div class="form-group" show-errors="{ showSuccess: true}">
+                        <div class="col-sm-12">
+                            <textarea ng-model="shareUpdate.thread.body" name="body" class="form-control" rows="4" placeholder="{{randomPrompt}}" required></textarea>
+                        </div>
+                    </div>
+                </form>
+                <button class="btn btn-primary btn-outline"
+                        ng-click="shareUpdate.saveThread(thread)">
+                    <i class="fa fa-check"></i>
+                    <span>Share Family Update</span>
+                </button>
+                <br>
+            </div>
+        </tab>
+        <tab heading="Upload Photos">
+            <br>
+            <div class="form-group">
+                <input type="text" class="form-control" placeholder="What do you want to call this photo collection?">
+            </div>
+            <div>
+                <div class="text-center" style="border:dashed darkslategrey 1px;height: 94px;background: lightgrey;">
+                    upload photos
+                </div>
+            </div>
+        </tab>
+    </tabset>
     <!-- Holding area for uploaded photos -->
     <div id="preview" class="dropzone hide" style="margin-bottom: 10px;"></div>
 </div>
 <div class="col-md-6 col-xs-12">
 
-    <div ng-controller="ThreadFormCtrl as shareUpdate" class="ibox-content">
-        <form class="form-horizontal" name="shareUpdate.threadForm" novalidate>
-            <div class="form-group" show-errors="{ showSuccess: true}">
-                <label class="col-sm-2 control-label">Subject</label>
-
-                <div class="col-sm-10">
-                    <input type="text" class="form-control" name="title" ng-model="shareUpdate.thread.title" required>
-                </div>
-            </div>
-           <input type="hidden" ng-model="shareUpdate.thread.category.data.id" ng-init="shareUpdate.thread.category.data.id=3">
-            <div class="form-group" show-errors="{ showSuccess: true}">
-                <div class="col-sm-12">
-                    <textarea ng-model="shareUpdate.thread.body" name="body" class="form-control" rows="4" required></textarea>
-                </div>
-            </div>
-        </form>
-        <button class="btn btn-primary btn-outline"
-                ng-click="shareUpdate.saveThread(thread)">
-            <i class="fa fa-check"></i>
-            <span>Share Family Update</span>
-        </button>
-    </div><br>
 <div  infinite-scroll="more()" infinite-scroll-disabled='activityLoading' infinite-scroll-immediate-check="false">
     <div ng-repeat="activity in feed">
 

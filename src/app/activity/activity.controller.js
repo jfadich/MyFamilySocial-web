@@ -5,6 +5,16 @@
         $scope.feed = {};
         $scope.size = 'full';
         $scope.activityLoading = true;
+        $scope.sharePrompts = [
+            'What have you been up to?',
+            'Have you done anything fun lately?',
+            'Want to make a family request?',
+            'What\'s on your mind?',
+            'How are you liking this site?',
+            'Have anything to share?'
+        ];
+
+        $scope.randomPrompt = $scope.sharePrompts[Math.floor(Math.random() * $scope.sharePrompts.length)];
 
         ActivityService.getFeed().then(function(response){
             $scope.feed = response.data.data;
