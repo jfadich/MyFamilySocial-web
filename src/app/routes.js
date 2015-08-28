@@ -251,11 +251,6 @@
     }
     angular.module('inspinia')
         .config(routes)
-        .config(function($breadcrumbProvider) {
-            $breadcrumbProvider.setOptions({
-                includeAbstract: 'true'
-            });
-        })
         .config(function(toastrConfig) {
             angular.extend(toastrConfig, {
 

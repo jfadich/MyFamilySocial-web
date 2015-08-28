@@ -81,9 +81,9 @@ function CommentFeedController($scope, CommentService, toastr, api, auth) {
             $scope.commentLoading = true;
             $scope.parentId = 0;
             CommentService.getComments($scope.parent,$scope.limit).then(function(response) {
-                $scope.parentId = response.data.id;
-                $scope.comments = response.data.data;
-                $scope.meta = response.data.meta;
+                $scope.parentId = $scope.parent.id;
+                $scope.comments = response.data;
+                $scope.meta = response.meta;
             }).finally(function() {
                 $scope.commentLoading = false;
             });

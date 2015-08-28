@@ -13,7 +13,6 @@
         'ui.bootstrap.showErrors',
         'ngSanitize',
         'MassAutoComplete',
-        'ncy-angular-breadcrumb',
         'hc.marked',
         'sticky',
         'infinite-scroll'
