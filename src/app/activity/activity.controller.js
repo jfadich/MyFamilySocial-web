@@ -17,8 +17,8 @@
         $scope.randomPrompt = $scope.sharePrompts[Math.floor(Math.random() * $scope.sharePrompts.length)];
 
         ActivityService.getFeed().then(function(response){
-            $scope.feed = response.data.data;
-            $scope.meta = response.data.meta;
+            $scope.feed = response.data;
+            $scope.meta = response.meta;
         }).finally(function(){
             $scope.activityLoading = false;
         });
@@ -45,8 +45,8 @@
                 if($scope.meta.pagination.links.next != null) {
                     $scope.activityLoading = true;
                     api.get($scope.meta.pagination.links.next).then(function(response) {
-                        $scope.feed = $scope.feed.concat(response.data.data);
-                        $scope.meta = response.data.meta;
+                        $scope.feed = $scope.feed.concat(response.data);
+                        $scope.meta = response.meta;
                     }).finally(function() {
                         $scope.activityLoading = false;
                     });

@@ -35,9 +35,7 @@
                 },
                 resolve: {
                     categories: function(ForumService) {
-                        return ForumService.getCategories().then(function(response){
-                            return response.data;
-                        });
+                        return ForumService.getCategories();
                     }
                 }
             } )
@@ -143,7 +141,7 @@
                 resolve: {
                     albums: function (PhotoService) {
                         return PhotoService.getAlbums().then(function(response){
-                            return response.data;
+                            return response;
                         });
                     }
                 },

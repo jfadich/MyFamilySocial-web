@@ -7,7 +7,7 @@ function CommentFeedController($scope, CommentService, toastr, api, auth) {
     $scope.addReply = function(comment, event) {
         event.target.disabled = true;
         CommentService.addComment(comment.body, $scope.parent).then(function(response){
-            $scope.comments.unshift(response.data.data);
+            $scope.comments.unshift(response.data);
             toastr.success('Success','Reply added', { iconClass: 'toast-comment'});
             comment.body = '';
         });
@@ -24,8 +24,8 @@ function CommentFeedController($scope, CommentService, toastr, api, auth) {
 
         CommentService.updateComment({ body:reply.edited, id: reply.id }).then(function(response) {
             toastr.success('Success','Reply updated', { iconClass: 'toast-comment'});
-            reply.body = response.data.data.body;
-            reply.updated = response.data.data.updated;
+            reply.body = response.data.body;
+            reply.updated = response.data.updated;
         });
     };
 
@@ -63,8 +63,8 @@ function CommentFeedController($scope, CommentService, toastr, api, auth) {
             if($scope.meta.pagination.links.next != null) {
                 $scope.commentLoading = true;
                 api.get($scope.meta.pagination.links.next).then(function(response) {
-                    $scope.comments = $scope.comments.concat(response.data.data);
-                    $scope.meta = response.data.meta;
+                    $scope.comments = $scope.comments.concat(response.data);
+                    $scope.meta = response.meta;
                 }).finally(function() {
                     $scope.commentLoading = false;
                 });

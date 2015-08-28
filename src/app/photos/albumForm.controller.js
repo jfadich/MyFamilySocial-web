@@ -16,7 +16,7 @@
 
                 if(album.id === undefined){
                     promise = PhotoService.addAlbum(album).then(function (response) {
-                        var album = response.data.data;
+                        var album = response.data;
                         toastTitle = album.name.length > 100 ? (album.name.substring(0,100) + '...') : album.name;
                         message = "'" + toastTitle + "' <b>created.</b>";
                         return response
@@ -24,7 +24,7 @@
                 }
                 else {
                     promise = PhotoService.updateAlbum(album).then(function (response) {
-                        var album = response.data.data;console.log(response);
+                        var album = response.data;console.log(response);
                         toastTitle = album.name.length > 100 ? (album.name.substring(0,100) + '...') : album.name;
                         message = "'" + toastTitle + "' <b>Saved.</b>";
                         return response
@@ -36,7 +36,7 @@
 
                 return promise.then(function(response){
                     toastr.success( message, 'Success', {allowHtml: true});
-                    // $state.go("family.photos.albums.album", {album: response.data.data.slug});
+                    // $state.go("family.photos.albums.album", {album: response.data.slug});
                 })
             }
         };

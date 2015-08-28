@@ -39,7 +39,9 @@
             else if (method === 'delete')
                 promise = $http.delete(url);
 
-            return promise.catch(function (response) {console.log(response);
+            return promise.then(function(response) {
+                return response.data;
+            }, function (response) {console.log(response);
                 if(response.data === null ||
                     response.data === undefined||
                     response.data.error === undefined) {

@@ -24,8 +24,8 @@ function PhotoExplorerController($scope, PhotoService, $q, api, $timeout, toastr
             });
 
             PhotoService.getPhotos($scope.parent, 'tags').then(function(response) {
-                $scope.photos = response.data.data;
-                $scope.meta = response.data.meta;
+                $scope.photos = response.data;
+                $scope.meta = response.meta;
                 $scope.morePhotos = $scope.photos.length > 1;
 
                 // If the photo that the user is looking for is not in the original request, get it
@@ -33,9 +33,9 @@ function PhotoExplorerController($scope, PhotoService, $q, api, $timeout, toastr
                     var highlight  = $.grep($scope.photos, function(e){ return e.id == $scope.highlightImage; });
                     if(highlight.length == 0) {
                         PhotoService.getPhoto($scope.highlightImage,'parent').then(function (response) {
-                            if(response.data.data.parent.data.id == $scope.parent.id) {
-                                $scope.photos.unshift(response.data.data);
-                                highlight = [response.data.data];
+                            if(response.data.parent.data.id == $scope.parent.id) {
+                                $scope.photos.unshift(response.data);
+                                highlight = [response.data];
                                 $scope.selectPhoto($scope.photos.indexOf(highlight[0]));
                             }
                             else
@@ -77,7 +77,7 @@ function PhotoExplorerController($scope, PhotoService, $q, api, $timeout, toastr
             if($scope.meta.pagination.links.next != null) {
                 $scope.parentLoading = true;
                 return api.get($scope.meta.pagination.links.next).then(function(response) {
-                    $scope.photos = $scope.photos.concat(response.data.data);
+                    $scope.photos = $scope.photos.concat(response.data);
                     $scope.meta = response.data.meta;
                 }).finally(function() {
                     $scope.parentLoading = false;

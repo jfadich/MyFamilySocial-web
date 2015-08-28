@@ -40,7 +40,7 @@
                 if(term == '')
                     return;
                 return TagService.search(term).then(function(response){
-                    var tags = response.data.data;
+                    var tags = response.data;
 
                     tags.forEach(function(tag){
                         self.tag_results.push({value: tag.name, label: tag.name});
@@ -72,7 +72,7 @@
 
                 if(self.thread.id === 0){
                     promise = ForumService.addThread(self.thread).then(function (response) {
-                        var thread = response.data.data;
+                        var thread = response.data;
                         toastTitle = thread.title.length > 100 ? (thread.title.substring(0,100) + '...') : thread.title;
                         message = "'" + toastTitle + "' <b>created.</b>";
                         return response
@@ -80,7 +80,7 @@
                 }
                 else {
                     promise = ForumService.updateThread(self.thread).then(function (response) {
-                        var thread = response.data.data;
+                        var thread = response.data;
                         toastTitle = thread.title.length > 100 ? (thread.title.substring(0,100) + '...') : thread.title;
                         message = "'" + toastTitle + "' <b>Saved.</b>";
                         return response
@@ -94,7 +94,7 @@
 
                 return promise.then(function(response){
                     toastr.success( message, 'Success',{ iconClass: 'toast-comment', allowHtml: true});
-                    return $state.go("family.forum.category.thread", {thread_slug: response.data.data.slug});
+                    return $state.go("family.forum.category.thread", {thread_slug: response.data.slug});
                 })
             }
         };

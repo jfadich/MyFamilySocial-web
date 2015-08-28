@@ -5,8 +5,8 @@
         self.loading = true;
         if($state.params.category_slug == '' || $state.params.category_slug == 'all') {
             ForumService.getThreads('owner,tags,category').then(function(response){
-                self.data = response.data.data;
-                self.meta = response.data.meta;
+                self.data = response.data;
+                self.meta = response.meta;
                 self.loading = false;
             });
         } else{
@@ -25,12 +25,12 @@
                     self.loading = true;
                     api.get(self.meta.pagination.links.next).then(function(response) {
                         if($state.params.category_slug == '' || $state.params.category_slug == 'all') {
-                            self.data = self.data.concat(response.data.data);
+                            self.data = self.data.concat(response.data);
                             self.meta = response.data.meta;
                         }
                         else {
-                            self.data = self.data.concat(response.data.data.threads.data);
-                            self.meta = response.data.data.threads.meta;
+                            self.data = self.data.concat(response.data.threads.data);
+                            self.meta = response.data.threads.meta;
                         }
                     }).finally(function() {
                         self.loading = false;

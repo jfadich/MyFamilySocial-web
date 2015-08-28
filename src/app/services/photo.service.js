@@ -1,34 +1,39 @@
 ;(function () {
 
+    angular.module('inspinia')
+        .factory('PhotoService', PhotoService);
+
     function PhotoService(api){
-        var self = this;
-        self.pagination;
+        return {
+            getAlbums: getAlbums,
+            getAlbum: getAlbum,
+            addAlbum: addAlbum,
+            updateAlbum: updateAlbum,
+            getPhoto: getPhoto,
+            getPhotos: getPhotos,
+            updatePhoto: updatePhoto
+        };
 
-        self.getAlbums = function(includes) {
+        function getAlbums(includes) {
             return api.get(api.url('/albums', includes));
-        };
-
-        self.getAlbum = function(album, includes) {
+        }
+        function getAlbum(album, includes) {
             return api.get(api.url('/albums/'+album, includes));
-        };
-
-        self.addAlbum = function(album) {
+        }
+        function addAlbum(album) {
             return api.post(api.url('/albums'), album);
-        };
-
-        self.updateAlbum = function(album) {
+        }
+        function updateAlbum(album) {
             return api.patch(api.url('/albums/' + album.slug), {
                 name: album.name,
                 shared: album.shared,
                 description: album.description
             })
-        };
-
-        self.getPhoto = function(photo, includes) {
+        }
+        function getPhoto(photo, includes) {
             return api.get(api.url('/photos/'+photo, includes));
-        };
-
-        self.getPhotos = function(parent, includes, count) {
+        }
+        function getPhotos(parent, includes, count) {
             var limit = '';
             if(count != undefined)
                 limit = "?limit="+count;
@@ -36,19 +41,14 @@
                 return api.get(api.url('/photos'+limit, includes));
 
             return api.get(api.url('/photos/'+parent.type+'/'+parent.id+limit, includes));
-        };
-
-        self.updatePhoto = function(photo) {
+        }
+        function updatePhoto(photo) {
             return api.patch(api.url('/photos/' + photo.id), {
                 name: photo.name,
                 description: photo.description,
                 tags: photo.tags
             })
-        };
+        }
     }
-
-    angular.module('inspinia')
-        .service('PhotoService', PhotoService);
-
 
 })();

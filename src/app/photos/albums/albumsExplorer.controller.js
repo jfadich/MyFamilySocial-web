@@ -13,14 +13,14 @@
             self.selectedAlbum = null;
             if($state.params.photo != undefined && $state.params.photo != null) {
                 PhotoService.getPhoto($state.params.photo, 'parent').then(function(response){
-                    self.selectedAlbum = response.data.data.parent.data;
+                    self.selectedAlbum = response.data.parent.data;
                     setDownloadLink([self.selectedAlbum]);
-                    self.selectedPhoto = response.data.data.id;
+                    self.selectedPhoto = response.data.id;
                 })
             }
             else if($state.params.album != undefined) {
                 PhotoService.getAlbum($state.params.album).then(function(response){
-                    self.selectedAlbum = response.data.data;
+                    self.selectedAlbum = response.data;
                     setDownloadLink([self.selectedAlbum]);
                     self.selectedPhoto = null;
                 });
@@ -29,8 +29,8 @@
                 self.selectedAlbum = null;
                 self.selectedPhoto = null;
                 PhotoService.getPhotos(null, 'parent',30).then(function(response){
-                    self.photos = response.data.data;
-                    self.meta = response.data.meta;
+                    self.photos = response.data;
+                    self.meta = response.meta;
                 }).finally(function() {
                     self.photoListLoading = false;
                 })
@@ -52,8 +52,8 @@
                 if(self.meta.pagination.links.next != null) {
                     self.photoListLoading = true;
                     return api.get(self.meta.pagination.links.next).then(function(response) {
-                        self.photos = self.photos.concat(response.data.data);
-                        self.meta = response.data.meta;
+                        self.photos = self.photos.concat(response.data);
+                        self.meta = response.meta;
                     }).finally(function() {
                         self.photoListLoading = false;
                     });

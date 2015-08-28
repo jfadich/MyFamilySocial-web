@@ -47,7 +47,7 @@
         };
 
         PhotoService.getAlbum($state.params.album, 'owner').then(function(response){
-            $scope.album = response.data.data;console.log($scope.album);
+            $scope.album = response.data;console.log($scope.album);
             $scope.downloadLink = api.url('/albums/'+ $scope.album.slug + '/download?token='+token.get());
         });
     }

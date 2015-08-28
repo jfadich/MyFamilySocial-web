@@ -1,36 +1,38 @@
 ;(function () {
 
-    function CommentService(api){
-        var self = this;
+    angular.module('inspinia')
+        .factory('CommentService', CommentService);
 
-        self.addComment = function(comment, parent) {
+    function CommentService(api){
+        return {
+            addComment: addComment,
+            getComments: getComments,
+            deleteComment: deleteComment,
+            updateComment: updateComment
+        };
+
+        function addComment(comment, parent) {
             return api.post(api.url('/comments/'), {
                 body: comment,
                 parent_type: parent.type,
                 parent_id: parent.id
             });
-        };
-
-        self.getComments = function(parent, limit) {
+        }
+        function getComments(parent, limit) {
             if(limit == undefined)
                 limit = '';
             else
                 limit = "?limit="+limit;
             return api.get(api.url('/comments/'+parent.type+'/'+parent.id+limit))
-        };
-
-        self.deleteComment = function(comment) {
+        }
+        function deleteComment(comment) {
             return api.delete(api.url('/comments/') + comment);
-        };
-
-        self.updateComment = function(comment) {
+        }
+        function updateComment(comment) {
             return api.patch(api.url('/comments/') + comment.id, {
                 body: comment.body
             });
-        };
+        }
     }
-
-    angular.module('inspinia')
-        .service('CommentService', CommentService);
 
 })();

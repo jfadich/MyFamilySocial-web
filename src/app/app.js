@@ -5,7 +5,6 @@
         'ngAnimate',
         'ngTouch',
         'ngSanitize',
-        'ngResource',
         'ui.router',
         'ui.bootstrap',
         'angularMoment',

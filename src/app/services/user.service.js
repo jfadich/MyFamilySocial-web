@@ -1,11 +1,9 @@
 ;(function(){
 
     angular.module('inspinia')
-        .factory('UserService', ['api', '$resource', UserService]);
+        .factory('UserService', ['api', UserService]);
 
-    function UserService( api, $resource ) {
-
-        var userResource = $resource(api.url('/users/:userId'),{userId:'@id'},{update: {method:'PATCH'}});
+    function UserService( api ) {
 
         return {
             getUser: getUser,
@@ -13,11 +11,7 @@
         };
 
         function getUser(user, includes) {
-            return api.preFlight().then(function(){
-
-                return userResource.get({userId:user, with:includes}).$promise;
-
-            }).then(api.postFlight, api.catch);
+            return api.get(api.url('/users/' + user, includes));
         }
         function updateUser(user, includes) {
             $.extend(user, user.address);
@@ -29,13 +23,7 @@
             if(birthdate != 'Invalid date')
                 user.birthdate = moment(new Date(user.birthdate)).format('MM/DD/YYYY');
 
-            return api.preFlight().then(function(response){
-
-                var u = new userResource(user);
-                return u.$update({with:includes});
-
-            }).then(api.postFlight, api.catch);
-
+            return api.patch(api.url('/users/' + user.id, includes), user);
         }
     }
 
