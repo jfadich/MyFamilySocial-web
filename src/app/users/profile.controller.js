@@ -25,7 +25,7 @@
 
         $scope.saveUser = function (userUpdate) {
 
-            UserService.updateUser(userUpdate, 'role').then(function(response) {
+            UserService.updateUser(userUpdate, 'profile_pictures,albums.photos,role').then(function(response) {
                 $scope.editing = false;
 
                 if(typeof response.data.birthdate != 'undefined')

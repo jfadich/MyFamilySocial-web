@@ -139,10 +139,8 @@
                     label: 'Albums'
                 },
                 resolve: {
-                    albums: function (PhotoService) {
-                        return PhotoService.getAlbums().then(function(response){
-                            return response;
-                        });
+                    albums: function (AlbumService) {
+                        return AlbumService.getAlbum('');
                     }
                 },
                 data: {

@@ -1,6 +1,6 @@
 ;(function () {
 
-    function AlbumsExplorerController(PhotoService, $scope, albums,$state, api, token){
+    function AlbumsExplorerController(PhotoService, AlbumService, $scope, albums,$state, api, token){
         var self = this;
         self.showAlbums = true;
         self.editingAlbum = false;
@@ -19,7 +19,7 @@
                 })
             }
             else if($state.params.album != undefined) {
-                PhotoService.getAlbum($state.params.album).then(function(response){
+                AlbumService.getAlbum($state.params.album).then(function(response){
                     self.selectedAlbum = response.data;
                     setDownloadLink([self.selectedAlbum]);
                     self.selectedPhoto = null;

@@ -29,7 +29,7 @@ function PhotoInfoController($scope, toastr, $state, TagService, PhotoService) {
             if(term == '')
                 return;
             return TagService.search(term).then(function(response){
-                var tags = response.data.data;
+                var tags = response.data;
 
                 tags.forEach(function(tag){
                     $scope.tag_results.push({value: tag.name, label: tag.name});
@@ -57,7 +57,7 @@ function PhotoInfoController($scope, toastr, $state, TagService, PhotoService) {
         }).join(",");
 
         return PhotoService.updatePhoto(photo).then(function (response) {
-            var photo = response.data.data;
+            var photo = response.data;
             toastTitle = photo.name.length > 100 ? (photo.name.substring(0,100) + '...') : photo.name;
             message = "'" + toastTitle + "' <b>Saved.</b>";
 

@@ -33,7 +33,7 @@
         $scope.pages = albums.meta.pagination;
     }
 
-    function PhotosController($scope,PhotoService,$state,api, token) {
+    function PhotosController($scope,AlbumService,$state,api, token) {
         $scope.album = {  };
         $scope.editing_album = false;
         $scope.highlightImage = $state.params.highlightImage;
@@ -46,7 +46,7 @@
             $scope.editing_album = true;
         };
 
-        PhotoService.getAlbum($state.params.album, 'owner').then(function(response){
+        AlbumService.getAlbum($state.params.album, 'owner').then(function(response){
             $scope.album = response.data;console.log($scope.album);
             $scope.downloadLink = api.url('/albums/'+ $scope.album.slug + '/download?token='+token.get());
         });

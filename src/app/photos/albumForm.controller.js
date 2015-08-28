@@ -1,7 +1,7 @@
 
 ;(function () {
 
-    function AlbumFormController($scope, PhotoService, toastr, $state) {
+    function AlbumFormController($scope, PhotoService,AlbumService, toastr, $state) {
         if($scope.album === undefined)
             $scope.album = { shared:true };
 
@@ -15,7 +15,7 @@
             if ($scope.albumForm.$valid) {
 
                 if(album.id === undefined){
-                    promise = PhotoService.addAlbum(album).then(function (response) {
+                    promise = AlbumService.addAlbum(album).then(function (response) {
                         var album = response.data;
                         toastTitle = album.name.length > 100 ? (album.name.substring(0,100) + '...') : album.name;
                         message = "'" + toastTitle + "' <b>created.</b>";
@@ -23,7 +23,7 @@
                     });
                 }
                 else {
-                    promise = PhotoService.updateAlbum(album).then(function (response) {
+                    promise = AlbumService.updateAlbum(album).then(function (response) {
                         var album = response.data;console.log(response);
                         toastTitle = album.name.length > 100 ? (album.name.substring(0,100) + '...') : album.name;
                         message = "'" + toastTitle + "' <b>Saved.</b>";

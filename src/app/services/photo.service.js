@@ -5,31 +5,11 @@
 
     function PhotoService(api){
         return {
-            getAlbums: getAlbums,
-            getAlbum: getAlbum,
-            addAlbum: addAlbum,
-            updateAlbum: updateAlbum,
             getPhoto: getPhoto,
             getPhotos: getPhotos,
             updatePhoto: updatePhoto
         };
 
-        function getAlbums(includes) {
-            return api.get(api.url('/albums', includes));
-        }
-        function getAlbum(album, includes) {
-            return api.get(api.url('/albums/'+album, includes));
-        }
-        function addAlbum(album) {
-            return api.post(api.url('/albums'), album);
-        }
-        function updateAlbum(album) {
-            return api.patch(api.url('/albums/' + album.slug), {
-                name: album.name,
-                shared: album.shared,
-                description: album.description
-            })
-        }
         function getPhoto(photo, includes) {
             return api.get(api.url('/photos/'+photo, includes));
         }
