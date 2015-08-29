@@ -46,6 +46,10 @@
   margin-right: 40px;
 }
 
+.body-small .navbar-top-links li:last-child {
+  margin-right: 0;
+}
+
 .navbar-top-links li a {
   padding: 20px 10px;
   min-height: 50px;
@@ -310,7 +314,6 @@ body.mini-navbar .navbar-default .nav > li > .nav-second-level li a {
   color: white;
   display: none;
   padding: 18px 0;
-  width:70px;
 }
 
 .pace-done .navbar-static-side, .pace-done .nav-header, .pace-done li.active, .pace-done #page-wrapper, .pace-done .footer {
@@ -339,6 +342,10 @@ body.fixed-nav #wrapper .navbar-static-side,
 body.fixed-nav #wrapper #page-wrapper
 {
   margin-top: 60px;
+}
+
+body.top-navigation.fixed-nav #wrapper #page-wrapper {
+  margin-top: 0;
 }
 
 .fixed-nav .minimalize-styl-2 {
@@ -496,13 +503,4 @@ body.canvas-menu nav.navbar-static-side {
 body.canvas-menu.mini-navbar nav.navbar-static-side {
   display: block;
   width: 220px;
-  z-index:-1;
-}
-
-nav.navbar-static-side li {
-  max-width:220px;
-}
-
-.mini-navbar nav.navbar-static-side {
-  width:70px !important; // force nav container to collapse so sticky will work properly
 }
