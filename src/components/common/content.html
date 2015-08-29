@@ -1,31 +1,24 @@
 <!-- Wrapper-->
-<div id="wrapper" mass-autocomplete style="margin-top:60px;">
+<div id="wrapper">
+
+    <!-- Navigation
+    <div ng-include="'components/common/navigation.html'"></div>-->
 
     <!-- Page wraper -->
     <!-- ng-class with current state name give you the ability to extended customization your view -->
     <div id="page-wrapper" class="gray-bg {{$state.current.name}}">
 
-        <!-- Navigation -->
-        <div class="row border-bottom white-bg">
-            <div ng-include="'components/common/navigation.html'" class="container text-center"></div>
-        </div>
-
-        <!-- Breadcrumbs
-        <div ng-include="'components/common/heading.html'" class="container"></div>
-         -->
-
         <!-- Page wrapper -->
-        <div class="wrapper wrapper-content">
-            <div class="container">
+        <div ng-include="'components/common/topnavbar.html'"></div>
+
+        <div class="wrapper wrapper-content" style="margin-top:55px;">
                 <div class="row">
 
                     <!-- Main view  -->
                     <div ui-view></div>
 
                 </div>
-            </div>
         </div>
-
         <!-- Footer -->
         <div ng-include="'components/common/footer.html'"></div>
 

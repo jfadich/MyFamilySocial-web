@@ -1,19 +1,40 @@
 <div class="row border-bottom">
-    <nav class="navbar navbar-static-top white-bg" role="navigation" style="margin-bottom: 0">
-        <div class="navbar-header">
-            <span minimaliza-sidebar></span>
-            <form role="search" class="navbar-form-custom" method="post" action="">
-                <div class="form-group">
-                    <input type="text" disabled placeholder="Search for something..." class="form-control" name="top-search" id="top-search">
-                </div>
-            </form>
-        </div>
-        <ul class="nav navbar-top-links navbar-right">
-            <li class="pull-right">
-                <a ui-sref="logout">
-                    <i class="fa fa-sign-out"></i> Log out
-                </a>
+    <nav class="navbar navbar-fixed-top white-bg" role="navigation" style="margin-bottom: 0">
+
+        <ul class="nav navbar-nav text-center">
+            <li class="dropdown" dropdown style="height: 100%;">
+
+                    <a class="dropdown-toggle" href dropdown-toggle>
+                    <div  style="max-width: 40px;" class="hidden-xs">
+                    <profile-picture size="small" user="main.user" img-class="img-responsive"></profile-picture>
+                    </div>
+                        <div class="visible-xs font-bold" style="padding-left:5px;">
+                            {{ main.user.first_name[0] | uppercase }} {{ main.user.last_name[0] | uppercase }}+
+                        </div>
+                    </a>
+                    <ul class="dropdown-menu animated fadeInRight m-t-xs" style="position: absolute;background: white;">
+                        <li><a ng-click="">Profile</a></li>
+                        <li><a ng-click="">Settings</a></li>
+                        <li><a ng-click="">Logout</a></li>
+                    </ul>
+
             </li>
+            <li ui-sref-active="active">
+                <a ui-sref="family.home"><i class="fa fa-home"></i><span class="nav-label hidden-xs"><br>Home</span></a>
+            </li>
+            <li ng-class="{ active: $state.includes('family.photos') }">
+                <a ui-sref="family.photos.albums"><i class="fa fa-photo"></i> <span class="nav-label hidden-xs"><br>Photos</span></a>
+            </li>
+            <li ng-class="{ active: $state.includes('family.events') }">
+                <a><i class="fa fa-calendar"></i> <span class="nav-label hidden-xs"><br>Calender</span></a>
+            </li>
+            <li ng-class="{ active: $state.includes('family.events') }">
+                <a><i class="fa fa-list"></i> <span class="nav-label hidden-xs"><br>Recipies</span></a>
+            </li>
+            <li ng-class="{ active: $state.includes('family.members') }">
+                <a ui-sref="family.members.index"><i class="fa fa-users"></i> <span class="nav-label hidden-xs"><br>Address Book</span></a>
+            </li>
+
         </ul>
     </nav>
 </div>
