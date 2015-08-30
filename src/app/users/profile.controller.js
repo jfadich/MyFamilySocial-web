@@ -1,52 +1,53 @@
 ;(function () {
 
-    function ProfileController($scope, UserService, $state, RoleService) {
-        $scope.user = [];
-        $scope.roles = [];
-        $scope.editing = false;
+    angular.module('inspinia')
+        .controller('ProfileCtrl', ProfileController);
 
-        UserService.getUser($state.params.user, 'profile_pictures,albums.photos,role').then(function(users){
-            if(typeof users.data.birthdate != 'undefined')
-                users.data.birthdate = new Date(users.data.birthdate *1000);
-            else
-                users.data.birthdate = NaN;
+    function ProfileController($scope, UserService, $state, RoleService, toastr) {
+        var self = this;
+        self.user = [];
+        self.roles = [];
+        self.editing = false;
+        self.saveUser = saveUser;
 
-            $scope.user = users.data;
+        activate();
 
+        return self;
 
-            $scope.$on('photos.upload.user.' + $scope.user.id, function(event, data){console.log(data);
-                $scope.user.image= data.image;
+        function activate() {
+            UserService.getUser($state.params.user, 'profile_pictures,albums.photos,role').then(function(users){
+                self.user = users.data;
+                if(typeof self.user.birthdate != 'undefined')
+                    self.user.birthdate = new Date(self.user.birthdate *1000);
+                else {
+                    self.user.birthdate = NaN;
+
+                }
+
+                $scope.$on('photos.upload.user.' + self.user.id, function(event, data){
+                    self.user.image= data.image;
+                });
             });
-        });
 
-        RoleService.getRoles().then(function(response) {
-            $scope.roles = response.data.data;
-        });
+            RoleService.getRoles().then(function(response) {
+                self.roles = response.data;
+            });
+        }
 
-        $scope.saveUser = function (userUpdate) {
+        function saveUser(userUpdate) {
 
             UserService.updateUser(userUpdate, 'profile_pictures,albums.photos,role').then(function(response) {
-                $scope.editing = false;
+                self.editing = false;
+                toastr.success('Profile updated successfully','Saved!');
 
                 if(typeof response.data.birthdate != 'undefined')
-                    response.data.birthdate = new Date(response.data.data.birthdate *1000);
+                    response.data.birthdate = new Date(response.data.birthdate *1000);
                 else
                     response.data.birthdate = NaN;
 
-                $scope.user = response.data;
+                self.user = response.data;
             })
-        };
-
-        $scope.edit = function() {
-            $scope.editing = true;
-        };
-
-        $scope.stopEdit = function() {
-            $scope.editing = false;
         }
     }
-
-    angular.module('inspinia')
-        .controller('ProfileCtrl', ProfileController);
 
 })();

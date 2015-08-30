@@ -1,0 +1,92 @@
+<div class="row">
+
+    <div class="col-sm-8 pull-right col-xs-12" id="userBox" ng-show="userList.showUser">
+        <div class="ibox">
+
+            <div class="ibox-content">
+                <div class="tab-content" ng-repeat="user in userList.users">
+                    <div class="tab-pane active" ng-if="userList.showUser == user.id">
+                        <div class="row m-b-lg">
+                            <div class="col-lg-4 text-center">
+                                <div class="m-b-sm">
+                                    <profile-picture size="medium" user="user" img-class="img-responsive"></profile-picture>
+
+                                </div>
+                            </div>
+                            <div class="col-lg-8">
+                                <h2>
+                                    {{ user.display_name }}
+                                </h2>
+                                <strong>Contact Info</strong>
+                                <ul class="list-group clear-list">
+                                    <li class="list-group-item fist-item" ng-if="user.email">
+                                        <span class="fa fa-envelope m-r-xs"></span>
+                                        {{ user.email }}
+                                    </li>
+                                    <li class="list-group-item" ng-if="user.phone_one">
+                                        <span class="fa fa-phone m-r-xs"></span>
+                                        {{ user.phone_one }}
+                                    </li>
+                                    <li class="list-group-item" ng-if="user.phone_two">
+                                        <span class="fa fa-phone m-r-xs"></span>
+                                        {{ user.phone_two }}
+                                    </li>
+                                    <li class="clearfix list-group-item" ng-if="user.address">
+                                        <span class="fa fa-home m-r-xs"></span>
+                                        <address class="pull-right" style="width:90%;">
+                                            {{ user.address.street_address }}<br>
+                                            {{ user.address.city }}, {{ user.address.state }} {{ user.address.zip_code }}<br>
+                                        </address>
+                                    </li>
+                                </ul>
+                                <!--
+                                <button type="button" class="btn btn-primary btn-sm btn-block"><i
+                                        class="fa fa-envelope"></i> Send Message
+                                </button> -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-4">
+        <div class="ibox">
+            <div class="ibox-content">
+                <h2>Family Members</h2>
+
+                <input type="text" placeholder="Search members" class="input form-control" ng-model="userList.searchUser">
+
+                <div class="clients-list">
+
+                    <div id="tab-1" class="tab-pane active">
+                        <div class="full-height-scroll" full-scroll>
+                            <div class="table-responsive">
+                                <table class="table table-striped table-hover">
+                                    <tbody infinite-scroll="userList.more()" infinite-scroll-disabled='userList.usersLoading'>
+                                    <tr ng-repeat="user in userList.users | filter:userList.searchUser" ng-click="userList.selectUser(user)">
+                                        <td width="100px"><profile-picture size="thumb" user="user" img-class="img-responsive" nolink></profile-picture> </td>
+                                        <td><h2>{{ user.display_name }}</h2></td>
+                                    </tr>
+
+                                    </tbody>
+                                </table>
+                                <p>
+                                    <button type="button"
+                                            class="btn btn-block btn-outline btn-primary"
+                                            ng-click="userList.more()"
+                                            ng-if="userList.users.length < userList.meta.pagination.total">
+                                        <i class="fa fa-arrow-down"></i> More users
+                                    </button>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</div>

@@ -2,21 +2,18 @@
 <div id="preview" class="dropzone hide" style="margin-bottom: 10px;"></div>
 
 <div class="col-md-4">
-    <div class="ibox float-e-margins" dropzone="" id="file-dropzone" dz-parent="user" dz-permissions="user.permissions.edit">
+    <div class="ibox float-e-margins" dropzone="" id="file-dropzone" dz-parent="user" dz-permissions="profile.user.permissions.edit">
         <div class="ibox-title">
             <h5>Profile Photo</h5>
         </div>
         <div>
             <div class="ibox-content no-padding border-left-right">
-                <img alt="image" class="img-responsive" src="assets/images/common/full-default-profile.jpg"
-                     ng-if="user.image === undefined" class="m-r-sm ng-cloak">
-                <img alt="image" class="img-responsive" ng-src="{{ user.image.large }}" ng-if="user.image !== undefined"
-                     class="m-r-sm ng-cloak">
+                <profile-picture user="profile.user" size="large" img-class="img-responsive"></profile-picture>
             </div>
             <div class="ibox-content profile-content">
                 <div class="animated fadeIn">
                     <h3><strong>
-                        {{ user.display_name }}</strong>
+                        {{ profile.user.display_name }}</strong>
                     </h3>
                     <h5>
                         <a class="btn btn-white btn-xs" id="dz-clickable">Drag a photo/click here to change your profile picture</a>
@@ -39,10 +36,10 @@
                     <div class="form-group">
 
                         <label class="col-sm-2 control-label">First Name</label>
-                        <div class="col-sm-4"><input type="text" class="form-control" ng-model="user.first_name"></div>
+                        <div class="col-sm-4"><input type="text" class="form-control" ng-model="profile.user.first_name"></div>
 
                         <label class="col-sm-2 control-label">Last Name</label>
-                        <div class="col-sm-4"><input type="text" class="form-control" ng-model="user.last_name"></div>
+                        <div class="col-sm-4"><input type="text" class="form-control" ng-model="profile.user.last_name"></div>
 
                     </div>
                     <div class="hr-line-dashed"></div>
@@ -52,21 +49,21 @@
                         <label class="col-sm-2 control-label">Email</label>
                         <div class="col-sm-10">
                             <div class="input-group m-b">
-                                <input type="text" class="form-control" ng-model="user.email">
+                                <input type="text" class="form-control" ng-model="profile.user.email">
                             </div>
                         </div>
 
                         <label class="col-sm-2 control-label">Mobile Phone</label>
                         <div class="col-sm-4">
                             <div class="input-group m-b">
-                                <input type="text" class="form-control" ng-model="user.phone_one">
+                                <input type="text" class="form-control" ng-model="profile.user.phone_one">
                             </div>
                         </div>
 
                         <label class="col-sm-2 control-label">Second Phone</label>
                         <div class="col-sm-4">
                             <div class="input-group m-b">
-                                <input type="text" class="form-control" ng-model="user.phone_two">
+                                <input type="text" class="form-control" ng-model="profile.user.phone_two">
                             </div>
                         </div>
 
@@ -77,72 +74,72 @@
                         <label class="col-sm-2 control-label">Street Address</label>
                         <div class="col-sm-4">
                             <div class="input-group m-b">
-                                <input type="text" class="form-control" ng-model="user.address.street_address">
+                                <input type="text" class="form-control" ng-model="profile.user.address.street_address">
                             </div>
                         </div>
 
                         <label class="col-sm-2 control-label">City</label>
                         <div class="col-sm-4">
                             <div class="input-group m-b">
-                                <input type="text" class="form-control" ng-model="user.address.city">
+                                <input type="text" class="form-control" ng-model="profile.user.address.city">
                             </div>
                         </div>
 
                         <label class="col-sm-2 control-label">State</label>
                         <div class="col-sm-4">
                             <div class="input-group m-b">
-                                <input type="text" class="form-control" ng-model="user.address.state">
+                                <input type="text" class="form-control" ng-model="profile.user.address.state">
                             </div>
                         </div>
 
                         <label class="col-sm-2 control-label">Zip</label>
                         <div class="col-sm-4">
                             <div class="input-group m-b">
-                                <input type="text" class="form-control" ng-model="user.address.zip_code">
+                                <input type="text" class="form-control" ng-model="profile.user.address.zip_code">
                             </div>
                         </div>
                     </div>
-                        <div class="hr-line-dashed"></div>
+                    <div class="hr-line-dashed"></div>
 
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label">Birthday</label>
-                            <div class="col-sm-4">
-                                <div class="input-group m-b">
-                                    <input type="date" class="form-control" ng-model="user.birthdate">
-                                </div>
-                            </div>
-
-                            <label class="col-sm-2 control-label">Website</label>
-                            <div class="col-sm-4">
-                                <div class="input-group m-b">
-                                    <input type="text" class="form-control" ng-model="user.website">
-                                </div>
-                            </div>
-
-                            <label class="col-sm-2 control-label">Role</label>
-                            <div class="col-sm-10">
-                                <div ng-if="!user.permissions.authorize">
-                                    {{ user.role.data.name }}
-                                </div>
-                                <select class="form-control m-b"
-                                        name="role"
-                                        ng-model="user.role.data.id"
-                                        ng-options="role.id as role.name for role in roles"
-                                        ng-if="user.permissions.authorize"
-                                        required>
-                                </select>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Birthday</label>
+                        <div class="col-sm-4">
+                            <div class="input-group m-b">
+                                <input type="date" class="form-control" ng-model="profile.user.birthdate">
                             </div>
                         </div>
+
+                        <label class="col-sm-2 control-label">Website</label>
+                        <div class="col-sm-4">
+                            <div class="input-group m-b">
+                                <input type="text" class="form-control" ng-model="profile.user.website">
+                            </div>
+                        </div>
+
+                        <label class="col-sm-2 control-label">Role</label>
+                        <div class="col-sm-10">
+                            <div ng-if="!user.permissions.authorize">
+                                {{ user.role.data.name }}
+                            </div>
+                            <select class="form-control m-b"
+                                    name="role"
+                                    ng-model="profile.user.role.data.id"
+                                    ng-options="role.id as role.name for role in profile.roles"
+                                    ng-if="profile.user.permissions.authorize"
+                                    required>
+                            </select>
+                        </div>
+                    </div>
 
                     <div class="hr-line-dashed"></div>
                     <div class="form-group">
                         <div class="col-sm-4 col-sm-offset-2">
-                            <button class="btn btn-white" ng-click="stopEdit()">Cancel</button>
-                            <button class="btn btn-primary" ng-click="saveUser(user)">Save changes</button>
+                            <button class="btn btn-white" ng-click="profile.editing = false">Cancel</button>
+                            <button class="btn btn-primary" ng-click="profile.saveUser(profile.user)">Save changes</button>
                         </div>
                     </div>
 
-                    </div>
+                </div>
 
                 <br class="clearfix">
             </form>

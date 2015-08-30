@@ -91,8 +91,9 @@
             } )
             .state('family.members.index', {
                 url: "/index",
-                templateUrl: "app/views/users/listUsers.html",
+                templateUrl: "app/users/user-list.html",
                 controller: "UsersCtrl",
+                controllerAs: 'userList',
                 ncyBreadcrumb: {
                     label: 'Members'
                 },
@@ -102,24 +103,11 @@
             })
             .state('family.members.profile', {
                 url: "/:user",
-                templateUrl: "app/views/users/showProfile.html",
+                templateUrl: "app/users/profile.show.html",
                 controller: "ProfileCtrl",
-                ncyBreadcrumb: {
-                    label: '{{ user.display_name }}'
-                },
+                controllerAs: "profile",
                 data: {
-                    pageTitle: 'Members'
-                }
-            })
-            .state('family.members.edit', {
-                url: "/:user",
-                templateUrl: "app/views/users/editProfile.html",
-                controller: "ProfileCtrl",
-                ncyBreadcrumb: {
-                    label: '{{ user.display_name }}'
-                },
-                data: {
-                    pageTitle: 'Members'
+                    pageTitle: '{{ profile.user.display_name }}'
                 }
             })
             .state('family.photos', {

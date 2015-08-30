@@ -1,0 +1,93 @@
+<div ng-if="!profile.editing">
+    <div class="col-md-4">
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <h5>Profile Detail</h5>
+                    <span class="pull-right" ng-if="profile.user.permissions.edit">
+                        <a class="btn btn-white btn-xs" ng-click="profile.editing = true"> <i class="fa fa-pencil"></i> </a>
+                    </span>
+            </div>
+            <div>
+                <div class="ibox-content no-padding border-left-right">
+                    <profile-picture user="profile.user" size="large" img-class="img-responsive"></profile-picture>
+                </div>
+                <div class="ibox-content profile-content">
+                    <div class="animated fadeIn">
+                        <h2><strong>
+                            {{ profile.user.first_name }} {{ profile.user.last_name }}</strong>
+                        </h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <h3>Contact</h3>
+            </div>
+            <div class="ibox-content profile-content">
+                <ul class="list-unstyled m-t-md animated fadeIn no-margins">
+                    <li ng-if="profile.user.email">
+                        <span class="fa fa-envelope m-r-xs"></span>
+                        {{ profile.user.email }}
+                    </li>
+                    <li ng-if="profile.user.phone_one">
+                        <span class="fa fa-phone m-r-xs"></span>
+                        {{ profile.user.phone_one }}
+                    </li>
+                    <li ng-if="profile.user.phone_two">
+                        <span class="fa fa-phone m-r-xs"></span>
+                        {{ profile.user.phone_two }}
+                    </li>
+                    <li ng-if="profile.user.website">
+                        <span class="fa fa-link m-r-xs"></span>
+                        <a href="http://{{ profile.user.website }}" target="_blank">{{ profile.user.website }}</a>
+                    </li>
+                    <li class="clearfix" ng-if="profile.user.address.city && profile.user.address.state">
+                        <span class="fa fa-home m-r-xs"></span>
+                        <address class="pull-right" style="width:93%;">
+                            {{ profile.user.address.street_address }}
+                            {{ profile.user.address.city }}, {{ profile.user.address.state }} {{ profile.user.address.zip_code }}<br>
+                        </address>
+                    </li>
+                </ul>
+                <div>
+                    <hr class="hr-line-solid">
+                    <div class="form-group">
+                        <label>Send private message</label>
+                        <textarea class="form-control" placeholder="Your message" rows="3"></textarea>
+                    </div>
+                    <button class="btn btn-primary btn-block">Send</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="ibox" ng-if="profile.user.profile_pictures.data.length > 0">
+            <div class="ibox-content">
+                <h3>Photos of {{ profile.user.first_name }}</h3>
+                <div class="user-friends">
+                    <a href=""
+                       ng-repeat="photo in profile.user.profile_pictures.data"
+                       title="{{photo.name}}">
+                        <img alt="{{photo.name}}" ng-src="{{ photo.image.small }}">
+                    </a>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+    <div class="col-md-8">
+        <div class="ibox">
+            <div class="ibox-content text-center">
+                <p class="font-bold">{{ profile.user.display_name }} must be new here. They have no recent activity</p>
+            </div>
+        </div>
+
+    </div>
+    </div>
+
+</div>
+
+<div ng-if="profile.editing" ng-include="'app/users/profile.edit.html'"></div>
