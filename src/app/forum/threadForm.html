@@ -1,0 +1,84 @@
+
+    <div class="ibox-content" ng-controller="ThreadFormCtrl as form">
+
+            <form class="form-horizontal" name="form.threadForm" novalidate>
+                <div class="form-group" show-errors="{ showSuccess: true}">
+                    <label class="col-sm-2 control-label">Thread Title:</label>
+
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" name="title" ng-model="form.thread.title" required>
+                    </div>
+                </div>
+                <div class="form-group" show-errors="{ showSuccess: true}">
+                    <label class="col-sm-2 control-label">Category:</label>
+
+                    <div ng-class="main.user.role.data.permissions.forum_glueThread ? 'col-sm-8' : 'col-sm-10'">
+                        <select class="form-control m-b"
+                                name="category"
+                                ng-model="form.thread.category.data.id"
+                                ng-options="category.id as category.name for category in forum.categories.data"
+                                required>
+                        </select>
+                    </div>
+
+
+                    <div class="col-sm-1" ng-if="main.user.role.data.permissions.forum_glueThread">
+                        <div class="switch">
+                            <div class="onoffswitch">
+                                <input type="checkbox" ng-model="form.thread.sticky" class="onoffswitch-checkbox" id="shared">
+                                <label class="onoffswitch-label" for="shared">
+                                    <span class="onoffswitch-inner"> </span>
+                                    <span class="onoffswitch-switch"></span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-1" ng-if="main.user.role.data.permissions.forum_glueThread">Sticky</div>
+                </div>
+                <div class="form-group" show-errors="{ showSuccess: true}">
+                    <div class="col-sm-12">
+                        <textarea ng-model="form.thread.body" name="body" class="form-control" rows="8" required></textarea>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Tags
+                        <small>(comma separated)</small>
+                    </label>
+
+                    <div class="col-sm-3">
+                        <input type="text" class="form-control" ng-model="form.dirty.value"
+                               mass-autocomplete-item="form.tag_autocomplete">
+                    </div>
+                            <span class="col-md-7 text-left pull-right" ng-if="form.thread.tag_array.length > 0">
+                                <span ng-repeat="tag in form.thread.tag_array">
+                                    <a class="btn btn-white btn-sm" ng-click="form.removeTag(tag)"><i class="fa fa-close"></i>
+                                        &nbsp;{{ tag.name }}</a>
+                                </span>
+                            </span>
+                </div>
+            </form>
+
+            <div class="media-body"><hr>
+                <div class="form-group col-xs-12 col-sm-3 pull-right">
+                    <button class="btn btn-outline btn-primary form-control" ng-disabled="threadForm.$invalid"
+                            ng-click="form.saveThread(thread)">
+                        <i class="fa fa-check"></i>
+                        <span ng-if="form.thread.id">Save Topic</span>
+                        <span ng-if="!form.thread.id">Create Topic</span>
+                    </button>
+                </div>
+                <div class="form-group col-xs-12 col-sm-3 pull-right" ng-if="form.thread.id">
+                    <button class="btn btn-outline btn-warning form-control" ng-click="currentThread.stopThreadEdit()">
+                        <i class="fa fa-sign-out"></i> Cancel
+                    </button>
+                </div>
+                <div class="form-group col-xs-12 col-sm-3" ng-if="form.thread.id">
+                    <button class="btn btn-outline btn-danger form-control" ng-if="form.thread.permissions.delete">
+                        <i class="fa fa-close"></i> Delete
+                    </button>
+                </div>
+                <br>
+            </div>
+            <div class="clearfix"></div>
+
+</div>

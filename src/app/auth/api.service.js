@@ -68,7 +68,7 @@
                 if(response.data.error.error_code === ERRORS.invalidEntity) {
                     var errors = response.data.error.message;
 
-                    if($.isArray(errors)) {
+                    if(typeof errors === 'object') {
                         for(var attributes in errors) {
                             for(var message in errors[attributes])
                                 toastr.error(errors[attributes][message]);

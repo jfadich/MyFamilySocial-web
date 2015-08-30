@@ -36,7 +36,7 @@
             </div>
         </div>
 
-        <div ng-include="'app/views/forum/_threadForm.html'" class="ibox-content" ng-if="currentThread.editing_thread"></div>
+        <div ng-include="'app/forum/threadForm.html'" ng-if="currentThread.editing_thread"></div>
 
         <comment-feed parent="currentThread.thread" ng-show="!currentThread.editing_thread"></comment-feed>
     </div>

@@ -1,0 +1,50 @@
+<div class="ibox" infinite-scroll="threads.more()" infinite-scroll-disabled='threads.loading'
+     infinite-scroll-immediate-check="false"
+     ng-if="!$state.includes('family.forum.category.thread') && !$state.includes('family.forum.category.createThread')">
+    <div class="ibox-content text-center" ng-if="threads.data.length === 0">
+        <strong>There's nothing here.</strong>
+    </div>
+        <div class="vote-item" ng-repeat="thread in threads.data">
+            <div class="row">
+                <div class="col-md-10">
+                    <div class="vote-actions" style="width: 50px;">
+                        <profile-picture size="small" user="thread.owner.data" a-class="pull-left" img-class="m-r-sm"
+                                         class="hidden-xs"></profile-picture>
+                    </div>
+                    <a ui-sref="family.forum.category.thread({category_slug: thread.category.data.slug,thread_slug: thread.slug})"
+                       class="vote-title">
+                        {{ thread.title }}
+                    </a>
+
+                    <div class="vote-info">
+                        <i class="fa fa-user"></i> <a href="#">{{ thread.owner.data.display_name}}</a>
+                        <i class="fa fa-comments-o"></i> <a href="#">Comments ({{ thread.reply_count }})</a>
+                        <i class="fa fa-clock-o"></i> <a href="#"><span am-time-ago="thread.freshness"
+                                                                        am-preprocess="unix"></span></a>
+                        <span class="label label-info" ng-if="thread.sticky">sticky</span>
+                    </div>
+                </div>
+                <div class="col-md-2 ">
+                    <div class="vote-icon">
+                        <i ng-class="thread.category.data.icon"> </i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <div class="ibox-content">
+        <p ng-if="!threads.loading">
+            <button type="button"
+                    class="btn center-block btn-outline btn-primary"
+                    ng-click="threads.more()"
+                    ng-if="threads.data.length < threads.meta.pagination.total">
+                <i class="fa fa-arrow-down"></i> More topics
+            </button>
+        </p>
+        <div ng-if="threads.loading" ng-include="'components/common/loadingIcon.html'"></div>
+    </div>
+    </div>
+
+</div>
+
+<ui-view
+        ng-if="$state.includes('family.forum.category.thread') || $state.includes('family.forum.category.createThread')"></ui-view>

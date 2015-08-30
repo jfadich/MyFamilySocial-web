@@ -1,0 +1,39 @@
+<div class="ibox">
+    <div class="ibox-content">
+        <nav class="navbar navbar-static-top">
+
+            <ul class="nav navbar-top-links pull-right btn-info">
+                <li><a class="font-bold"
+                       ng-if="main.user.role.data.permissions.forum_createThread"
+                       ui-sref="family.forum.category.createThread({category_id: forum.currentCategory.id})">
+                    <i class="fa fa-plus"></i> Add Topic
+                </a></li>
+            </ul>
+            <ul class="nav navbar-top-links ">
+                <li ng-class="{'active': category.id == 'all'}">
+                    <a ui-sref="family.forum.category({category_slug: category.slug})">
+                        <i class="fa fa-asterisk"></i>
+                        {{forum.all.name}}
+                        &nbsp;
+                        <span class="label label-info">{{ forum.categories.meta.total_posts }}</span>
+                    </a>
+
+                </li>
+                <li ng-repeat="category in forum.categories.data"
+                    ng-class="{'active': category.id == forum.currentCategory.id}"
+                        >
+                    <a ui-sref="family.forum.category({category_slug: category.slug})">
+                        <i ng-class="category.icon"></i>
+                        {{ category.name }}
+                        &nbsp;
+                        <span class="label label-info">{{ category.topic_count }}</span>
+                    </a>
+                </li>
+            </ul>
+
+
+        </nav>
+    </div>
+
+    <ui-view></ui-view>
+</div>

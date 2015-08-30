@@ -1,9 +1,11 @@
 ;(function () {
 
-    function ForumController($scope, $state, categories, ForumService) {
+    angular.module('inspinia')
+        .controller('ForumCtrl', ForumController);
+
+    function ForumController($scope, $state, categories) {
         var self = this;
         self.categories = categories;
-        self.total_posts = categories.meta.total_posts;
         self.threads = [];
         self.all = {
             id:'all',
@@ -23,26 +25,10 @@
             else {
                 self.currentCategory = self.all;
             }
-            if($state.current.name == 'family.forum') {
-                return $state.go('family.forum.category')
-            }
         });
 
         return self;
     }
-
-    function AddThreadController($scope, ForumService, toastr, $state, categories, TagService) {
-        $scope.categories = categories.data;
-        $scope.headerTitle = 'Add new Post';
-        $scope.breadcrumbs = [{title: 'Forum', link: '#/discussions'},
-            { title: 'Create Topic', link: '#/discussions/new'}];
-
-
-    }
-
-    angular.module('inspinia')
-        .controller('ForumCtrl', ForumController)
-        .controller('AddThreadCtrl', AddThreadController);
 
 })();
 

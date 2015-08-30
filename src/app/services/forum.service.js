@@ -39,7 +39,7 @@
             });
         }
         function updateThread(thread) {
-            return api.patch('/forum/topic/' + thread.slug, {
+            return api.patch(api.url('/forum/topic/' + thread.slug), {
                 title: thread.title,
                 body: thread.body,
                 tags: thread.tags,

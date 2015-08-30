@@ -59,17 +59,18 @@
                 </form>
             </div><br>
         </div>
+
+        <p>
+
+        <div ng-if="comments.length < meta.pagination.total && !commentLoading && !limit">
+            <button type="button"
+                    class="btn center-block btn-outline btn-primary"
+                    ng-click="more()" >
+
+                <i class="fa fa-arrow-down"></i> More replies
+            </button>
+        </div>
+        </p>
+
     </div>
 </div>
-    <p>
-
-    <div ng-if="comments.length < meta.pagination.total && !commentLoading && !limit">
-        <button type="button"
-                class="btn center-block btn-outline btn-primary"
-                ng-click="more()" >
-
-            <i class="fa fa-arrow-down"></i> More replies
-        </button>
-    </div>
-    </p>
-

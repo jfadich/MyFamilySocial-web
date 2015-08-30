@@ -1,24 +1,41 @@
 ;(function () {
 
+    angular.module('inspinia')
+        .controller('ThreadListCtrl', ThreadListController);
+
     function ThreadListController($scope, ForumService, $state, api) {
         var self = this;
         self.loading = true;
-        if($state.params.category_slug == '' || $state.params.category_slug == 'all') {
-            ForumService.getThreads('owner,tags,category').then(function(response){
-                self.data = response.data;
-                self.meta = response.meta;
+        self.more = more;
+
+        activate();
+
+        return self;
+
+        function activate() {
+            var promise;
+            if($state.params.category_slug == '' || $state.params.category_slug == 'all') {
+                promise = ForumService.getThreads('owner,tags,category').then(function(response){
+                    self.data = response.data;
+                    self.meta = response.meta;
+                    self.loading = false;
+                });
+            } else{
+                promise = ForumService.getCategory($state.params.category_slug, 'threads.category,threads.owner,threads.tags').then(function(response){
+                    self.data = response.data.threads.data;
+                    self.meta = response.data.threads.meta;
+                    self.loading = false;
+                });
+            }
+
+            promise.finally(function() {
                 self.loading = false;
-            });
-        } else{
-            ForumService.getCategory($state.params.category_slug, 'threads.category,threads.owner,threads.tags').then(function(response){
-                self.data = response.data.threads.data;
-                self.meta = response.data.threads.meta;
-                self.loading = false;
-            });
+            })
         }
 
-        self.more = function() {
-            if(self.loading) return;
+
+        function more() {
+            if(self.loading || typeof self.meta == 'undefined') return;
 
             if(self.meta.pagination != null && self.meta.pagination.links != undefined) {
                 if(self.meta.pagination.links.next != null) {
@@ -37,12 +54,8 @@
                     });
                 }
             }
-        };
-
+        }
         return self;
     }
-
-    angular.module('inspinia')
-        .controller('ThreadListCtrl', ThreadListController);
 
 })();

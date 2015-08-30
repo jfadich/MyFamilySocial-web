@@ -27,12 +27,10 @@
             })
             .state('family.forum', {
                 url: '/discussions',
-                templateUrl: "app/views/forum/categories.html",
+                abstract: true,
+                templateUrl: "app/forum/forum.html",
                 controllerAs: "forum",
                 controller: "ForumCtrl",
-                ncyBreadcrumb: {
-                    label: 'Forum'
-                },
                 resolve: {
                     categories: function(ForumService) {
                         return ForumService.getCategories();
@@ -41,26 +39,20 @@
             } )
             .state('family.forum.category.createThread', {
                 url: "/new",
-                templateUrl: "app/views/forum/threadForm.html",
-                ncyBreadcrumb: {
-                    label: 'Create New Topic'
-                },
+                templateUrl: "app/forum/threadForm.html",
                 data: {
                     pageTitle: 'Create Topic'
                 }
             })
             .state('family.forum.category', {
                 url: "/:category_slug",
-                ncyBreadcrumb: {
-                    label: '{{ forum.currentCategory.name }}'
-                },
                 controller: 'ThreadListCtrl',
                 controllerAs: 'threads',
-                templateUrl: "app/views/forum/listThreads.html"
+                templateUrl: "app/forum/threadList.html"
             })
             .state('family.forum.category.thread', {
                 url: "/:thread_slug",
-                templateUrl: "app/views/forum/showThread.html",
+                templateUrl: "app/forum/thread.html",
                 controllerAs: "currentThread",
                 controller: "ThreadCtrl",
                 ncyBreadcrumb: {
@@ -229,7 +221,7 @@
                 url: "/logout",
                 controller: "LoginCtrl"
             });
-        $urlRouterProvider.when('/discussions/all', '/discussions');
+        $urlRouterProvider.when('/discussions', '/discussions/all');
         $urlRouterProvider.when('/members', '/members/index');
         $urlRouterProvider.otherwise('home');
     }
