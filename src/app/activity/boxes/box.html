@@ -1,0 +1,20 @@
+<div ng-switch="activity.type">
+    <div ng-switch-when="created_comment_forumthread">
+        <div ng-include="'/app/activity/boxes/full/created_comment_forumthread.html'" class="animated fadeIn" ></div>
+    </div>
+    <div ng-switch-when="created_comment_photo">
+        <div ng-include="'/app/activity/boxes/full/created_comment_photo.html'" class="animated fadeIn" ></div>
+    </div>
+    <div ng-switch-when="created_photo_album">
+        <div ng-include="'/app/activity/boxes/full/created_photo_album.html'" class="animated fadeIn" ></div>
+    </div>
+    <div ng-switch-when="created_forumthread_forumcategory">
+        <div ng-include="'/app/activity/boxes/full/created_forumthread_forumcategory.html'" class="animated fadeIn" ></div>
+    </div>
+    <div ng-switch-when="created_album">
+        <div ng-include="'/app/activity/boxes/full/created_album.html'" class="animated fadeIn" ></div>
+    </div>
+    <div ng-switch-when="created_photo_user">
+        <div ng-include="'/app/activity/boxes/full/created_photo_user.html'" class="animated fadeIn" ></div>
+    </div>
+</div>

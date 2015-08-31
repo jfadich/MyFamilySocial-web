@@ -13,6 +13,7 @@
         'ngSanitize',
         'MassAutoComplete',
         'hc.marked',
+        'datatables',
         'sticky',
         'infinite-scroll'
     ])

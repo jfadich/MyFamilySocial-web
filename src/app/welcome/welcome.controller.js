@@ -1,6 +1,6 @@
 ;(function () {
 
-    function ProfileWizardController(user, auth, toastr) {
+    function ProfileWizardController(UserService, auth, toastr) {
         var self = this;
         self.currentTab = 'info';
         auth.currentUser().then(function(response) {
@@ -17,10 +17,10 @@
         };
 
         self.saveUser = function (userUpdate) {
-            return user.updateUser(userUpdate, 'role').then(function(response) {
+            return UserService.updateUser(userUpdate, 'role').then(function(response) {
                 toastr.success('Profile Updated Successfully', 'Success');
 
-                self.user = response.data.data;
+                self.user = response.data;
             })
         };
 

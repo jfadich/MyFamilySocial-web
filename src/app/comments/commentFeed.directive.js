@@ -45,7 +45,7 @@ function CommentFeedController($scope, CommentService, toastr, api, auth) {
                     CommentService.deleteComment(reply.id).then(function(response){
                         var index = $scope.comments.indexOf(reply);
                         $scope.comments.splice(index, 1);
-                        toastr.success('Deleted!', 'Shhhh, you didn\'t see that', 'success', { iconClass: 'toast-comment'});
+                        toastr.success('Shhhh, you didn\'t see that', 'success', { iconClass: 'toast-comment'});
                         $scope.meta--;
                         return response;
 

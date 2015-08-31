@@ -11,7 +11,8 @@
             'Want to make a family request?',
             'What\'s on your mind?',
             'How are you liking this site?',
-            'Have anything to share?'
+            'Have anything to share?',
+            'Do you need anything?'
         ];
 
         $scope.randomPrompt = $scope.sharePrompts[Math.floor(Math.random() * $scope.sharePrompts.length)];
@@ -22,21 +23,6 @@
         }).finally(function(){
             $scope.activityLoading = false;
         });
-
-        $scope.getActivityBox = function(type) {
-            var activityTypes = [
-                'created_comment_forumthread',
-                'created_comment_photo',
-                'created_photo_album',
-                'created_forumthread_forumcategory',
-                'created_album',
-                'created_photo_user'
-            ];
-            if(activityTypes.indexOf(type) > -1)
-                return 'app/activity/boxes/'+$scope.size+'/'+type+'.html';
-
-            return '';
-        };
 
         $scope.more = function() {
             if($scope.activityLoading) return;

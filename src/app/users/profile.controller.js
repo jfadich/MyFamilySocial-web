@@ -3,11 +3,13 @@
     angular.module('inspinia')
         .controller('ProfileCtrl', ProfileController);
 
-    function ProfileController($scope, UserService, $state, RoleService, toastr) {
+    function ProfileController($scope, UserService, $state, RoleService, toastr, api) {
         var self = this;
         self.user = [];
         self.roles = [];
         self.editing = false;
+        self.activityLoading = true;
+        self.more = more;
         self.saveUser = saveUser;
 
         activate();
@@ -15,7 +17,7 @@
         return self;
 
         function activate() {
-            UserService.getUser($state.params.user, 'profile_pictures,albums.photos,role').then(function(users){
+            UserService.getUser($state.params.user, 'profile_pictures,activity.photos,role').then(function(users){
                 self.user = users.data;
                 if(typeof self.user.birthdate != 'undefined')
                     self.user.birthdate = new Date(self.user.birthdate *1000);
@@ -47,6 +49,23 @@
 
                 self.user = response.data;
             })
+        }
+
+        function more() {
+            if(self.activityLoading) return;
+
+            if(self.user.activity.meta.pagination != null && self.user.activity.meta.pagination.links != undefined) {
+                if(self.user.activity.meta.pagination.links.next != null) {
+                    self.activityLoading = true;
+                    api.get(self.user.activity.meta.pagination.links.next).then(function(response) {
+                        self.user.activity.data = self.feed.concat(response.data.activity.data);
+                        self.user.activity.meta = response.data.activity.meta;
+                    }).finally(function() {
+                        self.activityLoading = false;
+                    });
+                }
+            }
+
         }
     }
 

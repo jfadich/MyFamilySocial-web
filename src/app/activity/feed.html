@@ -40,9 +40,10 @@
 <div  infinite-scroll="more()" infinite-scroll-disabled='activityLoading' infinite-scroll-immediate-check="false">
     <div ng-repeat="activity in feed">
 
-        <div ng-include="getActivityBox(activity.type)" class="animated fadeIn"></div>
+        <activity-box activity="activity"></activity-box>
 
-    </div></div>
+    </div>
+</div>
     <p>
     <div ng-include="'components/common/loadingIcon.html'" ng-if="activityLoading"></div>
     <div ng-if="feed.length < meta.pagination.total && !activityLoading">

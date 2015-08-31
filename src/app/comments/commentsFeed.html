@@ -11,7 +11,6 @@
                     <button class="btn btn-primary btn-sm" ng-disabled="threadReply.$invalid" ng-click="addReply(comment, $event)">
                         Add Reply
                     </button>
-                    <div ng-if="commentLoading" ng-include="'components/common/loadingIcon.html'"></div>
                 </div>
 
 
@@ -62,6 +61,7 @@
 
         <p>
 
+        <div ng-if="commentLoading" ng-include="'components/common/loadingIcon.html'"></div>
         <div ng-if="comments.length < meta.pagination.total && !commentLoading && !limit">
             <button type="button"
                     class="btn center-block btn-outline btn-primary"

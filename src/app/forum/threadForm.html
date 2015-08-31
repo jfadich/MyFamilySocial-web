@@ -22,18 +22,12 @@
                     </div>
 
 
-                    <div class="col-sm-1" ng-if="main.user.role.data.permissions.forum_glueThread">
-                        <div class="switch">
-                            <div class="onoffswitch">
-                                <input type="checkbox" ng-model="form.thread.sticky" class="onoffswitch-checkbox" id="shared">
-                                <label class="onoffswitch-label" for="shared">
-                                    <span class="onoffswitch-inner"> </span>
-                                    <span class="onoffswitch-switch"></span>
-                                </label>
-                            </div>
+                    <div class="col-sm-2 " ng-if="main.user.role.data.permissions.forum_glueThread">
+                        <div class="checkbox checkbox-info">
+                            <input type="checkbox" ng-model="form.thread.sticky" id="sticky">
+                            <label for="sticky" class="font-bold">Sticky</label>
                         </div>
                     </div>
-                    <div class="col-sm-1" ng-if="main.user.role.data.permissions.forum_glueThread">Sticky</div>
                 </div>
                 <div class="form-group" show-errors="{ showSuccess: true}">
                     <div class="col-sm-12">
