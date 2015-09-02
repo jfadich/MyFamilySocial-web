@@ -38,6 +38,7 @@
         });
 
         self.toggleAlbumList = function() {
+            $scope.$broadcast('masonry.reload');
             self.showAlbums = !self.showAlbums;
         };
 

@@ -1,0 +1,75 @@
+<div ng-if="!photoMaster.selected" class="ibox-content">
+    <div class="row">
+        <div ng-class="{'col-md-9': photoMaster.showAlbumList, 'col-md-12': !photoMaster.showAlbumList }">
+            <div class="" ng-show="photoMaster.photos.length == 0" class="text-center">
+                <h4>It's empty in here</h4>
+            </div>
+
+            <div class="" ng-show="photoMaster.display == 'list'">
+
+                <div class="list-group">
+                    <div class="list-group-item" ng-repeat="photo in photoMaster.photos">
+                        <a ng-click="photoMaster.selectPhoto($index)" class="pull-left">
+                            <img alt="{{ photo.name }}" ng-src="{{ photo.image.small }}">
+                        </a>
+                        <div class="media-body" style="padding-left: 10px">
+                            <h4><a ng-click="photoMaster.selectPhoto($index)">{{ photo.name }}</a></h4>
+                            Added by {{ photo.owner.data.display_name }} on {{ photo.created * 1000 | date : short }}
+                        </div>
+
+                    </div>
+                </div>
+
+
+                <div class="clearfix"></div>
+            </div>
+
+            <div ng-if="photoMaster.display == 'gallery'" infinite-scroll="photoMaster.more()" infinite-scroll-disabled="photoMaster.parentLoading" infinite-scroll-immediate-check="false">
+
+                <div masonry="{ gutter: 0 }" load-images="true" preserve-order column-width="185" reload-on-resize>
+
+                    <div class="masonry-brick" ng-repeat="photo in photoMaster.photos">
+                        <img alt="{{photo.name}}" ng-src="{{ photo.image.medium }}" class="img-responsive">
+                    </div>
+
+                </div>
+
+
+
+                <div class="clearfix"></div>
+                <div ng-show="photoMaster.parentLoading" ng-include="'components/common/loadingIcon.html'"></div>
+                <div ng-show="!photoMaster.parentLoading">
+                    <button type="button"
+                            class="btn btn-outline btn-primary center-block"
+                            ng-click="more()"
+                            ng-if="photoMaster.meta.pagination != 'undefined' && photoMaster.meta.pagination.links.next != null">
+                        <i class="fa fa-arrow-down"></i> More Photos
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div ng-if="photoMaster.showAlbumList" class="col-md-3 pull-right">
+            <div class="folder-list" full-scroll>
+                <input type="text" placeholder="Search Collections" class="input-lg form-control" ng-model="photoMaster.searchAlbum">
+                <br>
+                <a class="btn btn-info btn-block"
+                           ng-if="main.user.role.data.permissions.forum_createThread"
+                           ui-sref="family.forum.category.createThread({category_id: forum.currentCategory.id})">
+                        <i class="fa fa-plus"></i> Create Collection
+                    </a>
+                <ul class="list-group no-padding">
+                    <li class="list-group-item"  ng-class="photoMaster.parent == null ? 'active' : ''"><a ui-sref="family.photos.albums">All Photos</a></li>
+                    <li class="list-group-item" ng-repeat="album in photoMaster.albums | filter:photoMaster.searchAlbum"  ng-class="photoMaster.parent.id === album.id ? 'active' : ''">
+                        <a ui-sref="family.photos.albums.album({album: album.slug})">
+                            {{ album.name }}
+                        </a>
+                    </li>
+                </ul>
+
+                <div class="clearfix"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<photo-info ng-show="photoMaster.selected" photo="photoMaster.selected" editing="photoMaster.editingPhoto"></photo-info>

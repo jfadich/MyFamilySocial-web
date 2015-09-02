@@ -1,0 +1,55 @@
+<div class="ibox">
+    <div class="ibox-content">
+        <nav class="navbar navbar-static-top">
+            <ul class="nav navbar-top-links pull-right btn-info" ng-if="!photoMaster.selected">
+                <li>
+                    <a ng-click="photoMaster.toggleAlbumList()">
+                        Collections <i class="glyphicon glyphicon-menu-hamburger"></i>
+                    </a>
+                </li>
+            </ul>
+            <ul class="nav navbar-top-links pull-right" ng-if="photoMaster.selected">
+                <li>
+                    <a ng-click="photoMaster.editingPhoto = !photoMaster.editingPhoto" ng-if="photoMaster.selected.permissions.edit">
+                        <i class="fa fa-pencil"></i>
+                    </a>
+                </li>
+                <li>
+                    <a ng-click="photoMaster.prevPhoto()" ng-disabled="photoMaster.currentIndex === 0">
+                        <i class="fa fa-arrow-left"></i>
+                    </a>
+                </li>
+                <li>
+                    <a
+                        ng-click="photoMaster.nextPhoto($event)"
+                        ng-disabled="photoMaster.currentIndex + 1 === photoMaster.photos.length && photoMaster.meta.pagination.links.next === undefined"
+                        >
+                        <i class="fa fa-arrow-right"></i>
+                    </a>
+                </li>
+                <li>
+                    <a class="btn-danger" ng-click="photoMaster.closeExplorer()"><i class="fa fa-close"></i></a>
+                </li>
+            </ul>
+            <ul class="nav navbar-top-links ">
+                <li>
+                    <a class="text-center" ng-click="photoMaster.changeDisplay('gallery')" tooltip="Gallery">
+                        <i class="glyphicon glyphicon-th-large"></i>  <span class="hidden-xs">Gallery</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="text-center" ng-click="photoMaster.changeDisplay('list')" tooltip="List">
+                        <i class="glyphicon glyphicon-th-list"></i>  <span class="hidden-xs"> List</span>
+                    </a>
+                </li>
+                <li ng-if="photoMaster.parent.permissions.add_photo" id="dz-clickable">
+                    <a class="text-center">
+                        <i class="fa fa-upload"></i> <span class="hidden-xs"> Add Photos</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+
+    <div ui-view></div>
+</div>

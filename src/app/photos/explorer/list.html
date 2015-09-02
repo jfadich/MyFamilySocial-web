@@ -21,24 +21,17 @@
         <div class="clearfix"></div>
     </div>
 
-    <div class="ibox-content text-center" ng-show="display == 'gallery'" infinite-scroll="more()" infinite-scroll-disabled="parentLoading" infinite-scroll-immediate-check="false">
-        <div id="lightboxGallery" ng-click="gallery($event)">
+    <div class="ibox-content text-center" ng-if="display == 'gallery'" infinite-scroll="more()" infinite-scroll-disabled="parentLoading" infinite-scroll-immediate-check="false">
 
-            <div class="col-xs-6 col-sm-3" ng-repeat="photo in photos">
-                <div class="thumbnail" ng-class="targetImage == photo.id ? 'animated tada' : ''">
-                    <a href="{{photo.image.large}}" data-gallery=""
-                                           title="{{photo.name}}">
+            <div masonry="{ gutter: 0 }" load-images="true" preserve-order column-width="185" reload-on-resize>
+
+                <div class="masonry-brick" ng-repeat="photo in photos">
                     <img alt="{{photo.name}}" ng-src="{{ photo.image.medium }}" class="img-responsive">
-                </a>
                 </div>
-                <div style="position: absolute;bottom:50px;right:50px;z-index:10000">
-                    <button ng-click="selectPhoto($index, $event)" class="btn btn-white btn-sm">
-                        <i class="fa fa-comments"></i>
-                    </button>
-                </div>
+
             </div>
 
-        </div>
+
 
         <div class="clearfix"></div>
         <div ng-show="parentLoading" ng-include="'components/common/loadingIcon.html'"></div>
