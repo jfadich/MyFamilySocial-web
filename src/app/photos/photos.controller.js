@@ -24,7 +24,8 @@
 
         self.toggleAlbumList = function() {
             self.showAlbumList = !self.showAlbumList;
-            $scope.$broadcast('masonry.reload');
+            if(self.display == 'gallery')
+                $scope.$broadcast('masonry.reload');
         };
 
         $scope.$on("$stateChangeSuccess", function() {
@@ -33,8 +34,11 @@
                 AlbumService.getAlbum($state.params.parentKey, 'photos').then(function(response){
                     self.parent = response.data;
                     self.photos = self.parent.photos.data;
-                    self.meta = self.parent.photos.meta;
+                    self.meta = self.parent.photos.meta;console.log(self.meta);
                     self.selected = null;
+                    $scope.$on('photos.upload.' + self.parent.type + '.' + self.parent.id, function(event, data){
+                        self.photos = self.photos.concat(data);
+                    });
                 }).finally(function() {
                     self.parentLoading = false;
                 });
@@ -43,54 +47,35 @@
 
         return self;
 
-        function watchParent() {
-            if($scope.parent.type != undefined && $scope.parentId != $scope.parent.id) {
-                $scope.parentLoading = true;
-                $scope.parentId = $scope.parent.id;
-
-                $scope.$on('photos.upload.' + $scope.parent.type + '.' + $scope.parent.id, function(event, data){
-                    $scope.photos.unshift(data);
-                });
-
-                PhotoService.getPhotos($scope.parent, 'tags').then(function(response) {
-                    $scope.photos = response.data;
-                    $scope.meta = response.meta;
-                    $scope.morePhotos = $scope.photos.length > 1;
-                }).finally(function() {
-                    $scope.parentLoading = false;
-                });
-            }
-        }
-
         function nextPhoto(event) {
-            $scope.editingPhoto = false;
-            if(typeof $scope.photos[$scope.currentIndex+1] === 'undefined') {
+            self.editingPhoto = false;
+            if(typeof self.photos[self.currentIndex+1] === 'undefined') {
                 event.target.disabled = true;
-                if(typeof $scope.meta.pagination.links.next !== 'undefined') {
-                    $scope.more().then(function() {
-                        if(typeof $scope.photos[$scope.currentIndex+1] !== 'undefined') {
+                if(typeof self.meta.pagination.links.next !== 'undefined') {
+                    self.more().then(function() {
+                        if(typeof self.photos[self.currentIndex+1] !== 'undefined') {
                             event.target.disabled = false;
-                            $scope.nextPhoto();
+                            self.nextPhoto();
                         }
                     });
                 }
             }
             else {
-                $scope.currentPhoto = $scope.photos[$scope.currentIndex+1];
-                $scope.currentIndex += 1;
+                self.selected = self.photos[self.currentIndex+1];
+                self.currentIndex += 1;
             }
         }
         function more() {
-            if($scope.parentLoading) return;
+            if(self.parentLoading) return;
 
-            if($scope.meta.pagination != null && $scope.meta.pagination.links != undefined) {
-                if($scope.meta.pagination.links.next != null) {
-                    $scope.parentLoading = true;
-                    return api.get($scope.meta.pagination.links.next).then(function(response) {
-                        $scope.photos = $scope.photos.concat(response.data);
-                        $scope.meta = response.data.meta;
+            if(self.meta.pagination != null && self.meta.pagination.links != undefined) {
+                if(self.meta.pagination.links.next != null) {
+                    self.parentLoading = true;
+                    return api.get(self.meta.pagination.links.next).then(function(response) {
+                        self.photos = self.photos.concat(response.data.photos.data);
+                        self.meta = response.data.photos.meta;console.log(response)
                     }).finally(function() {
-                        $scope.parentLoading = false;
+                        self.parentLoading = false;
                     });
                 }
             }
@@ -98,9 +83,9 @@
             return $q.reject('no pages left');
         }
         function prevPhoto() {
-            if($scope.currentIndex >= 0) {
-                $scope.currentPhoto = $scope.photos[$scope.currentIndex-1];
-                $scope.currentIndex -= 1;
+            if(self.currentIndex >= 0) {
+                self.selected = self.photos[self.currentIndex-1];
+                self.currentIndex -= 1;
             }
         }
         function selectPhoto(photo) {
@@ -112,13 +97,13 @@
             }
         }
         function closeExplorer() {
-            $scope.currentPhoto = false;
-            $scope.editingPhoto = false;
-            $scope.currentIndex = 0;
+            self.selected = false;
+            self.editingPhoto = false;
+            self.currentIndex = 0;
         }
         function changeDisplay(newDisplay) {
             self.display = newDisplay;
-            self.currentPhoto = false;
+            self.selected = false;
             self.editingPhoto = false;
         }
     }

@@ -21,7 +21,7 @@
                     self.loading = false;
                 });
             } else{
-                promise = ForumService.getCategory($state.params.category_slug, 'threads.category,threads.owner,threads.tags').then(function(response){
+                promise = ForumService.getCategory($state.params.category_slug, 'threads.category,threads.owner').then(function(response){
                     self.data = response.data.threads.data;
                     self.meta = response.data.threads.meta;
                     self.loading = false;

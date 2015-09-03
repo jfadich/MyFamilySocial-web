@@ -8,9 +8,9 @@
                     </a>
                 </li>
             </ul>
-            <ul class="nav navbar-top-links pull-right" ng-if="photoMaster.selected">
-                <li>
-                    <a ng-click="photoMaster.editingPhoto = !photoMaster.editingPhoto" ng-if="photoMaster.selected.permissions.edit">
+            <ul class="nav navbar-top-links pull-right" ng-show="photoMaster.selected">
+                <li ng-if="photoMaster.selected.permissions.edit">
+                    <a ng-click="photoMaster.editingPhoto = !photoMaster.editingPhoto">
                         <i class="fa fa-pencil"></i>
                     </a>
                 </li>
