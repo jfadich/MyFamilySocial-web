@@ -14,9 +14,9 @@
                     <i class="fa fa-plus"></i> Create Collection
                 </a>
                 <ul class="list-group no-padding">
-                    <li class="list-group-item"  ng-class="photoMaster.parent == null ? 'active' : ''"><a ui-sref="family.photos.albums">All Photos</a></li>
+                    <li class="list-group-item"  ng-class="photoMaster.parent == null ? 'active' : ''"><a ui-sref="family.photos.all">All Photos</a></li>
                     <li class="list-group-item" ng-repeat="album in photoMaster.albums | filter:photoMaster.searchAlbum"  ng-class="photoMaster.parent.id === album.id ? 'active' : ''">
-                        <a ui-sref="family.photos.albums.album({album: album.slug})">
+                        <a ui-sref="family.photos.album({album: album.slug})">
                             {{ album.name }}
                         </a>
                     </li>
@@ -57,9 +57,9 @@
 
             <div ng-if="photoMaster.display == 'gallery'" infinite-scroll="photoMaster.more()" infinite-scroll-disabled="photoMaster.parentLoading" infinite-scroll-immediate-check="false">
 
-                <div masonry="{ gutter: 0 }" load-images="true" preserve-order column-width="300" reload-on-resize>
+                <div class="row">
 
-                    <div class="masonry-brick" ng-repeat="photo in photoMaster.photos">
+                    <div class="col-md-4" ng-repeat="photo in photoMaster.photos">
                         <a ng-click="photoMaster.selectPhoto($index)">
                         <img alt="{{photo.name}}" ng-src="{{ photo.image.medium }}" class="img-responsive">
                         </a>

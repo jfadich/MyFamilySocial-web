@@ -9,7 +9,7 @@
         };
 
         function getFeed() {
-            return api.get(api.url('/activities/'));
+            return api.get(api.url('/activities/?count=5'));
         }
     }
 

@@ -15,14 +15,22 @@
                 templateUrl: "app/photos/photos.html",
                 //template: '<ui-view></ui-view>'
             } )
-            .state('family.photos.foo', {
-                url: "/albums/:parentKey",
+            .state('family.photos.album', {
+                url: "/albums/:album",
                 templateUrl: "app/photos/photoList.html",
 
                 data: {
                     pageTitle: 'Photos'
                 }
-            }); /*
+            })
+            .state('family.photos.all', {
+                    url: "/",
+                    templateUrl: "app/photos/photoList.html",
+                    data: {
+                        pageTitle: 'Photos'
+                    }
+                });
+        /*
             .state('family.photos.albums', {
                 url: "/albums",
                 templateUrl: "app/photos/albums/index.html",

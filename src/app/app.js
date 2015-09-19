@@ -15,8 +15,7 @@
         'hc.marked',
         'datatables',
         'sticky',
-        'infinite-scroll',
-        'wu.masonry'
+        'infinite-scroll'
     ])
     .constant('API_URL', 'http://myfamily.dev')
     .constant('ERRORS', {

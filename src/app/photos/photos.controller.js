@@ -29,20 +29,32 @@
         };
 
         $scope.$on("$stateChangeSuccess", function() {
-            //if($state.params.parentType == 'albums') {
-                self.parentLoading      = true;
-                AlbumService.getAlbum($state.params.parentKey, 'photos').then(function(response){
+            if(typeof $state.params.album !== 'undefined') {
+                self.parentLoading = true;
+                AlbumService.getAlbum($state.params.album, 'photos').then(function (response) {
                     self.parent = response.data;
                     self.photos = self.parent.photos.data;
-                    self.meta = self.parent.photos.meta;console.log(self.meta);
+                    self.meta = self.parent.photos.meta;
+                    console.log(self.meta);
                     self.selected = null;
-                    $scope.$on('photos.upload.' + self.parent.type + '.' + self.parent.id, function(event, data){
+                    $scope.$on('photos.upload.' + self.parent.type + '.' + self.parent.id, function (event, data) {
                         self.photos = self.photos.concat(data);
                     });
-                }).finally(function() {
+                }).finally(function () {
                     self.parentLoading = false;
                 });
-            //}
+            } else {
+                self.parentLoading = true;
+                PhotoService.getPhoto('').then(function (response) {
+                    self.parent = undefined;
+                    self.photos = response.data;
+                    self.meta = response.meta;
+                    console.log(self.meta);
+                    self.selected = null;
+                }).finally(function () {
+                    self.parentLoading = false;
+                });
+            }
         });
 
         return self;
@@ -72,8 +84,14 @@
                 if(self.meta.pagination.links.next != null) {
                     self.parentLoading = true;
                     return api.get(self.meta.pagination.links.next).then(function(response) {
-                        self.photos = self.photos.concat(response.data.photos.data);
-                        self.meta = response.data.photos.meta;console.log(response)
+                        if($state.params.album) {
+                            self.photos = self.photos.concat(response.data.photos.data);
+                            self.meta = response.data.photos.meta;console.log(response)
+                        } else {
+                            self.photos = self.photos.concat(response.data);
+                            self.meta = response.meta;
+                        }
+
                     }).finally(function() {
                         self.parentLoading = false;
                     });
