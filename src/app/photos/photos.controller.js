@@ -3,7 +3,7 @@
     angular.module('inspinia')
         .controller('PhotoMasterCtrl', PhotoMasterController);
 
-    function PhotoMasterController($scope, PhotoService, $q, api, $state, AlbumService,albums) {
+    function PhotoMasterController($scope, PhotoService, $q, api, $state, AlbumService,albums, $mdSidenav, $mdDialog) {
         var self = this;
         self.parent             = {permissions: {add_photo: false}}; // disable dropzone until parent enables it
         self.closeExplorer      = closeExplorer;
@@ -22,10 +22,28 @@
         self.parentId           = 0;
         self.albums             = albums.data;
 
+        self.selectPhoto = function(index, ev) {
+            selectPhoto(index);
+            $mdDialog.show({
+                controller: function(data) {
+                    var self = this;
+                    self.selected = data.photo;
+                    return self;
+                },
+                controllerAs: 'photoDialog',
+                templateUrl: '/app/photos/photoDialog.html',
+                parent: angular.element(document.body),
+                targetEvent: ev,
+                data: {
+                    photo: self.selected
+                },
+                clickOutsideToClose:true
+            })
+        };
+
         self.toggleAlbumList = function() {
-            self.showAlbumList = !self.showAlbumList;
-            if(self.display == 'gallery')
-                $scope.$broadcast('masonry.reload');
+            $mdSidenav('right')
+                .toggle()
         };
 
         $scope.$on("$stateChangeSuccess", function() {
@@ -34,6 +52,10 @@
                 AlbumService.getAlbum($state.params.album, 'photos').then(function (response) {
                     self.parent = response.data;
                     self.photos = self.parent.photos.data;
+                    angular.forEach(self.photos, function(photo) {
+
+                    });
+
                     self.meta = self.parent.photos.meta;
                     console.log(self.meta);
                     self.selected = null;

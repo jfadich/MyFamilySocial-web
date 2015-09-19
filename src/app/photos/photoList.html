@@ -2,29 +2,41 @@
 
     <!-- Holding area for uploaded photos -->
     <div id="preview" class="dropzone hide" style="margin-bottom: 10px;"></div>
-<div ng-if="!photoMaster.selected" class="ibox-content">
+<div class="ibox-content">
+    <md-button class="md-fab md-mini" aria-label="Eat cake" ng-click="photoMaster.toggleAlbumList();">
+        <i class="fa fa-search"></i>
+    </md-button>
     <div class="row">
-        <div ng-if="photoMaster.showAlbumList" class="col-md-3 pull-right">
-            <div class="folder-list" full-scroll>
-                <input type="text" placeholder="Search Collections" class="input-lg form-control" ng-model="photoMaster.searchAlbum">
-                <br>
+        <md-sidenav class="md-sidenav-right md-whiteframe-z2" md-component-id="right" style="margin-top:55px;">
+            <md-toolbar class="md-theme-light">
+                <h1 class="md-toolbar-tools">Collections</h1>
                 <a class="btn btn-info btn-block"
                    ng-if="main.user.role.data.permissions.forum_createThread"
                    ui-sref="family.forum.category.createThread({category_id: forum.currentCategory.id})">
                     <i class="fa fa-plus"></i> Create Collection
                 </a>
-                <ul class="list-group no-padding">
-                    <li class="list-group-item"  ng-class="photoMaster.parent == null ? 'active' : ''"><a ui-sref="family.photos.all">All Photos</a></li>
-                    <li class="list-group-item" ng-repeat="album in photoMaster.albums | filter:photoMaster.searchAlbum"  ng-class="photoMaster.parent.id === album.id ? 'active' : ''">
+            </md-toolbar>
+            <md-content layout-padding>
+                <form>
+                    <md-input-container>
+                        <label for="testInput">Search Collections</label>
+                        <input type="text" id="testInput"
+                               ng-model="photoMaster.searchAlbum" md-autofocus>
+                    </md-input-container>
+                </form>
+                <md-list>
+                    <md-list-item class="md-3-line">
+                        <a ui-sref="family.photos.all">All Photos</a>
+                    </md-list-item>
+                    <md-list-item class="md-3-line" ng-repeat="album in photoMaster.albums | filter:photoMaster.searchAlbum">
                         <a ui-sref="family.photos.album({album: album.slug})">
                             {{ album.name }}
                         </a>
-                    </li>
-                </ul>
-
-            </div>
-        </div>
-        <div ng-class="{'col-md-9': photoMaster.showAlbumList, 'col-md-12': !photoMaster.showAlbumList }">
+                    </md-list-item>
+                </md-list>
+            </md-content>
+        </md-sidenav>
+        <div class="col-md-12">
             <div class="" ng-show="photoMaster.photos.length == 0" class="text-center">
                 <h4>It's empty in here</h4>
             </div>
@@ -59,12 +71,20 @@
 
                 <div class="row">
 
-                    <div class="col-md-4" ng-repeat="photo in photoMaster.photos">
-                        <a ng-click="photoMaster.selectPhoto($index)">
-                        <img alt="{{photo.name}}" ng-src="{{ photo.image.medium }}" class="img-responsive">
-                        </a>
-                    </div>
 
+                    <md-grid-list
+                            md-cols-sm="1" md-cols-md="2" md-cols-gt-md="6"
+                            md-row-height-gt-md="1:1" md-row-height="4:3"
+                            md-gutter="8px" md-gutter-gt-sm="4px" >
+                        <md-grid-tile ng-repeat="photo in photoMaster.photos"
+                                      md-rowspan="1"
+                                      md-colspan="1"
+                                      md-colspan-sm="1">
+                            <a ng-click="photoMaster.selectPhoto($index, $event)">
+                            <img alt="{{photo.name}}" ng-src="{{ photo.image.medium }}" class="img-responsive">
+                                </a>
+                        </md-grid-tile>
+                    </md-grid-list>
                 </div>
 
 
@@ -86,4 +106,3 @@
     </div>
 </div>
 </div>
-<photo-info ng-if="photoMaster.selected" photo="photoMaster.selected" editing="photoMaster.editingPhoto"></photo-info>

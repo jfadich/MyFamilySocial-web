@@ -1,0 +1,28 @@
+<md-dialog aria-label="photoDialog.selected.name" style="max-width:95%; width:95%;">
+    <form>
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <h2>{{ photoDialog.selected.name }}</h2>
+                <span flex></span>
+                <md-button class="md-icon-button" ng-click="cancel()">
+                    <i class="fa fa-times"></i>
+                </md-button>
+            </div>
+        </md-toolbar>
+
+            <photo-info ng-if="photoDialog.selected" photo="photoDialog.selected" editing="photoDialog.editingPhoto"></photo-info>
+
+        <div class="md-actions" layout="row">
+            <md-button href="http://en.wikipedia.org/wiki/Mango" target="_blank" md-autofocus>
+                edit
+            </md-button>
+            <span flex></span>
+            <md-button ng-click="answer('not useful')" >
+                Previous
+            </md-button>
+            <md-button ng-click="photoMaster.nextPhoto()" style="margin-right:20px;" >
+                Next
+            </md-button>
+        </div>
+    </form>
+</md-dialog>
