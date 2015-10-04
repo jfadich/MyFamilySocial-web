@@ -3,7 +3,7 @@
     angular.module('inspinia')
         .controller('PhotoMasterCtrl', PhotoMasterController);
 
-    function PhotoMasterController($scope, PhotoService, $q, api, $state, AlbumService,albums, $mdSidenav, $mdDialog) {
+    function PhotoMasterController($scope, PhotoService, $q, api, $state, AlbumService,albums, $mdSidenav, $http) {
         var self = this;
         self.parent             = {permissions: {add_photo: false}}; // disable dropzone until parent enables it
         self.closeExplorer      = closeExplorer;
@@ -24,27 +24,24 @@
 
         self.selectPhoto = function(index, ev) {
             selectPhoto(index);
-            $mdDialog.show({
-                controller: function(data) {
-                    var self = this;
-                    self.selected = data.photo;
-                    return self;
-                },
-                controllerAs: 'photoDialog',
-                templateUrl: '/app/photos/photoDialog.html',
-                parent: angular.element(document.body),
-                targetEvent: ev,
-                data: {
-                    photo: self.selected
-                },
-                clickOutsideToClose:true
-            })
+            //var ibox = $element.closest('div.ibox');
+            //var button = $element.find('i.fa-expand');
+            $('body').toggleClass('fullscreen-ibox-mode');
+            //button.toggleClass('fa-expand').toggleClass('fa-compress');
+            //ibox.toggleClass('fullscreen');
+            setTimeout(function() {
+                $(window).trigger('resize');
+            }, 100);
         };
 
         self.toggleAlbumList = function() {
             $mdSidenav('right')
                 .toggle()
         };
+        $scope.$on('$stateChangeStart',
+            function(event, toState, toParams){
+                $('body').removeClass('fullscreen-ibox-mode');
+            });
 
         $scope.$on("$stateChangeSuccess", function() {
             if(typeof $state.params.album !== 'undefined') {
@@ -95,8 +92,8 @@
                 }
             }
             else {
-                self.selected = self.photos[self.currentIndex+1];
                 self.currentIndex += 1;
+                self.selected = self.photos[self.currentIndex];
             }
         }
         function more() {

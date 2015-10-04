@@ -32,6 +32,11 @@
             duplicateEntity: 203,
             invalidRelationship: 204
         })
+        .config(function($mdThemingProvider) {
+            $mdThemingProvider.theme('default')
+                .primaryPalette('green')
+                .accentPalette('brown');
+        })
     .config(['markedProvider', function(markedProvider) {
         markedProvider
             .setOptions({gfm: true});

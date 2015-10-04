@@ -3,7 +3,7 @@
     <!-- Holding area for uploaded photos -->
     <div id="preview" class="dropzone hide" style="margin-bottom: 10px;"></div>
 <div class="ibox-content">
-    <md-button class="md-fab md-mini" aria-label="Eat cake" ng-click="photoMaster.toggleAlbumList();">
+    <md-button class="md-fab md-mini pull-right" aria-label="Eat cake" ng-click="photoMaster.toggleAlbumList();">
         <i class="fa fa-search"></i>
     </md-button>
     <div class="row">
@@ -87,19 +87,51 @@
                     </md-grid-list>
                 </div>
 
+                <div ng-if="photoMaster.selected" class="ibox fullscreen" style="background: rgba(0, 0, 0, .5);margin-bottom: 0" ng-click="photoMaster.selected = false">
+                    <nav class="navbar navbar-fixed-top white-bg" role="navigation" style="margin-bottom: 0" ng-click="$event.stopPropagation()">
 
+                    <md-toolbar>
+                        <div class="md-toolbar-tools">
+                            <md-button aria-label="Home" ng-click="photoMaster.prevPhoto($event)">
+                                <i class="fa fa-arrow-left"></i><span class="nav-label hidden-xs">&nbsp;Previous</span>
+                            </md-button>
+                            <img alt="{{photo.name}}" ng-src="{{ photoMaster.photos[photoMaster.currentIndex-1].image.small }}" style="border:#5E5E5E solid 2px;" class="img-responsive">
+                            <img alt="{{photo.name}}" ng-src="{{ photoMaster.selected.image.small }}" class="img-responsive" style="border:#c2c2c2 solid 2px;">
+                            <img alt="{{photo.name}}" ng-src="{{ photoMaster.photos[photoMaster.currentIndex+1].image.small }}" ng-click="photoMaster.selectPhoto(photoMaster.currentIndex+1)" style="border:#5E5E5E solid 2px;" class="img-responsive">
+                            <img alt="{{photo.name}}" ng-src="{{ photoMaster.photos[photoMaster.currentIndex+2].image.small }}" ng-click="photoMaster.selectPhoto(photoMaster.currentIndex+2)" style="border:#5E5E5E solid 2px;" class="img-responsive">
+                            <md-button ng-click="photoMaster.nextPhoto($event)">
+                                 <span class="nav-label hidden-xs">Next</span> <i class="fa fa-arrow-right"></i>
+                            </md-button>
+                            <md-button ng-click="photoMaster.editingPhoto = !photoMaster.editingPhoto" ng-if="photoMaster.selected.permissions.edit">
+                                <i class="fa fa-pencil"></i> <span class="nav-label hidden-xs">Edit</span>
+                            </md-button>
+
+                            <span flex></span>
+                            <md-button ng-click="photoMaster.selected = false" md-position-mode="target-right target">
+                                <i class="fa fa-times"></i> <span class="nav-label hidden-xs">Close</span>
+                            </md-button>
+                        </div>
+                    </md-toolbar>
+                        </nav>
+                    <div  full-scroll style="margin-top:64px;cursor: default">
+                    <photo-info photo="photoMaster.selected" editing="photoMaster.editing" ng-click="$event.stopPropagation()"></photo-info>
+                    </div>
+
+
+
+                </div>
 
                 <div class="clearfix"></div>
             </div>
             <br>
             <div ng-show="photoMaster.parentLoading" ng-include="'components/common/loadingIcon.html'"></div>
-            <div ng-show="!photoMaster.parentLoading">
-                <button type="button"
-                        class="btn btn-outline btn-primary center-block"
+            <div ng-show="!photoMaster.parentLoading" class=" center-block" style="width: 140px;">
+                <md-button type="button"
+                        class="md-primary center-block"
                         ng-click="photoMaster.more()"
                         ng-if="photoMaster.meta.pagination != 'undefined' && photoMaster.meta.pagination.links.next != null">
                     <i class="fa fa-arrow-down"></i> More Photos
-                </button>
+                </md-button>
             </div>
         </div>
 
