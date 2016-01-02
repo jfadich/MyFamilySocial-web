@@ -85,7 +85,7 @@
         }
     }
 
-    angular.module('inspinia')
+    angular.module('MyFamilySocial')
         .service('token', tokenService)
         .config(function ($httpProvider) {
             $httpProvider.interceptors.push(tokenInterceptor);

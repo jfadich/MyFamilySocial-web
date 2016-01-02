@@ -27,7 +27,7 @@
         return self;
     }
 
-    angular.module('inspinia')
+    angular.module('MyFamilySocial')
         .controller('ProfileWizardCtrl', ProfileWizardController);
 
 })();

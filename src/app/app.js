@@ -1,22 +1,16 @@
 'use strict';
 
 (function () {
-    angular.module('inspinia', [
+    angular.module('MyFamilySocial', [
         'ngAnimate',
-        'ngTouch',
-        'ngSanitize',
         'ui.router',
         'ui.bootstrap',
+        'angular-loading-bar',
         'angularMoment',
         'toastr',
         'ui.bootstrap.showErrors',
-        'ngSanitize',
-        'MassAutoComplete',
         'hc.marked',
-        'datatables',
-        'sticky',
-        'infinite-scroll',
-        'ngMaterial'
+        'infinite-scroll'
     ])
     .constant('API_URL', 'http://myfamily.dev')
     .constant('ERRORS', {
@@ -31,11 +25,6 @@
             notFound: 202,
             duplicateEntity: 203,
             invalidRelationship: 204
-        })
-        .config(function($mdThemingProvider) {
-            $mdThemingProvider.theme('default')
-                .primaryPalette('green')
-                .accentPalette('brown');
         })
     .config(['markedProvider', function(markedProvider) {
         markedProvider

@@ -41,7 +41,7 @@
         };
     }
 
-    angular.module('inspinia')
+    angular.module('MyFamilySocial')
         .controller('ActivityCtrl', ActivityController)
 
 })();

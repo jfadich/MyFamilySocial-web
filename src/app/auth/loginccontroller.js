@@ -53,7 +53,7 @@
 
     }
 
-    angular.module('inspinia')
+    angular.module('MyFamilySocial')
         .controller('LoginCtrl', LoginController);
 
 })();

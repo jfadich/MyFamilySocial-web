@@ -1,6 +1,6 @@
 ;(function () {
 
-    angular.module('inspinia')
+    angular.module('MyFamilySocial')
         .controller('ForumCtrl', ForumController);
 
     function ForumController($scope, $state, categories) {

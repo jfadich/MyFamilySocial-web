@@ -134,7 +134,7 @@ function PhotoExplorerController($scope, PhotoService, $q, api, $timeout, toastr
     };
 }
 
-angular.module('inspinia')
+angular.module('MyFamilySocial')
     .directive("photoExplorer", function() {
         return {
             restrict: 'E',

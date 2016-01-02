@@ -1,6 +1,6 @@
 ;(function () {
 
-    angular.module('inspinia')
+    angular.module('MyFamilySocial')
         .factory('CommentService', CommentService);
 
     function CommentService(api){

@@ -145,7 +145,7 @@
 
     }
 
-    angular.module('inspinia')
+    angular.module('MyFamilySocial')
         .service('auth', authService)
 
 })();

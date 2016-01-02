@@ -1,6 +1,6 @@
 ;(function () {
 
-    angular.module('inspinia')
+    angular.module('MyFamilySocial')
         .service('ForumService', ForumService);
 
     function ForumService(api){

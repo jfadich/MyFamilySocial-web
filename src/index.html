@@ -1,10 +1,12 @@
-<!doctype html>
-<html class="no-js" ng-app="inspinia">
+<!DOCTYPE html>
+<!--[if IE 9 ]><html class="ie9" data-ng-app="MyFamilySocial" data-ng-controller="MainCtrl as mactrl"><![endif]-->
+<![if IE 9 ]><html data-ng-app="MyFamilySocial" data-ng-controller="MainCtrl as mactrl"><![endif]>
+
   <head>
-    <meta charset="utf-8">
-    <title page-title></title>
-    <meta name="description" content="">
-    <meta name="viewport" content="width=device-width">
+      <meta charset="utf-8">
+      <title page-title></title>
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
       <link rel="apple-touch-icon" sizes="57x57" href="/apple-touch-icon-57x57.png">
       <link rel="apple-touch-icon" sizes="60x60" href="/apple-touch-icon-60x60.png">
       <link rel="apple-touch-icon" sizes="72x72" href="/apple-touch-icon-72x72.png">
@@ -38,22 +40,53 @@
     <!-- endinject -->
     <!-- endbuild -->
   </head>
-  <body ng-controller="MainCtrl as main" class="top-navigation md-skin" id="page-top">
-    <!--[if lt IE 10]>
-      <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+    <body data-ng-class="{ 'sw-toggled': mactrl.layoutType === '1'}">
+
+    <data ui-view></data>
+
+    <!-- Older IE warning message -->
+    <!--[if lt IE 9]>
+    <div class="ie-warning">
+        <h1 class="c-white">Warning!!</h1>
+        <p>You are using an outdated version of Internet Explorer, please upgrade <br/>to any of the following web browsers to access this website.</p>
+        <div class="iew-container">
+            <ul class="iew-download">
+                <li>
+                    <a href="http://www.google.com/chrome/">
+                        <img src="img/browsers/chrome.png" alt="">
+                        <div>Chrome</div>
+                    </a>
+                </li>
+                <li>
+                    <a href="https://www.mozilla.org/en-US/firefox/new/">
+                        <img src="img/browsers/firefox.png" alt="">
+                        <div>Firefox</div>
+                    </a>
+                </li>
+                <li>
+                    <a href="http://www.opera.com">
+                        <img src="img/browsers/opera.png" alt="">
+                        <div>Opera</div>
+                    </a>
+                </li>
+                <li>
+                    <a href="https://www.apple.com/safari/">
+                        <img src="img/browsers/safari.png" alt="">
+                        <div>Safari</div>
+                    </a>
+                </li>
+                <li>
+                    <a href="http://windows.microsoft.com/en-us/internet-explorer/download-ie">
+                        <img src="img/browsers/ie.png" alt="">
+                        <div>IE (New)</div>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <p>Sorry for the inconvenience!</p>
+    </div>
     <![endif]-->
 
-    <div ui-view></div>
-
-    <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
-    <script>
-      (function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=
-      function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;
-      e=o.createElement(i);r=o.getElementsByTagName(i)[0];
-      e.src='//www.google-analytics.com/analytics.js';
-      r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));
-      ga('create','UA-XXXXX-X');ga('send','pageview');
-    </script>
 
     <!-- build:js(src) scripts/vendor.js -->
     <!-- bower:js -->

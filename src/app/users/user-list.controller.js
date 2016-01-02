@@ -40,7 +40,7 @@
     }
 
 
-    angular.module('inspinia')
+    angular.module('MyFamilySocial')
         .controller('UsersCtrl', UsersController);
 
 })();

@@ -1,6 +1,6 @@
 ;(function () {
 
-    angular.module('inspinia')
+    angular.module('MyFamilySocial')
         .controller('ProfileCtrl', ProfileController);
 
     function ProfileController($scope, UserService, $state, RoleService, toastr, api) {

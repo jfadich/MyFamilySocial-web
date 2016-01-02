@@ -1,6 +1,6 @@
 ;(function () {
 
-    angular.module('inspinia')
+    angular.module('MyFamilySocial')
         .factory('ActivityService', ActivityService);
 
     function ActivityService(api){

@@ -1,6 +1,6 @@
 ;(function(){
 
-    angular.module('inspinia')
+    angular.module('MyFamilySocial')
         .factory('UserService', ['api', UserService]);
 
     function UserService( api ) {

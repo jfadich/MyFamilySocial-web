@@ -1,6 +1,6 @@
 ;(function () {
 
-    angular.module('inspinia')
+    angular.module('MyFamilySocial')
         .controller('ThreadFormCtrl', ThreadFormController);
 
     function ThreadFormController($scope, ForumService, toastr, $state, TagService) {

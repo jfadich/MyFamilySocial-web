@@ -72,7 +72,7 @@ function PhotoInfoController($scope, toastr, $state, TagService, PhotoService) {
     }
 }
 
-angular.module('inspinia')
+angular.module('MyFamilySocial')
     .directive("photoInfo", function() {
         return {
             restrict: 'E',

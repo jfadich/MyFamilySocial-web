@@ -9,7 +9,7 @@
 
     }
 
-    angular.module('inspinia')
+    angular.module('MyFamilySocial')
         .service('RoleService', RoleService);
 
 })();

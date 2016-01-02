@@ -1,9 +1,9 @@
 ;(function () {
 
-    angular.module('inspinia')
+    angular.module('MyFamilySocial')
         .controller('PhotoMasterCtrl', PhotoMasterController);
 
-    function PhotoMasterController($scope, PhotoService, $q, api, $state, AlbumService,albums, $mdSidenav, $http) {
+    function PhotoMasterController($scope, PhotoService, $q, api, $state, AlbumService,albums, $http) {
         var self = this;
         self.parent             = {permissions: {add_photo: false}}; // disable dropzone until parent enables it
         self.closeExplorer      = closeExplorer;
@@ -34,10 +34,7 @@
             }, 100);
         };
 
-        self.toggleAlbumList = function() {
-            $mdSidenav('right')
-                .toggle()
-        };
+
         $scope.$on('$stateChangeStart',
             function(event, toState, toParams){
                 $('body').removeClass('fullscreen-ibox-mode');

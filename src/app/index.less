@@ -1,31 +1,83 @@
-@import '../../bower_components/font-awesome/less/font-awesome.less'; // Import here to make font-awesome unicode variables available
-@import '/less/style.less';
-@nav-profil-pattern: url("../assets/images/patterns/header-profile.png") no-repeat;
+/*
+ * Load Main Bootstrap LESS files
+ */
 
+@import '/bower_components/bootstrap/less/bootstrap';
+@import '/bower_components/material-shadows/material-shadows';
 
-// Custom Icons for the toastr
-#toast-container > .toast-warning:before {
-  content: @fa-var-shield;
-}
-#toast-container > .toast-info:before {
-  content: @fa-var-info;
-}
-.toast-comment:extend(.toast-success)  {
-  &:before{
-    content: @fa-var-comment;
-  }
-}
+/*
+ * LESS Plugins
+ */
+@import 'less/less-plugins/for';
 
-// Force navbar floating on mobile
-.navbar-nav>li, .navbar-nav {
-  float: left !important;
-}
+/*
+ * Variable and Mixin
+ */
 
-.navbar-nav.navbar-right:last-child {
-  margin-right: -15px !important;
-}
+@import 'less/variables';
+@import 'less/mixin';
 
-.navbar-right {
-  float: right!important;
-}
+/*
+ * Load Font
+ */
+@import 'less/font';
 
+/*
+ * Load Website related LESS files
+ */
+@import 'less/generics';
+@import 'less/bootstrap-overrides';
+@import 'less/base';
+@import 'less/list';
+@import 'less/header';
+@import 'less/sidebar';
+@import 'less/dropdown';
+@import 'less/listview';
+@import 'less/progress-bar';
+@import 'less/chat';
+@import 'less/tabs';
+@import 'less/card';
+@import 'less/chart';
+@import 'less/widgets';
+@import 'less/table';
+@import 'less/todo';
+@import 'less/button';
+@import 'less/form';
+@import 'less/pagination';
+@import 'less/popover';
+@import 'less/wizard';
+@import 'less/alert';
+@import 'less/media';
+@import 'less/modal';
+@import 'less/panel';
+@import 'less/tooltip';
+@import 'less/breadcrumb';
+@import 'less/messages';
+@import 'less/404';
+@import 'less/login';
+@import 'less/profile';
+@import 'less/photos';
+@import 'less/contacts';
+@import 'less/shadow';
+@import 'less/misc';
+@import 'less/ie-warning';
+@import 'less/load';
+@import 'less/footer';
+@import 'less/pricing-table';
+@import 'less/invoice';
+@import 'less/wall';
+@import 'less/skin';
+@import 'less/preloader';
+
+@import 'less/print';
+
+/*
+ * Vendor Overrides
+ */
+@import 'less/vendor-overrides/mediaelement';
+@import 'less/vendor-overrides/bootstrap-datetimepicker';
+@import 'less/vendor-overrides/light-gallery';
+@import 'less/vendor-overrides/waves';
+@import 'less/vendor-overrides/ui-bootstrap';
+@import 'less/vendor-overrides/sweetalert';
+@import 'less/vendor-overrides/malihu-custom-scrollbar';

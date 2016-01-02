@@ -1,6 +1,6 @@
 ;(function () {
 
-    angular.module('inspinia')
+    angular.module('MyFamilySocial')
         .controller('ThreadCtrl', ThreadController);
 
     function ThreadController($scope, ForumService, $state) {

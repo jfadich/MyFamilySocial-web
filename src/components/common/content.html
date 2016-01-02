@@ -1,29 +1,21 @@
-<!-- Wrapper-->
-<div id="wrapper">
+<header id="header" data-current-skin={{mactrl.currentSkin}} data-ng-include="'component/header.html'" data-ng-controller="headerCtrl as hctrl"></header>
 
-    <!-- Navigation
-    <div ng-include="'components/common/navigation.html'"></div>-->
 
-    <!-- Page wraper -->
-    <!-- ng-class with current state name give you the ability to extended customization your view -->
-    <div id="page-wrapper" class="gray-bg {{$state.current.name}}" mass-autocomplete>
+<section id="main">
 
-        <!-- Page wrapper -->
-        <div ng-include="'components/common/topnavbar.html'"></div>
+    <aside id="sidebar" data-ng-include="'component/sidebar-left.html'" data-ng-class="{ 'toggled': mactrl.sidebarToggle.left === true }"></aside>
 
-        <div class="wrapper wrapper-content" style="margin-top:55px;">
-                <div class="row">
+    <section id="content">
 
-                    <!-- Main view  -->
+        <div class="container">
+    <!-- Main view  -->
                     <div ui-view></div>
 
-                </div>
-        </div>
-        <!-- Footer -->
-        <div ng-include="'components/common/footer.html'"></div>
+            </div>
 
-    </div>
-    <!-- End page wrapper-->
+    </section>
 
-</div>
-<!-- End wrapper-->
+
+</section>
+
+<footer id="footer" data-ng-include="'components/common/footer.html'"></footer>

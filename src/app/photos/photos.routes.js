@@ -63,7 +63,7 @@
             })
 */
     }
-    angular.module('inspinia')
+    angular.module('MyFamilySocial')
         .config(PhotoRoutes)
 
 })();

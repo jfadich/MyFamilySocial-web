@@ -8,7 +8,7 @@
         })
     }
 
-    angular.module('inspinia')
+    angular.module('MyFamilySocial')
         .controller('PhotoCtrl', PhotoController);
 
 })();

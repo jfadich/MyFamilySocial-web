@@ -101,7 +101,7 @@ function CommentFeedController($scope, CommentService, toastr, api, auth) {
     }
 }
 
-angular.module('inspinia')
+angular.module('MyFamilySocial')
     .directive("commentFeed", function() {
         return {
             restrict: 'E',

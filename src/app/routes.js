@@ -149,7 +149,7 @@
         $urlRouterProvider.when('/members', '/members/index');
         $urlRouterProvider.otherwise('home');
     }
-    angular.module('inspinia')
+    angular.module('MyFamilySocial')
         .config(routes)
         .config(function(toastrConfig) {
             angular.extend(toastrConfig, {

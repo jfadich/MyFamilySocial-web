@@ -1,6 +1,6 @@
 (function() {
 
-    angular.module('inspinia')
+    angular.module('MyFamilySocial')
         .directive("profilePicture", profilePicture);
 
     function profilePicture() {

@@ -52,7 +52,7 @@
         });
     }
 
-    angular.module('inspinia')
+    angular.module('MyFamilySocial')
         .controller('AlbumCtrl', AlbumController)
         .controller('PhotosCtrl', PhotosController);
 

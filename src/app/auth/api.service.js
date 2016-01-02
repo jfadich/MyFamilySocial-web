@@ -175,7 +175,7 @@
 
     }
 
-    angular.module('inspinia')
+    angular.module('MyFamilySocial')
         .service('api', apiService)
 
 
