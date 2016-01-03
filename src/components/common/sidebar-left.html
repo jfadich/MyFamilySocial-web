@@ -6,7 +6,7 @@
             </div>
 
             <div class="profile-info">
-                {{ mactrl.user.first_name }} {{ mactrl.user.last_name }}
+                {{ mactrl.user.display_name }}
 
                 <i class="zmdi zmdi-caret-down"></i>
             </div>
@@ -28,7 +28,7 @@
             <a data-ui-sref="family.home" data-ng-click="mactrl.dismissSidebar($event)"><i class="zmdi zmdi-home"></i> Home</a>
         </li>
         <li data-ui-sref-active="active">
-            <a data-ui-sref="family.photos.albums" data-ng-click="mactrl.dismissSidebar($event)"><i class="zmdi zmdi-image"></i>Photos</a>
+            <a data-ui-sref="family.photos" data-ng-click="mactrl.dismissSidebar($event)"><i class="zmdi zmdi-image"></i>Photos</a>
         </li>
 
         <li>

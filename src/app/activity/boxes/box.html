@@ -1,20 +1,38 @@
-<div ng-switch="activity.type">
-    <div ng-switch-when="created_comment_forumthread">
-        <div ng-include="'/app/activity/boxes/full/created_comment_forumthread.html'" class="animated fadeIn" ></div>
+<div class="card">
+    <div class="card-header">
+        <div class="media">
+            <profile-picture user="activity.actor" class="pull-left" img-class="lv-img"></profile-picture>
+
+            <div class="media-body m-t-5">
+                <h2>
+                    <a ui-sref="family.members.profile({user: activity.actor.id})">
+                        {{ activity.actor.display_name }}
+                    </a>
+                    <small>Posted <span am-time-ago="activity.created" am-preprocess="unix"></span></small></h2>
+            </div>
+        </div>
+
     </div>
-    <div ng-switch-when="created_comment_photo">
-        <div ng-include="'/app/activity/boxes/full/created_comment_photo.html'" class="animated fadeIn" ></div>
+
+    <div ng-switch="activity.type">
+        <div ng-switch-when="created_comment_forumthread">
+            <div ng-include="'/app/activity/boxes/full/created_comment_forumthread.html'" class="animated fadeIn" ></div>
+        </div>
+        <div ng-switch-when="created_comment_photo">
+            <div ng-include="'/app/activity/boxes/full/created_comment_photo.html'" class="animated fadeIn" ></div>
+        </div>
+        <div ng-switch-when="created_photo_album">
+            <div ng-include="'/app/activity/boxes/full/created_photo_album.html'" class="animated fadeIn" ></div>
+        </div>
+        <div ng-switch-when="created_forumthread_forumcategory">
+            <div ng-include="'/app/activity/boxes/full/created_forumthread_forumcategory.html'" class="animated fadeIn" ></div>
+        </div>
+        <div ng-switch-when="created_album">
+            <div ng-include="'/app/activity/boxes/full/created_album.html'" class="animated fadeIn" ></div>
+        </div>
+        <div ng-switch-when="created_photo_user">
+            <div ng-include="'/app/activity/boxes/full/created_photo_user.html'" class="animated fadeIn" ></div>
+        </div>
     </div>
-    <div ng-switch-when="created_photo_album">
-        <div ng-include="'/app/activity/boxes/full/created_photo_album.html'" class="animated fadeIn" ></div>
-    </div>
-    <div ng-switch-when="created_forumthread_forumcategory">
-        <div ng-include="'/app/activity/boxes/full/created_forumthread_forumcategory.html'" class="animated fadeIn" ></div>
-    </div>
-    <div ng-switch-when="created_album">
-        <div ng-include="'/app/activity/boxes/full/created_album.html'" class="animated fadeIn" ></div>
-    </div>
-    <div ng-switch-when="created_photo_user">
-        <div ng-include="'/app/activity/boxes/full/created_photo_user.html'" class="animated fadeIn" ></div>
-    </div>
+
 </div>

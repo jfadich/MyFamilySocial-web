@@ -1,20 +1,11 @@
-<div class="social-feed-box">
+<div class="card-body card-padding">
+    <p>{{ activity.target.body | limitTo: 250 }}</p>
 
-    <div class="social-avatar">
-        <profile-picture user="activity.actor" class="pull-left"></profile-picture>
-        <div class="media-body">
-            <a ui-sref="family.members.profile({user: activity.actor.id})" style="display: inline">
-                {{ activity.actor.display_name }}
-            </a> commented on <strong><a ui-sref="family.photos.albums.album.photo({photo:activity.target.id})"> {{ activity.target.name }} </a></strong>
-            <small class="text-muted"><span am-time-ago="activity.created" am-preprocess="unix"></span></small>
+    <div class="wall-img-preview clearfix">
+        <div class="wip-item" ng-style="{'background-image': 'url({{activity.target.image.card}})' }">
 
         </div>
     </div>
-    <div class="social-body">
-        <p>{{ activity.target.body | limitTo: 250 }}</p>
-        <img ng-src="{{ activity.target.image.card }}" class="img-responsive">
-    </div>
-
-    <comment-feed parent="activity.target" limit="3"></comment-feed>
-
 </div>
+
+<comment-feed parent="activity.target" limit="3"></comment-feed>

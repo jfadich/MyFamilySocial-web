@@ -1,37 +1,32 @@
-<div id="social-feed-box" infinite-scroll="more()" infinite-scroll-disabled='commentLoading' infinite-scroll-immediate-check="false">
+<div class="wall-comment-list" infinite-scroll="more()" infinite-scroll-disabled='commentLoading' infinite-scroll-immediate-check="false">
 
-    <div class="social-footer">
-        <form class="ng-pristine ng-valid social-comment" ng-if="parent.permissions.comment" name="threadReply">
+    <!-- Comment Listing -->
+    <div class="wcl-list">
+        <div ng-repeat="reply in comments" class="media" ng-class="{'animated flipOutX': reply.deleted}">
+                <profile-picture size="small" user="reply.owner.data" a-class="pull-left" img-class="lv-img-sm"></profile-picture>
 
-                <profile-picture size="small" user="currentUser" class="pull-left"></profile-picture>
-                <div class="media-body">
-                    <textarea type="text" placeholder="Add reply" name="comment" ng-model="comment.body" class="form-control" rows="3" required="">
-                                </textarea>
-                    <br>
-                    <button class="btn btn-primary btn-sm" ng-disabled="threadReply.$invalid" ng-click="addReply(comment, $event)">
-                        Add Reply
-                    </button>
+            <div class="media-body" ng-if="editing != reply.id">
+                <a href="" class="a-title">{{ reply.owner.data.display_name }}</a>
+                <small class="c-gray m-l-10">{{ reply.created * 1000 | date : short }}  <span ng-if="reply.created !== reply.updated">[Last Edited {{ reply.updated * 1000 | date : short }}]</span></small>
+                <p class="m-t-5 m-b-0" marked="reply.body"></p>
+            </div>
+
+                <div class="pull-right p-0" ng-if="reply.permissions.edit">
+                    <ul class="actions">
+                        <li class="dropdown" uib-dropdown>
+                            <a href="" uib-dropdown-toggle aria-haspopup="true" aria-expanded="false">
+                                <i class="zmdi zmdi-more-vert"></i>
+                            </a>
+
+                            <ul class="dropdown-menu dropdown-menu-right">
+                                <li>
+                                    <a ng-click="editReply(reply, $event)">Edit</a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
                 </div>
 
-
-            <br>
-        </form>
-
-        <div ng-repeat="reply in comments" ng-class="{'animated flipOutX': reply.deleted}">
-            <div class="social-comment">
-
-                <profile-picture size="small" user="reply.owner.data" class="pull-left"></profile-picture>
-
-                <div class="media-body" ng-if="editing != reply.id">
-                    <a ui-sref="family.members.profile({user: reply.owner.data.id})">
-                        {{ reply.owner.data.display_name }}
-                    </a>
-                    <span class=" pull-right">
-                        <button class="btn btn-white btn-xs" ng-if="reply.permissions.edit" ng-click="editReply(reply, $event)"> <i class="fa fa-pencil"></i> </button>
-                    </span>
-                    <p marked="reply.body"></p>
-                    <small class="text-muted">{{ reply.created * 1000 | date : short }}  <span ng-if="reply.created !== reply.updated">[Last Edited {{ reply.updated * 1000 | date : short }}]</span></small>
-                </div>
 
                 <form class="media-body" ng-if="editing == reply.id" name="editThreadReply" novalidate="">
                     <div class="form-group">
@@ -56,21 +51,40 @@
                     </div>
                     <br>
                 </form>
-            </div><br>
         </div>
-
-        <p>
-
-        <div ng-if="commentLoading" ng-include="'components/common/loadingIcon.html'"></div>
-        <div ng-if="comments.length < meta.pagination.total && !commentLoading && !limit">
-            <button type="button"
-                    class="btn center-block btn-outline btn-primary"
-                    ng-click="more()" >
-
-                <i class="fa fa-arrow-down"></i> More replies
-            </button>
-        </div>
-        </p>
 
     </div>
+
+    <!-- Comment form -->
+    <div class="wcl-form">
+        <div class="wc-comment" data-ng-if="!mactrl.wallCommenting[1]" data-ng-click="mactrl.wallCommenting[1] = true" ng-init="mactrl.wallCommenting[1] = false">
+            <div class="wcc-inner">
+                Write Something...
+            </div>
+        </div>
+
+        <div class="wc-comment">
+            <div class="wcc-inner">
+                <textarea class="wcci-text" data-auto-size placeholder="Write Something..."></textarea>
+            </div>
+
+            <div class="m-t-15">
+                <button class="btn btn-sm btn-primary">Post</button>
+            </div>
+        </div>
+    </div>
+
+    <p>
+
+    <div ng-if="commentLoading" ng-include="'components/common/loadingIcon.html'"></div>
+    <div ng-if="comments.length < meta.pagination.total && !commentLoading && !limit">
+        <button type="button"
+                class="btn center-block btn-outline btn-primary"
+                ng-click="more()" >
+
+            <i class="fa fa-arrow-down"></i> More replies
+        </button>
+    </div>
+    </p>
+
 </div>

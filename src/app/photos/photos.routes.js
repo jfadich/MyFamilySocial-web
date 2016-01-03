@@ -4,15 +4,14 @@
         $stateProvider
             .state('family.photos', {
                 url: '/photos',
-                abstract: true,
-                controller: 'PhotoMasterCtrl',
-                controllerAs: 'photoMaster',
+                controller: 'AlbumListCtrl',
+                controllerAs: 'albums',
                 resolve: {
                     albums: function (AlbumService) {
-                        return AlbumService.getAlbum('');
+                        return AlbumService.getAlbum('', 'photos:limit(12)');
                     }
                 },
-                templateUrl: "app/photos/photos.html",
+                templateUrl: "app/photos/albumList.html",
                 //template: '<ui-view></ui-view>'
             } )
             .state('family.photos.album', {
