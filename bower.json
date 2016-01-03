@@ -26,6 +26,7 @@
     "awesome-bootstrap-checkbox": "~0.3.4",
     "lightgallery": "~1.1.5",
     "bootstrap": "~3.3.5",
+    "autosize": "~3.0.6",
     "dropzone": "~4.0.1",
     "material-design-iconic-font": "~2.1.1",
     "font-awesome": "~4.3.0",

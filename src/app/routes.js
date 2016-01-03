@@ -18,9 +18,6 @@
                 url: "/home",
                 templateUrl: "app/activity/feed.html",
                 controller: 'ActivityCtrl',
-                ncyBreadcrumb: {
-                    label: 'Activity'
-                },
                 data: {
                     pageTitle: 'Welcome'
                 }

@@ -1,0 +1,49 @@
+<div class="sidebar-inner c-overflow">
+    <div class="profile-menu">
+        <a href="" toggle-submenu>
+            <div class="profile-pic">
+                <profile-picture size="small" user="mactrl.user" nolink="true" img-class="profile-pic-menu"></profile-picture>
+            </div>
+
+            <div class="profile-info">
+                {{ mactrl.user.first_name }} {{ mactrl.user.last_name }}
+
+                <i class="zmdi zmdi-caret-down"></i>
+            </div>
+        </a>
+
+        <ul class="main-menu">
+            <li>
+                <a data-ui-sref="pages.profile.profile-about" data-ng-click="mactrl.dismissSidebar($event)"><i class="zmdi zmdi-account"></i> View Profile</a>
+            </li>
+            <li>
+                <a data-ui-sref="logout"><i class="zmdi zmdi-time-restore"></i> Logout</a>
+            </li>
+        </ul>
+    </div>
+
+    <ul class="main-menu">
+
+        <li data-ui-sref-active="active">
+            <a data-ui-sref="family.home" data-ng-click="mactrl.dismissSidebar($event)"><i class="zmdi zmdi-home"></i> Home</a>
+        </li>
+        <li data-ui-sref-active="active">
+            <a data-ui-sref="family.photos.albums" data-ng-click="mactrl.dismissSidebar($event)"><i class="zmdi zmdi-image"></i>Photos</a>
+        </li>
+
+        <li>
+            <a href="" toggle-submenu><i class="zmdi zmdi-collection-text"></i> Recipes</a>
+        </li>
+
+        <li data-ui-sref-active="active">
+            <a data-ui-sref="calendar" data-ng-click="mactrl.dismissSidebar($event)"><i class="zmdi zmdi-calendar"></i> Calendar</a>
+        </li>
+
+
+
+        <li data-ui-sref-active="active">
+            <a data-ui-sref="family.members.index" data-ng-click="mactrl.dismissSidebar($event)"><i class="zmdi zmdi-pin-account"></i> Address Book</a>
+        </li>
+
+    </ul>
+</div>

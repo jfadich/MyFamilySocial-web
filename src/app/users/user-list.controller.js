@@ -13,7 +13,7 @@
         return self;
 
         function activate() {
-            UserService.getUser('').then(function(users){
+            UserService.getUser('?take=2').then(function(users){
                 self.users = users.data;
                 self.meta = users.meta;
             }).finally(function(){
